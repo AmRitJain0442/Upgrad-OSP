@@ -31,28 +31,28 @@ Learn to write prompts that prevent AI "hallucination" (making up facts) through
 pip install -r requirements.txt
 ```
 
-### 2. Set up Gemini API Key
+### 2. Set up Gemini API Key ⭐ EASY METHOD
 
 **IMPORTANT**: The platform now uses real document upload and Gemini API for summarization!
 
-Get your FREE API key from: https://makersuite.google.com/app/apikey
+**Quick Setup (2 minutes):**
 
-Then set it as an environment variable:
+1. Get your FREE API key: **https://makersuite.google.com/app/apikey**
 
-**Windows (PowerShell):**
-```powershell
-$env:GEMINI_API_KEY="your_api_key_here"
-```
+2. Create a `.env` file in the `ai-learning-platform` folder:
+   ```bash
+   cd ai-learning-platform
+   copy .env.example .env
+   ```
 
-**Windows (CMD):**
-```cmd
-set GEMINI_API_KEY=your_api_key_here
-```
+3. Edit `.env` file and add your key:
+   ```
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
 
-**Or edit app.py line 19 directly:**
-```python
-genai.configure(api_key='YOUR_API_KEY_HERE')
-```
+**That's it!** The app will automatically load your API key from the `.env` file.
+
+📖 **Detailed guide:** See `SETUP_API.md` for troubleshooting
 
 ### 3. Run the Application
 

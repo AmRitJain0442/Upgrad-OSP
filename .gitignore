@@ -10,3 +10,6 @@ uploads/
 *.log
 .env
 .DS_Store
+
+# Keep .env.example but ignore .env
+!.env.example

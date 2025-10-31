@@ -4,11 +4,15 @@ import os
 from werkzeug.utils import secure_filename
 import PyPDF2
 import docx
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__, 
             template_folder='../frontend/templates',
             static_folder='../frontend/static')
-app.secret_key = 'your-secret-key-here-change-in-production'
+app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-here-change-in-production')
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx'}
@@ -17,7 +21,24 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
-genai.configure(api_key=os.environ.get('GEMINI_API_KEY', 'YOUR_API_KEY_HERE'))
+# Configure Gemini API
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+if not GEMINI_API_KEY:
+    print("\n" + "="*60)
+    print("WARNING: GEMINI_API_KEY not found in .env file!")
+    print("="*60)
+    print("Please create a .env file in the ai-learning-platform directory")
+    print("with the following content:")
+    print("")
+    print("GEMINI_API_KEY=your_api_key_here")
+    print("")
+    print("Get your FREE API key from:")
+    print("https://makersuite.google.com/app/apikey")
+    print("="*60 + "\n")
+else:
+    print("✓ Gemini API key loaded successfully")
+
+genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.5-pro')
 
 COURSES = [

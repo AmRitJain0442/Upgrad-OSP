@@ -6,26 +6,25 @@
 
 The platform now uses REAL file upload and Gemini API for summarization!
 
-### Option 1: With Gemini API (Recommended)
-Get your FREE API key: https://makersuite.google.com/app/apikey
+### Setup with Gemini API (Recommended)
 
-**PowerShell:**
-```powershell
-cd ai-learning-platform
-pip install -r requirements.txt
-$env:GEMINI_API_KEY="your_key_here"
-cd backend
-python app.py
-```
+**Step 1:** Get your FREE API key: https://makersuite.google.com/app/apikey
 
-**CMD:**
+**Step 2:** Create `.env` file with your API key:
 ```bash
 cd ai-learning-platform
+copy .env.example .env
+# Edit .env file and add: GEMINI_API_KEY=your_key_here
+```
+
+**Step 3:** Install and run:
+```bash
 pip install -r requirements.txt
-set GEMINI_API_KEY=your_key_here
 cd backend
 python app.py
 ```
+
+You should see: `✓ Gemini API key loaded successfully`
 
 Open browser: **http://localhost:5000**
 

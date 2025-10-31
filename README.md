@@ -1,22 +1,22 @@
-# AI Skills Academy 🎓
+# AI Skills Academy 
 
 An interactive AI learning platform that teaches prompt engineering to working professionals through guided, hands-on experiences.
 
 ## Features
 
-### 🎯 Core Experience
+###  Core Experience
 - **Two-Panel Interface**: AI Tutor (left) + Interactive Workspace (right)
 - **Dark Theme**: Clean, professional design with sharp red accents
 - **Proactive Learning**: Real-time guidance, tips, and feedback
 
-### ✨ Interactive "Magic" Features
+###  Interactive "Magic" Features
 - **Visual Highlighting**: Elements glow red when the tutor guides you to them
 - **Proactive Suggestions**: Real-time tips appear as you type prompts
 - **Interactive Quizzes**: Knowledge checks embedded directly in the tutor chat
 - **Workspace AI**: Separate AI that responds to your prompts in real-time
 - **Progress Tracking**: Tabbed navigation unlocks as you complete lessons
 
-### 📚 Lesson 1: Focused Summarization
+###  Lesson 1: Focused Summarization
 Learn to write prompts that prevent AI "hallucination" (making up facts) through:
 - Guided document loading
 - Real-time prompt feedback

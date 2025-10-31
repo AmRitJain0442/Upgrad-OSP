@@ -18,7 +18,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 genai.configure(api_key=os.environ.get('GEMINI_API_KEY', 'YOUR_API_KEY_HERE'))
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-2.5-pro')
 
 COURSES = [
     {

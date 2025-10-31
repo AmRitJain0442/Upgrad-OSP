@@ -116,7 +116,7 @@ function addProactiveTip(tip) {
         <div class="message-content">
             <div class="proactive-tip">
                 <div class="tip-header">
-                    💡 Proactive Suggestion
+                    Proactive Suggestion
                 </div>
                 <p>${tip}</p>
             </div>
@@ -126,12 +126,53 @@ function addProactiveTip(tip) {
     tutorChat.scrollTop = tutorChat.scrollHeight;
 }
 
-function addWorkspaceMessage(content, isUser = false) {
+function parseMarkdown(text) {
+    // Convert markdown to HTML with proper formatting
+    let html = text;
+    
+    // Handle bold text **text**
+    html = html.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    
+    // Handle headings ### Heading
+    html = html.replace(/^### (.+)$/gm, '<h3 class="response-heading">$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2 class="response-heading">$1</h2>');
+    html = html.replace(/^# (.+)$/gm, '<h1 class="response-heading">$1</h1>');
+    
+    // Handle line breaks
+    html = html.replace(/\n\n/g, '</p><p>');
+    html = html.replace(/\n/g, '<br>');
+    
+    // Handle numbered lists
+    html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<div class="list-item"><span class="list-number">$1.</span> $2</div>');
+    
+    // Handle bullet points
+    html = html.replace(/^[-*]\s+(.+)$/gm, '<div class="list-item"><span class="bullet">•</span> $1</div>');
+    
+    // Handle code blocks
+    html = html.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+    
+    // Wrap in paragraph if not already wrapped
+    if (!html.startsWith('<')) {
+        html = '<p>' + html + '</p>';
+    }
+    
+    return html;
+}
+
+function addWorkspaceMessage(content, isUser = false, skipParsing = false) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `workspace-message ${isUser ? 'user' : 'ai'}`;
+    
+    // Parse markdown for AI messages (unless skipParsing is true)
+    let formattedContent = content;
+    if (!isUser && !skipParsing) {
+        formattedContent = parseMarkdown(content);
+    }
+    
     messageDiv.innerHTML = `
         <span class="message-label">${isUser ? 'You' : 'Workspace AI'}</span>
-        <div class="workspace-bubble">${content}</div>
+        <div class="workspace-bubble">${formattedContent}</div>
     `;
     workspaceChat.appendChild(messageDiv);
     workspaceChat.scrollTop = workspaceChat.scrollHeight;
@@ -200,7 +241,9 @@ function handleDocumentUpload(file) {
             documentUploaded = true;
             
             // Show document preview in workspace
-            addWorkspaceMessage(`Document loaded: <strong>${data.filename}</strong><br><br>${data.preview}`, false);
+            // Clean up preview text - remove excessive whitespace
+            const cleanPreview = data.preview.replace(/\s+/g, ' ').trim();
+            addWorkspaceMessage(`Document loaded: <strong>${data.filename}</strong><br><br>${cleanPreview}`, false, true);
             
             addTutorMessage(`Great! The document "${data.filename}" is loaded. Now, your goal is to summarize it. Try typing a prompt in the text box below the workspace.`);
             

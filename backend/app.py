@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, session
 import google.generativeai as genai
 import os
+import re
 from werkzeug.utils import secure_filename
 import PyPDF2
 import docx
@@ -60,19 +61,24 @@ def allowed_file(filename):
 
 def extract_text(filepath):
     ext = filepath.rsplit('.', 1)[1].lower()
+    text = ''
     
     if ext == 'txt':
         with open(filepath, 'r', encoding='utf-8') as f:
-            return f.read()
+            text = f.read()
     elif ext == 'pdf':
         with open(filepath, 'rb') as f:
             reader = PyPDF2.PdfReader(f)
             text = ' '.join([page.extract_text() for page in reader.pages])
-            return text
     elif ext == 'docx':
         doc = docx.Document(filepath)
-        return ' '.join([para.text for para in doc.paragraphs])
-    return ''
+        text = ' '.join([para.text for para in doc.paragraphs])
+    
+    # Clean up excessive whitespace - normalize all whitespace to single spaces
+    text = re.sub(r'\s+', ' ', text)
+    text = text.strip()
+    
+    return text
 
 @app.route('/')
 def index():

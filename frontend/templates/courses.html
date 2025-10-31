@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body class="courses-page">
+    <div class="cyber-bg"></div>
+    
+    <header class="main-header">
+        <div class="container">
+            <h1 class="logo">
+                <span class="logo-icon">🎓</span>
+                AI SKILLS ACADEMY
+                <span class="logo-pulse"></span>
+            </h1>
+            <p class="tagline">Build confidence in generative AI through hands-on practice</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="courses-grid">
+            {% for course in courses %}
+            <div class="course-card" data-course-id="{{ course.id }}">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="course-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h2 class="course-title">{{ course.title }}</h2>
+                    <p class="course-description">{{ course.description }}</p>
+                    
+                    <div class="submodules-list">
+                        <h3>Submodules</h3>
+                        <ul>
+                            {% for submodule in course.submodules %}
+                            <li class="submodule-item {% if submodule.completed %}completed{% endif %}">
+                                <span class="submodule-number">{{ "%02d"|format(submodule.id) }}</span>
+                                <span class="submodule-title">{{ submodule.title }}</span>
+                                <a href="/module/{{ course.id }}/{{ submodule.id }}" class="submodule-link">
+                                    <span>Launch</span>
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                                        <path d="M8 0L6.59 1.41 12.17 7H0v2h12.17l-5.58 5.59L8 16l8-8z"/>
+                                    </svg>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

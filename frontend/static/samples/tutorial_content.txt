@@ -1,0 +1,90 @@
+# Getting Started with Git Version Control
+
+**Introduction**
+
+Git is a distributed version control system (DVCS) designed to track changes in source code during software development. Its primary function is to record every modification made to your files, creating a detailed history. Git is essential because it enables safe collaboration among team members, provides a complete audit trail of project evolution, allows risk-free experimentation through branching, and is the undisputed professional standard in technology. Created by Linus Torvalds in 2005, Git now powers millions of projects globally, from small scripts to massive operating systems. This tutorial covers the fundamental commands necessary to get you productive with Git quickly.
+
+**Prerequisites**
+
+Before starting this hands-on guide, please ensure you have the following installed and ready:
+- Git must be installed (download the latest version from git-scm.com).
+- Basic familiarity with using a command line interface or terminal is required.
+- A reliable text editor (such as VS Code, Sublime Text, or Atom) is needed for viewing and editing files.
+- A fundamental understanding of how files and directories are organized on your computer.
+- A strong willingness to practice using command-line tools.
+
+***
+
+**Step-by-Step Guide**
+
+**Step 1 - Initialize Repository**
+
+Command: `git init`
+
+This command creates a new, empty Git repository within the current directory you are in. It establishes the essential, hidden `.git` folder, which stores all the project's historical version data. You should run this command only once per project, typically when starting a new folder meant for version control. Once executed, your folder becomes "Git-aware" and is ready to begin tracking file changes meticulously.
+
+**Step 2 - Check Status**
+
+Command: `git status`
+
+This is arguably the most frequently used Git command. It provides an instant snapshot of your repository’s current state. It clearly lists files that are untracked (Git is ignoring them), files that have been modified but not yet prepared for saving, and any changes that are staged and ready for commitment. If the output shows a clean working directory, it confirms no unrecorded changes exist.
+
+**Step 3 - Add Files to Staging**
+
+Command: `git add filename.txt` or `git add .` (to add all new/modified files)
+
+Before Git permanently records changes, you must explicitly move them to the staging area. The staging area acts as a preparation zone, allowing you to select precisely which modifications you want to include in the next snapshot. Think of this as placing specific items into a shopping cart before finalizing the purchase. Once staged, those files are marked as ready for the next permanent save point. You can remove files from staging using `git reset filename`.
+
+**Step 4 - Commit Changes**
+
+Command: `git commit -m "Descriptive message here"`
+
+Committing creates the actual permanent snapshot of everything currently in the staging area. Every commit must be accompanied by a message describing *what* was changed and *why*. High-quality messages are vital for effective collaboration and future debugging. Avoid vague messages like "fixes"; instead use specific phrases like "Implement user login form validation." Each successful commit receives a unique identification hash, forming the project's navigable timeline.
+
+**Step 5 - View History**
+
+Command: `git log`
+
+This command displays the comprehensive history of all commits made in the repository. It details the author, date, commit message, and the unique hash for each snapshot. For a much cleaner, abbreviated view showing only the hash and the subject line, use `git log --oneline`. Reviewing the log is essential for understanding project evolution and pinpointing when a specific feature was added or a bug was introduced. Press 'Q' to exit the log view.
+
+**Step 6 - Create Branch**
+
+Command: `git branch feature-name`
+
+Branches are fundamental to safe development. Creating a branch allows you to start a new line of development in isolation from your main codebase (often called `main` or `master`). This means you can experiment freely or build a new feature without destabilizing the production-ready code. To see all existing branches, use `git branch`; the current branch is indicated by an asterisk (*).
+
+**Step 7 - Switch Branches**
+
+Command: `git checkout branch-name` or `git switch branch-name` (The modern alternative)
+
+This command moves your working directory to reflect the files and history of the specified branch. All tracked files will instantly update to match that branch's state. This ensures that any new work done after switching will only affect that isolated environment. The newer `git switch` command is recommended for clarity, separating the function of switching branches from restoring files.
+
+**Step 8 - Merge Branches**
+
+Command: `git merge feature-name` (Executed while you are on the target branch, e.g., `main`)
+
+Merging integrates the completed changes from your feature branch back into your current branch. Git automatically attempts to combine the lines of code. If the same section of a file was modified independently in both branches, a merge conflict occurs, requiring manual resolution before the commit can finalize. Once the integration is successful, the feature branch is often deleted.
+
+**Common Commands Reference**
+
+| Command | Purpose |
+| :--- | :--- |
+| `git clone URL` | Copy an entire remote repository to your local machine |
+| `git pull` | Download and integrate the latest changes from a remote repository |
+| `git push` | Upload your local committed changes to a remote repository |
+| `git diff` | Show the changes made in files that have not yet been staged |
+| `git reset` | Unstage files or undo recent commits (use carefully) |
+
+These eight steps, plus the essential commands listed in this table, cover approximately 90 percent of the daily interactions a developer has with Git.
+
+**Tips for Beginners**
+
+1. **Commit Often:** Make small, frequent commits with clear, actionable messages. This is superior to making one massive commit after days of work.
+2. **Verify Status:** Always run `git status` immediately before executing `git add` or `git commit` to ensure you are tracking exactly what you intend to save.
+3. **Branch Heavily:** Use new branches for every feature, bug fix, or experiment to maintain a clean, deployable state on your primary branch.
+4. **Tense Matters:** Write commit messages in the imperative present tense: "Fix authentication bug," not "Fixed authentication bug."
+5. **Security First:** Never commit sensitive information, such as passwords, API keys, or configuration files containing secrets, directly into the repository history.
+
+**Next Steps**
+
+Once you master these fundamentals, the logical progression involves learning about **remote repositories** (services like GitHub or GitLab), understanding **pull requests** for collaborative code review, exploring advanced branching strategies, mastering **merge conflict resolution**, and eventually learning more powerful tools like **rebasing** and **cherry-picking**.

@@ -1,0 +1,203 @@
+# UserAuth API v2.1 Technical Documentation
+
+## API Overview
+
+The UserAuth API provides secure, standardized endpoints for managing user authentication and authorization within our ecosystem. This documentation specifically details version 2.1. The primary audience includes backend developers integrating user services. All communication must occur over HTTPS. The base URL for all endpoints is `https://api.example.com/v1`. Responses are consistently formatted in JSON. We guarantee a service uptime of 99.9% for these core authentication services. This version introduces enhanced token validation and stricter password policies.
+
+## Authentication
+
+Authentication for protected endpoints is performed using JSON Web Tokens (JWT) transmitted as Bearer tokens. Upon successful registration or login, a new JWT is issued. These tokens have a fixed validity period of 24 hours. To utilize a protected endpoint, the client must include the token in the HTTP request header using the `Authorization` field, prefixed with the scheme `Bearer` followed by a space and the token string.
+
+**Header Format Example:**
+
+```http
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjMsImlhdCI6MTY3ODg4NjQwMCwiZXhwIjoxNjc4ODkwMDAwfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```
+
+Security best practices mandate that clients never expose the token directly in URLs and securely store it server-side or in secure storage accessible only to the authenticated application session. Tokens must be refreshed prior to expiration.
+
+## POST /auth/register
+
+This endpoint facilitates the creation of a new user account.
+
+**Parameters:**
+
+| Field | Type | Required | Constraints |
+| :--- | :--- | :--- | :--- |
+| `email` | string | Yes | Must be unique across the system. |
+| `password` | string | Yes | Minimum 8 characters; must contain at least one uppercase letter, one lowercase letter, and one digit. |
+| `username` | string | Yes | 3 to 20 alphanumeric characters only. |
+| `full_name` | string | No | User's given name. |
+
+**Request JSON Example:**
+
+```json
+{
+  "email": "new.user@example.com",
+  "password": "SecureP@ss123",
+  "username": "useralpha99",
+  "full_name": "Alex Example"
+}
+```
+
+**Successful Response (201 Created):**
+
+Returns the newly created user ID and the initial access token.
+
+```json
+{
+  "status": "success",
+  "message": "User account created successfully.",
+  "data": {
+    "user_id": "uuid-a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "created_at": "2024-03-15T10:00:00Z"
+  }
+}
+```
+
+**Validation Error Response (400 Bad Request):**
+
+```json
+{
+  "status": "error",
+  "code": "VALIDATION_FAILED",
+  "message": "Input validation failed for one or more fields.",
+  "errors": [
+    { "field": "password", "detail": "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a number." },
+    { "field": "username", "detail": "Username must be between 3 and 20 alphanumeric characters." }
+  ]
+}
+```
+
+**Duplicate Email Response (409 Conflict):**
+
+```json
+{
+  "status": "error",
+  "code": "DUPLICATE_EMAIL",
+  "message": "The provided email address is already registered."
+}
+```
+
+## POST /auth/login
+
+This endpoint authenticates an existing user and issues a new JWT.
+
+**Parameters:**
+
+| Field | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `email` | string | Yes | Registered email address. |
+| `password` | string | Yes | User's current password. |
+| `remember_me` | boolean | No | If true, token may be issued with a slightly extended (but still limited) validity scope; default is false. |
+
+**Request JSON Example:**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "SecureP@ss123",
+  "remember_me": true
+}
+```
+
+**Successful Response (200 OK):**
+
+Returns the access token and essential user details.
+
+```json
+{
+  "status": "success",
+  "message": "Authentication successful.",
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "expires_at": "2024-03-16T10:00:00Z",
+    "user": {
+      "user_id": "uuid-a1b2c3d4-e5f6-7890-1234-567890abcdef",
+      "username": "useralpha99",
+      "email": "user@example.com",
+      "full_name": "Alex Example"
+    }
+  }
+}
+```
+
+**Invalid Credentials Response (401 Unauthorized):**
+
+```json
+{
+  "status": "error",
+  "code": "INVALID_CREDENTIALS",
+  "message": "The provided email or password does not match our records."
+}
+```
+
+**Rate Limited Response (429 Too Many Requests):**
+
+This response is returned when the IP address exceeds the login attempt threshold.
+
+```json
+{
+  "status": "error",
+  "code": "RATE_LIMITED",
+  "message": "Too many login attempts from this IP. Please wait 60 seconds."
+}
+```
+
+## GET /auth/user
+
+This protected endpoint retrieves the authenticated user's profile information based on the provided JWT.
+
+**Requirements:** Requires a valid Bearer token in the Authorization header. No request body is accepted.
+
+**Successful Response (200 OK):**
+
+Returns the complete profile object associated with the token's user ID.
+
+```json
+{
+  "status": "success",
+  "message": "User profile retrieved.",
+  "data": {
+    "user_id": "uuid-a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "username": "useralpha99",
+    "email": "user@example.com",
+    "full_name": "Alex Example",
+    "created_at": "2024-03-15T10:00:00Z",
+    "last_login": "2024-03-15T14:30:00Z"
+  }
+}
+```
+
+**Unauthorized Response (401 Unauthorized):**
+
+Token is missing, expired, or invalidly formatted.
+
+```json
+{
+  "status": "error",
+  "code": "UNAUTHORIZED",
+  "message": "Authentication required or token is invalid/expired."
+}
+```
+
+**Not Found Response (404 Not Found):**
+
+This occurs if the token is valid but the referenced user ID no longer exists in the primary user database (e.g., due to administrative deletion).
+
+```json
+{
+  "status": "error",
+  "code": "USER_NOT_FOUND",
+  "message": "The user associated with this token could not be located."
+}
+```
+
+## Error Handling
+
+All errors returned by the UserAuth API adhere to a standardized JSON structure for consistent client-side parsing. This structure includes a top-level `status` field (always "error"), a machine-readable `code` (e.g., `VALIDATION_FAILED`), and a human-readable `message`. Specific errors, particularly validation failures, may include an array of `errors` detailing field-specific issues. HTTP status codes reliably reflect the nature of the failure (e.g., 400 for client error, 500 for server error).
+
+## Rate Limiting
+
+To ensure service stability, all non-read endpoints (`POST /auth/register`, `POST /auth/login`) are subject to a strict rate limit of 1000 requests per hour per originating IP address. If this limit is exceeded, the API will respond with a `429 Too Many Requests` status code. The response headers will include `X-RateLimit-Limit`, `X-RateLimit-Remaining`, and `Retry-After` (specifying time in seconds until the limit resets). Clients encountering a 429 response must implement an exponential backoff strategy for subsequent attempts.

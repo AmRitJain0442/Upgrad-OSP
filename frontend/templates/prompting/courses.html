@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Prompt Engineering Courses - Upgrad OSP{% endblock %}
+
+{% block content %}
+<div class="courses-page">
+    <div class="cyber-bg"></div>
+    
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">
+                <span class="title-accent">Prompt Engineering</span>
+                <span class="title-main">Mastery Platform</span>
+            </h1>
+            <p class="main-subtitle">Master the art of AI communication through hands-on, guided learning</p>
+        </div>
+    </header>
+
+    <main class="container courses-container">
+        {% for course in courses %}
+        <div class="course-card" data-course-id="{{ course.id }}">
+            <div class="course-header">
+                <h2 class="course-title">{{ course.title }}</h2>
+                <div class="course-progress">
+                    <span class="progress-text">0/{{ course.submodules|length }} Complete</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="course-description">{{ course.description }}</p>
+            
+            <div class="submodules-grid">
+                {% for submodule in course.submodules %}
+                <a href="/prompting/module/{{ course.id }}/{{ submodule.id }}" 
+                   class="submodule-card {% if submodule.id != 1 %}locked{% endif %}">
+                    <div class="submodule-number">{{ "%02d"|format(submodule.id) }}</div>
+                    <div class="submodule-content">
+                        <h3 class="submodule-title">{{ submodule.title }}</h3>
+                        <p class="submodule-description">{{ submodule.description }}</p>
+                    </div>
+                    <div class="submodule-status">
+                        {% if submodule.id == 1 %}
+                        <svg class="status-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                        {% else %}
+                        <svg class="status-icon lock-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        {% endif %}
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Upgrad OSP. Built with Pydantic-AI and FastAPI.</p>
+        </div>
+    </footer>
+</div>
+{% endblock %}

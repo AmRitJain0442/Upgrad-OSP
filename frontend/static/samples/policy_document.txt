@@ -1,0 +1,85 @@
+TITLE: Remote Work Policy
+COMPANY: TechCorp Global
+EFFECTIVE: January 1, 2025
+VERSION: 2.0
+
+**Policy Statement**
+This policy establishes guidelines for remote work arrangements at TechCorp Global. Purpose is enabling flexible work while maintaining productivity, collaboration, and company culture. Remote work is a privilege based on role requirements, performance, and business needs. This policy applies to all employees globally. Managers retain discretion for team-specific requirements. Policy subject to periodic review and modification. Employees must acknowledge and comply with all terms. Violations may result in termination of remote privileges or employment.
+
+**Eligibility Criteria**
+Roles Eligible for Remote Work:
+- Software Engineers and Developers
+- Data Analysts and Scientists
+- Product Managers
+- Marketing and Content Specialists
+- Customer Success Managers (with geographic restrictions)
+
+Eligibility Requirements:
+- Minimum 6 months tenure demonstrating competence
+- Current performance rating "Meets Expectations" or higher
+- Role does not require regular physical presence (labs, hardware, facilities)
+- Manager approval required
+- Completed remote work training program
+- Home workspace meeting company standards
+
+Ineligible roles: Facilities, IT hardware support, laboratory technicians, roles requiring specialized on-site equipment.
+
+**Remote Work Arrangement Types**
+1. Fully Remote: Employee works 100 percent from home or approved remote location. Must reside in approved states/countries for legal/tax compliance. Requires executive approval. Annual office visits may be required.
+
+2. Hybrid Schedule: Employee splits time between office and remote. Standard hybrid: minimum 2 days in-office per week (Tuesday-Thursday preferred). Specific days determined with manager based on team needs and collaboration requirements. Advance notice required for schedule changes.
+
+3. Temporary Remote: Short-term arrangements up to 3 months for special circumstances (family care, relocation, medical). Manager approval sufficient. Requires documented end date and transition plan.
+
+**Requirements for Remote Workers**
+Workspace Requirements:
+- Dedicated workspace free from distractions
+- Ergonomic desk and chair meeting safety standards
+- Adequate lighting and ventilation
+- Professional background for video calls
+
+Technology Requirements:
+- Reliable high-speed internet minimum 50 Mbps download, 10 Mbps upload
+- Company-provided laptop (no personal devices for work)
+- Webcam and headset for meetings
+- VPN access mandatory for all work activities
+- Multi-factor authentication enabled
+- Home network security: WPA2/WPA3 encryption, updated router firmware
+
+Availability Requirements:
+- Online and responsive during core business hours: 9 AM - 3 PM EST
+- Attend all scheduled meetings via video (camera on)
+- Respond to messages within 1 hour during core hours
+- Maintain calendar with accurate availability
+
+**Performance Expectations**
+Remote employees held to same performance standards as office-based staff. Expectations include:
+- Meeting all deadlines and deliverables as assigned
+- Participating actively in team meetings and collaboration
+- Maintaining communication with manager and teammates
+- Completing work with quality meeting company standards
+- Adhering to all company policies and code of conduct
+- Documenting work appropriately in company systems
+
+Performance reviews conducted quarterly. Failure to meet expectations may result in return-to-office requirement or other corrective actions per standard policies.
+
+**Equipment & Stipends**
+Company Provided:
+- Laptop computer (standard model for role)
+- Monitor, keyboard, mouse upon request
+- Software licenses as required for role
+
+Employee Stipend:
+- 500 dollars annually for home office equipment/improvements
+- Reimbursement for office supplies within policy limits
+- Internet subsidy: 50 dollars monthly for primary internet service
+
+Equipment remains company property. Must be returned upon termination. Loss or damage may result in replacement charges.
+
+**Communication Guidelines**
+1. Default to asynchronous communication (email, Slack) for non-urgent matters
+2. Use video calls for complex discussions, brainstorming, sensitive topics
+3. Document decisions in writing (meeting notes, decision logs)
+4. Respond to messages within expected timeframes
+5. Set status appropriately (available, in meeting, away)
+6. Use shared calendars for transparency

@@ -1,0 +1,18 @@
+{
+  "foundations-1": "general_article.txt",
+  "foundations-2": "general_article.txt",
+  "foundations-3": "complex_scenario.txt",
+  "foundations-4": "business_report.txt",
+  "advanced-patterns-1": "tutorial_content.txt",
+  "advanced-patterns-2": "data_analysis.txt",
+  "advanced-patterns-3": "business_report.txt",
+  "advanced-patterns-4": "policy_document.txt",
+  "domain-specific-1": "technical_api_doc.txt",
+  "domain-specific-2": "business_report.txt",
+  "domain-specific-3": "creative_brief.txt",
+  "domain-specific-4": "data_analysis.txt",
+  "advanced-techniques-1": "complex_scenario.txt",
+  "advanced-techniques-2": "general_article.txt",
+  "advanced-techniques-3": "business_report.txt",
+  "advanced-techniques-4": "technical_api_doc.txt"
+}

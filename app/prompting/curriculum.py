@@ -384,6 +384,101 @@ FULL_CURRICULUM = [
                 "completed": False
             }
         ]
+    },
+    {
+        "id": "presentation-builder",
+        "title": "AI-Powered Presentation Builder",
+        "description": "Learn to prompt AI to create professional HTML/CSS presentations from documents",
+        "submodules": [
+            {
+                "id": 1,
+                "title": "Document Analysis & Information Extraction",
+                "description": "Master prompting techniques to extract structured information from documents",
+                "welcome_message": "Welcome to the Presentation Builder! In this module, you'll learn to transform any document into a beautiful HTML/CSS presentation. Let's start by learning how to extract key information from documents using smart prompts.",
+                "upload_prompt": "Upload a document you want to convert into a presentation. It could be a report, article, or any text-based content (PDF, DOCX, or TXT).",
+                "prompt_guidance": "Now, let's extract the key information. Try prompting the AI to identify: <strong>main topics, key points, supporting details, and structure</strong>. Example: 'Analyze this document and extract the main sections with their key points in a structured format.'",
+                "weak_prompt_tip": "For better extraction, be specific! Try: '<strong>Extract from this document: 1) Main title/topic, 2) 3-5 key sections with headings, 3) 2-3 bullet points per section, 4) Any important data or quotes</strong>'",
+                "success_message": "Excellent! You've successfully extracted structured information. Notice how being specific about what you want (sections, points, format) gives you organized output perfect for slides!",
+                "retry_message": "Good start! To get better structured data for slides, try asking for: specific number of sections, bullet points per section, and clear formatting.",
+                "quiz": {
+                    "question": "Why is structured extraction important for presentation creation?",
+                    "options": [
+                        "It makes the AI work faster",
+                        "It organizes content into slide-ready sections and points",
+                        "It reduces the document size",
+                        "It removes unnecessary information"
+                    ],
+                    "correct_index": 1
+                },
+                "completed": False
+            },
+            {
+                "id": 2,
+                "title": "Content Generation for Slides",
+                "description": "Learn to prompt AI to generate presentation-ready content",
+                "welcome_message": "Great job on extraction! Now let's learn to prompt the AI to generate actual slide content - titles, descriptions, and talking points for each slide.",
+                "upload_prompt": "Upload your document or continue with the previous one.",
+                "prompt_guidance": "Now prompt the AI to generate slide content. Try: '<strong>Based on this document, create content for 5-7 presentation slides. For each slide provide: 1) A catchy title, 2) 3-4 concise bullet points, 3) A brief speaker note</strong>'",
+                "weak_prompt_tip": "Make your prompt more specific! Include: exact number of slides, format for each slide (title + bullets), length constraints (e.g., 'keep bullets under 15 words'), and any style preferences (professional, casual, technical).",
+                "success_message": "Perfect! You've generated presentation-ready content. Notice how specifying the structure (title, bullets, notes) and constraints (number, length) creates content that fits perfectly into slides!",
+                "retry_message": "Good attempt! For better slide content, specify: how many slides, what goes on each slide (title/bullets/notes), and any length or style constraints.",
+                "quiz": {
+                    "question": "What makes a good prompt for slide content generation?",
+                    "options": [
+                        "Asking for as much detail as possible",
+                        "Being vague to let AI be creative",
+                        "Specifying structure, format, and constraints clearly",
+                        "Only requesting titles without details"
+                    ],
+                    "correct_index": 2
+                },
+                "completed": False
+            },
+            {
+                "id": 3,
+                "title": "Content Refinement & Validation",
+                "description": "Learn to iterate and refine AI-generated content through prompting",
+                "welcome_message": "Now let's learn the most important skill: refining AI output! You'll learn to validate content, spot issues, and prompt the AI to make specific improvements.",
+                "upload_prompt": "Continue with your previous document or upload a new one.",
+                "prompt_guidance": "Review the generated content and prompt for refinements. Try: '<strong>Review slide 3: make the bullets more concise, add a statistic if available in the document, and ensure it flows from slide 2</strong>'",
+                "weak_prompt_tip": "For precise refinements, use prompts like: '<strong>For slide [number]: 1) Shorten bullet 2 to under 10 words, 2) Replace generic terms with specific examples from the document, 3) Add a transition phrase connecting to the next slide</strong>'",
+                "success_message": "Excellent refinement! You've learned to give specific, actionable feedback. This iterative process ensures your presentation content is accurate, concise, and flows well!",
+                "retry_message": "Good refinement attempt! Be more specific about what to change: which slide, which bullet, what exactly to modify, and what the goal is (shorter, more specific, better flow, etc.).",
+                "quiz": {
+                    "question": "Why is iterative refinement crucial for AI-generated presentations?",
+                    "options": [
+                        "It makes the process take longer",
+                        "It ensures accuracy, conciseness, and proper flow",
+                        "It's only needed for technical content",
+                        "It's optional if the first output looks good"
+                    ],
+                    "correct_index": 1
+                },
+                "completed": False
+            },
+            {
+                "id": 4,
+                "title": "HTML/CSS Code Generation",
+                "description": "Master prompting AI to generate professional presentation code",
+                "welcome_message": "Time for the magic! You'll learn to prompt the AI to convert your refined content into beautiful HTML/CSS presentation code that works right in your browser.",
+                "upload_prompt": "Continue with your refined presentation content.",
+                "prompt_guidance": "Prompt the AI to generate code. Try: '<strong>Generate HTML and CSS code for a presentation with the following requirements: 1) Clean, modern design with slide navigation, 2) Responsive layout, 3) Smooth transitions between slides, 4) Include all the content we created. Use semantic HTML and modular CSS.</strong>'",
+                "weak_prompt_tip": "For better code generation, specify: '<strong>Create an HTML/CSS presentation with: 1) Full-screen slides with centered content, 2) Navigation buttons (prev/next/slide numbers), 3) Smooth fade transitions, 4) Dark theme with accent colors, 5) Mobile-responsive, 6) Include keyboard controls (arrow keys). Output complete code ready to run.</strong>'",
+                "success_message": "Outstanding! You've generated a complete presentation! The AI created HTML structure and CSS styling because you specified exactly what features you wanted. Your presentation is now ready to preview!",
+                "retry_message": "Good start! For production-ready code, specify: design style, navigation features, transitions, responsiveness, color scheme, and any interactive elements you want.",
+                "quiz": {
+                    "question": "What makes a code generation prompt effective?",
+                    "options": [
+                        "Just asking for 'HTML and CSS'",
+                        "Specifying features, design, interactions, and technical requirements",
+                        "Requesting the most complex code possible",
+                        "Avoiding technical details to keep it simple"
+                    ],
+                    "correct_index": 1
+                },
+                "completed": False
+            }
+        ]
     }
 ]
 

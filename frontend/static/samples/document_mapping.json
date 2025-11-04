@@ -14,5 +14,9 @@
   "advanced-techniques-1": "complex_scenario.txt",
   "advanced-techniques-2": "general_article.txt",
   "advanced-techniques-3": "business_report.txt",
-  "advanced-techniques-4": "technical_api_doc.txt"
+  "advanced-techniques-4": "technical_api_doc.txt",
+  "presentation-builder-1": "ai_healthcare_report.txt",
+  "presentation-builder-2": "ai_healthcare_report.txt",
+  "presentation-builder-3": "climate_change_guide.txt",
+  "presentation-builder-4": "climate_change_guide.txt"
 }

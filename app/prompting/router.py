@@ -13,7 +13,7 @@ from app.prompting.models import (
     UploadResponse, SummarizeRequest, QuizAnswer, QuizResult,
     SessionInfo, SubmoduleUnlockRequest
 )
-from app.prompting.curriculum import get_curriculum, get_module, get_submodule
+from app.prompting.curriculum import get_curriculum, get_module, get_submodule, FULL_CURRICULUM
 from app.prompting.session_manager import session_manager
 from app.prompting.utils import allowed_file, extract_text, sanitize_filename
 from app.prompting.agents import (
@@ -72,8 +72,11 @@ async def module_page(request: Request, module_id: str, submodule_id: int):
         session.current_module = module_id
         session.current_submodule = submodule_id
     
+    # Use different template for presentation builder module
+    template_name = "prompting/presentation_module.html" if module_id == "presentation-builder" else "prompting/module.html"
+    
     response = templates.TemplateResponse(
-        "prompting/module.html",
+        template_name,
         {
             "request": request,
             "module": module,
@@ -279,7 +282,10 @@ async def upload_file(
     """Upload and process document"""
     session = session_manager.get_session(session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        return UploadResponse(
+            success=False, 
+            error="Session expired. Please refresh the page (Ctrl+Shift+R) and try again."
+        )
     
     if not file.filename:
         return UploadResponse(success=False, error="No file selected")

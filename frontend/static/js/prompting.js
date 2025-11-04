@@ -617,10 +617,18 @@ function unlockNextSubmodule() {
 
 // ===== SAMPLE DOCUMENT =====
 async function loadSampleDocument() {
-    // Only allow during upload step
-    if (state.currentStep !== LessonStep.AWAITING_UPLOAD) {
-        addTutorMessage("Please wait for the current step to complete.");
+    console.log('loadSampleDocument called, step:', state.currentStep, 'doc uploaded:', state.documentUploaded);
+    
+    // Only allow if document hasn't been uploaded yet
+    if (state.documentUploaded) {
+        addTutorMessage("You've already uploaded a document. Continue with your prompt!");
         return;
+    }
+    
+    // If not in the right step, transition to it
+    if (state.currentStep !== LessonStep.AWAITING_UPLOAD) {
+        console.log('Not in AWAITING_UPLOAD step, transitioning...');
+        transitionToStep(LessonStep.AWAITING_UPLOAD);
     }
     
     unhighlightAll();
@@ -762,10 +770,18 @@ window.showFullDocument = function() {
 async function handleFileUpload(file) {
     if (!file) return;
     
-    // Only allow during upload step
-    if (state.currentStep !== LessonStep.AWAITING_UPLOAD) {
-        addTutorMessage("Please wait for the current step to complete.");
+    console.log('handleFileUpload called, step:', state.currentStep, 'doc uploaded:', state.documentUploaded);
+    
+    // Only allow if document hasn't been uploaded yet
+    if (state.documentUploaded) {
+        addTutorMessage("You've already uploaded a document. Continue with your prompt!");
         return;
+    }
+    
+    // If not in the right step, transition to it
+    if (state.currentStep !== LessonStep.AWAITING_UPLOAD) {
+        console.log('Not in AWAITING_UPLOAD step, transitioning...');
+        transitionToStep(LessonStep.AWAITING_UPLOAD);
     }
     
     unhighlightAll();
@@ -955,8 +971,12 @@ function initEventListeners() {
     // Sample document
     if (elements.useSampleBtn) {
         elements.useSampleBtn.addEventListener('click', () => {
-            if (state.currentStep === 'upload') {
+            console.log('Sample button clicked, current step:', state.currentStep);
+            // Allow if in awaiting upload step OR if document not uploaded yet
+            if (state.currentStep === LessonStep.AWAITING_UPLOAD || !state.documentUploaded) {
                 loadSampleDocument();
+            } else {
+                console.warn('Sample button clicked but step is:', state.currentStep);
             }
         });
     }
@@ -964,8 +984,12 @@ function initEventListeners() {
     // File upload
     if (elements.uploadDocBtn) {
         elements.uploadDocBtn.addEventListener('click', () => {
-            if (state.currentStep === 'upload') {
+            console.log('Upload button clicked, current step:', state.currentStep);
+            // Allow if in awaiting upload step OR if document not uploaded yet
+            if (state.currentStep === LessonStep.AWAITING_UPLOAD || !state.documentUploaded) {
                 elements.fileInput.click();
+            } else {
+                console.warn('Upload button clicked but step is:', state.currentStep);
             }
         });
     }

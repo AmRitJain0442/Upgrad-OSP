@@ -415,20 +415,20 @@ FULL_CURRICULUM = [
             {
                 "id": 2,
                 "title": "Content Generation for Slides",
-                "description": "Learn to prompt AI to generate presentation-ready content",
-                "welcome_message": "Great job on extraction! Now let's learn to prompt the AI to generate actual slide content - titles, descriptions, and talking points for each slide.",
-                "upload_prompt": "Upload your document or continue with the previous one.",
-                "prompt_guidance": "Now prompt the AI to generate slide content. Try: '<strong>Based on this document, create content for 5-7 presentation slides. For each slide provide: 1) A catchy title, 2) 3-4 concise bullet points, 3) A brief speaker note</strong>'",
-                "weak_prompt_tip": "Make your prompt more specific! Include: exact number of slides, format for each slide (title + bullets), length constraints (e.g., 'keep bullets under 15 words'), and any style preferences (professional, casual, technical).",
-                "success_message": "Perfect! You've generated presentation-ready content. Notice how specifying the structure (title, bullets, notes) and constraints (number, length) creates content that fits perfectly into slides!",
-                "retry_message": "Good attempt! For better slide content, specify: how many slides, what goes on each slide (title/bullets/notes), and any length or style constraints.",
+                "description": "Master the art of prompting AI to create engaging, presentation-ready slide content",
+                "welcome_message": "Welcome to Lesson 2! Now that you can extract information, let's learn the critical skill of **generating actual slide content**. You'll discover how to prompt AI to create titles, bullet points, and descriptions that work perfectly in presentations. The key is being specific about structure and constraints!",
+                "upload_prompt": "Upload a document you want to transform into slide content. This could be a report, article, research paper, or any content-rich document (PDF, DOCX, or TXT).",
+                "prompt_guidance": "Now, let's generate slide content! Try prompting the AI with this structure: '<strong>Create presentation slide content from this document. Generate 5-7 slides, each with: 1) A compelling title (max 8 words), 2) 3-4 bullet points (each under 15 words), 3) A brief explanation (2-3 sentences). Make it engaging and easy to present.</strong>'",
+                "weak_prompt_tip": "🎯 **Pro Tips for Better Slide Content:**\n\n• **Specify exact numbers**: 'Create 6 slides' instead of 'several slides'\n• **Set length constraints**: 'titles under 8 words', 'bullets under 15 words'\n• **Define the format**: What should each slide contain?\n• **Add style guidelines**: 'professional tone', 'action-oriented bullets', 'include real examples'\n• **Request variety**: 'use different slide types: overview, key points, comparison, conclusion'\n\n**Example Strong Prompt:**\n'<strong>Based on this document, create 6 presentation slides:\n- Slide 1: Title slide (main topic + subtitle)\n- Slides 2-5: Content slides (catchy title + 3 bullet points + key insight)\n- Slide 6: Summary/Call-to-action\nKeep titles under 8 words, bullets under 15 words. Use active voice and include specific data/examples from the document.</strong>'",
+                "success_message": "🎉 **Excellent work!** You've generated presentation-ready content! Notice how being specific about:\n• **Structure** (title + bullets + notes)\n• **Quantities** (exact number of slides and points)\n• **Constraints** (word limits)\n• **Style** (engaging, action-oriented)\n\n...created content that fits perfectly into slides! This is the foundation of AI-powered presentation creation.",
+                "retry_message": "Good start! To generate professional slide content, make sure your prompt includes:\n✓ Exact number of slides wanted\n✓ What each slide should contain (title, bullets, notes)\n✓ Length constraints (word limits for titles and bullets)\n✓ Style preferences (professional, conversational, technical)\n\nTry again with these elements!",
                 "quiz": {
-                    "question": "What makes a good prompt for slide content generation?",
+                    "question": "What's the MOST important factor when prompting AI to generate slide content?",
                     "options": [
-                        "Asking for as much detail as possible",
-                        "Being vague to let AI be creative",
-                        "Specifying structure, format, and constraints clearly",
-                        "Only requesting titles without details"
+                        "Using complex technical language",
+                        "Asking for as much text as possible",
+                        "Specifying clear structure, format, and length constraints",
+                        "Letting AI decide everything for maximum creativity"
                     ],
                     "correct_index": 2
                 },
@@ -436,21 +436,21 @@ FULL_CURRICULUM = [
             },
             {
                 "id": 3,
-                "title": "Content Refinement & Validation",
-                "description": "Learn to iterate and refine AI-generated content through prompting",
-                "welcome_message": "Now let's learn the most important skill: refining AI output! You'll learn to validate content, spot issues, and prompt the AI to make specific improvements.",
-                "upload_prompt": "Continue with your previous document or upload a new one.",
-                "prompt_guidance": "Review the generated content and prompt for refinements. Try: '<strong>Review slide 3: make the bullets more concise, add a statistic if available in the document, and ensure it flows from slide 2</strong>'",
-                "weak_prompt_tip": "For precise refinements, use prompts like: '<strong>For slide [number]: 1) Shorten bullet 2 to under 10 words, 2) Replace generic terms with specific examples from the document, 3) Add a transition phrase connecting to the next slide</strong>'",
-                "success_message": "Excellent refinement! You've learned to give specific, actionable feedback. This iterative process ensures your presentation content is accurate, concise, and flows well!",
-                "retry_message": "Good refinement attempt! Be more specific about what to change: which slide, which bullet, what exactly to modify, and what the goal is (shorter, more specific, better flow, etc.).",
+                "title": "Content Refinement & Polish",
+                "description": "Master the iterative process of refining AI-generated slide content for perfection",
+                "welcome_message": "🎨 Welcome to Lesson 3! Now you have slide content from Lesson 2, but **great presentations are never created in one shot**. In this lesson, you'll learn the critical skill of **refining and polishing** your content through targeted prompts. You'll discover how to make specific improvements, validate accuracy, and ensure your slides tell a compelling story!",
+                "upload_prompt": "Continue with the same document from Lesson 2, or upload a new document if you want to start fresh with different content.",
+                "prompt_guidance": "Time to refine! Look at your generated content and prompt the AI to improve it. Try: '<strong>Review and refine the slide content:\n1) Make slide titles more compelling and action-oriented\n2) Ensure each bullet point is under 12 words and starts with a strong verb\n3) Add specific examples or data from the document where possible\n4) Verify all information is accurate to the source document\n5) Ensure logical flow from one slide to the next</strong>'",
+                "weak_prompt_tip": "🎯 **Refinement Prompting Strategies:**\n\n**For Better Clarity:**\n'<strong>Simplify slide 2: Replace technical jargon with plain language, make bullets more concrete</strong>'\n\n**For Better Engagement:**\n'<strong>Make slide 3 more compelling: Add a powerful statistic from the document, use active voice, create urgency</strong>'\n\n**For Better Flow:**\n'<strong>Improve transitions: Add a connecting phrase at the end of slide 2 that leads into slide 3, ensure narrative continuity</strong>'\n\n**For Better Accuracy:**\n'<strong>Validate slide 4: Check all facts against the source document, replace general statements with specific data points, cite exact figures</strong>'\n\n**For Better Impact:**\n'<strong>Enhance slide 5: Move the strongest point to the top, add a real-world example, make the call-to-action clearer</strong>'\n\n**Pro Tip:** Be specific about WHICH slide, WHICH element, and WHAT to change!",
+                "success_message": "🌟 **Brilliant refinement!** You've mastered the art of iterative improvement! Notice how your targeted, specific prompts transformed good content into **great content**. You learned to:\n\n✓ **Target specific elements** (titles, bullets, data)\n✓ **Apply clear criteria** (word count, accuracy, impact)\n✓ **Validate against source** (ensuring accuracy)\n✓ **Improve narrative flow** (transitions, story arc)\n✓ **Enhance engagement** (stronger verbs, compelling examples)\n\nThis iterative refinement is what separates amateur presentations from professional ones!",
+                "retry_message": "Good attempt at refinement! To make your improvements more effective, try being more specific:\n\n❌ Avoid: 'Make it better'\n✅ Instead: 'Shorten bullet 2 on slide 3 to 10 words and add a percentage from the document'\n\n❌ Avoid: 'Improve the flow'\n✅ Instead: 'Add a transition sentence at the end of slide 2 that introduces the concept in slide 3'\n\n❌ Avoid: 'Make it more interesting'\n✅ Instead: 'Replace the generic example with the specific case study mentioned in paragraph 4 of the document'\n\nBe precise about WHAT to change and HOW to change it!",
                 "quiz": {
-                    "question": "Why is iterative refinement crucial for AI-generated presentations?",
+                    "question": "What's the key to effective content refinement prompting?",
                     "options": [
-                        "It makes the process take longer",
-                        "It ensures accuracy, conciseness, and proper flow",
-                        "It's only needed for technical content",
-                        "It's optional if the first output looks good"
+                        "Asking AI to 'make it better' without specifics",
+                        "Targeting specific slides/elements with clear, actionable changes",
+                        "Completely regenerating all content from scratch",
+                        "Accepting the first output without iteration"
                     ],
                     "correct_index": 1
                 },

@@ -959,34 +959,57 @@ body {
 
 /* Prompt Input Section */
 .prompt-input-section {
-    border-top: 1px solid var(--border-color);
-    background: var(--bg-secondary);
+    border-top: 2px solid var(--border-color);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, var(--bg-secondary) 100%);
     flex-shrink: 0;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--spacing-lg);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 5;
 }
 
 .prompt-analysis {
-    padding: var(--spacing-md);
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
     border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .analysis-header {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.938rem;
+    font-weight: 700;
     color: var(--primary);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .analysis-content {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
+    font-size: 0.938rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-weight: 500;
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--primary);
 }
 
 .prompt-input-wrapper {
@@ -1287,19 +1310,25 @@ input.highlight-glow {
     height: 250px;
     margin: 0 1rem 1rem 1rem;
     background: var(--bg-tertiary);
-    border: 2px solid var(--border-color);
+    border: 2px solid rgba(220, 38, 38, 0.3);
     border-radius: var(--radius-md);
     overflow: hidden;
     position: relative;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
 }
 
 .embedded-preview .preview-header {
-    background: var(--bg-secondary);
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    background: var(--gradient-red);
+    padding: 0.75rem 1.25rem;
+    border-bottom: 2px solid rgba(220, 38, 38, 0.5);
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.3px;
 }
 
 .embedded-preview .preview-placeholder {
@@ -1307,9 +1336,10 @@ input.highlight-glow {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100% - 40px);
+    height: calc(100% - 48px);
     color: var(--text-muted);
     text-align: center;
+    padding: 1rem;
 }
 
 .embedded-preview .preview-placeholder svg {
@@ -1325,7 +1355,7 @@ input.highlight-glow {
 
 .embedded-preview #previewFrame {
     width: 100%;
-    height: calc(100% - 40px);
+    height: calc(100% - 48px);
     border: none;
     background: white;
 }

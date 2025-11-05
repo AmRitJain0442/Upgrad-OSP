@@ -100,10 +100,17 @@ body {
     height: 100%;
     z-index: 0;
     background: 
-        radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.03) 0%, transparent 50%),
-        linear-gradient(125deg, #ffffff 0%, #fafafa 50%, #ffffff 100%),
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(220, 38, 38, 0.02) 2px, rgba(220, 38, 38, 0.02) 4px);
+        radial-gradient(circle at 100% 0%, rgba(239, 68, 68, 0.8) 0%, rgba(220, 38, 38, 0.6) 15%, transparent 40%),
+        radial-gradient(circle at 0% 100%, rgba(239, 68, 68, 0.7) 0%, rgba(220, 38, 38, 0.5) 15%, transparent 40%),
+        linear-gradient(180deg, 
+            rgba(239, 68, 68, 0.15) 0%, 
+            rgba(248, 113, 113, 0.08) 20%,
+            rgba(254, 202, 202, 0.05) 40%,
+            rgba(255, 255, 255, 0.02) 60%,
+            rgba(254, 202, 202, 0.05) 80%,
+            rgba(239, 68, 68, 0.15) 100%
+        ),
+        linear-gradient(125deg, #ffffff 0%, #fafafa 50%, #ffffff 100%);
     pointer-events: none;
 }
 
@@ -304,6 +311,25 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+/* Presentation Module - Enhanced Gradient Background */
+.presentation-module .cyber-bg {
+    background: 
+        radial-gradient(circle at 100% 0%, rgba(220, 38, 38, 0.4) 0%, rgba(239, 68, 68, 0.2) 20%, transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(239, 68, 68, 0.4) 0%, rgba(248, 113, 113, 0.2) 20%, transparent 50%),
+        linear-gradient(180deg, 
+            #ef4444 0%, 
+            #f87171 10%,
+            #fca5a5 25%,
+            #fecaca 40%,
+            #ffffff 55%,
+            #fecaca 70%,
+            #fca5a5 85%,
+            #f87171 95%,
+            #ef4444 100%
+        );
+    opacity: 0.4;
 }
 
 /* Module Header */

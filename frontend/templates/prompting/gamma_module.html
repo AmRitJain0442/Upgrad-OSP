@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block title %}Gamma AI Tutorial - Learn AI Presentation Tool{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/gamma_module.css">
+{% endblock %}
+
+{% block content %}
+<div id="gammaModule" class="gamma-module">
+    <!-- Top Bar -->
+    <div class="gamma-topbar">
+        <div class="gamma-logo">
+            <div class="gamma-logo-icon">γ</div>
+            <span>Gamma</span>
+        </div>
+
+        <div class="gamma-mode-switcher">
+            <button class="gamma-mode-btn active" data-mode="create">
+                ✨ Create
+            </button>
+            <button class="gamma-mode-btn" data-mode="edit">
+                ✏️ Edit
+            </button>
+            <button class="gamma-mode-btn" data-mode="present">
+                🎬 Present
+            </button>
+        </div>
+
+        <div class="gamma-actions">
+            <button class="gamma-btn gamma-btn-secondary">
+                💾 Save
+            </button>
+            <button class="gamma-btn gamma-btn-primary">
+                📤 Share
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="gamma-content">
+        
+        <!-- CREATE MODE -->
+        <div id="gammaCreate" class="gamma-create">
+            <div class="gamma-create-header">
+                <h1>Create a new presentation</h1>
+                <p>Choose how you want to start building your presentation</p>
+            </div>
+
+            <div class="create-options">
+                <div class="create-option-card" data-option="blank">
+                    <div class="option-icon">📄</div>
+                    <div class="option-title">Start from Blank</div>
+                    <div class="option-description">Begin with an empty canvas and build from scratch</div>
+                </div>
+
+                <div class="create-option-card" data-option="ai">
+                    <div class="option-icon">✨</div>
+                    <div class="option-title">Generate with AI</div>
+                    <div class="option-description">Let AI create your presentation from a topic or document</div>
+                </div>
+
+                <div class="create-option-card" data-option="import">
+                    <div class="option-icon">📥</div>
+                    <div class="option-title">Import Content</div>
+                    <div class="option-description">Upload PowerPoint, PDF, or other documents</div>
+                </div>
+            </div>
+
+            <div id="gammaInputSection" class="gamma-input-section">
+                <label class="input-label">What's your presentation about?</label>
+                <textarea 
+                    id="gammaTopicInput" 
+                    class="gamma-topic-input" 
+                    placeholder="Enter your topic, paste text, or describe what you want to create..."
+                    rows="4"
+                ></textarea>
+
+                <label class="input-label">AI Generation Options</label>
+                <div class="ai-options">
+                    <div class="ai-option selected" data-option="concise">
+                        📝 Concise (5-7 slides)
+                    </div>
+                    <div class="ai-option" data-option="detailed">
+                        📚 Detailed (10-15 slides)
+                    </div>
+                    <div class="ai-option" data-option="pitch">
+                        🎯 Pitch Deck
+                    </div>
+                    <div class="ai-option" data-option="educational">
+                        🎓 Educational
+                    </div>
+                </div>
+
+                <button id="gammaGenerateBtn" class="gamma-generate-btn">
+                    ✨ Generate with AI
+                </button>
+            </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div id="gammaEdit" class="gamma-edit">
+            <!-- Left Sidebar - Slides -->
+            <div class="gamma-sidebar">
+                <div class="sidebar-header">
+                    <button class="add-slide-btn">+ Add Slide</button>
+                </div>
+                <div id="gammaSlideList" class="gamma-slide-list">
+                    <!-- Slides will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Center - Canvas -->
+            <div class="gamma-main">
+                <div class="gamma-toolbar">
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" title="Undo">↶</button>
+                        <button class="toolbar-btn" title="Redo">↷</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" title="Bold"><strong>B</strong></button>
+                        <button class="toolbar-btn" title="Italic"><em>I</em></button>
+                        <button class="toolbar-btn" title="Underline"><u>U</u></button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" title="Text Color">🎨</button>
+                        <button class="toolbar-btn" title="Highlight">🖍️</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button class="toolbar-btn" title="Align Left">☰</button>
+                        <button class="toolbar-btn" title="Align Center">☰</button>
+                        <button class="toolbar-btn" title="Align Right">☰</button>
+                    </div>
+
+                    <div style="flex: 1"></div>
+
+                    <button id="gammaAiAssist" class="gamma-btn gamma-btn-primary">
+                        ✨ AI Assist
+                    </button>
+                </div>
+
+                <div class="gamma-canvas-container">
+                    <div id="gammaCanvas" class="gamma-canvas theme-professional">
+                        <!-- Slide content will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar - Properties -->
+            <div class="gamma-properties">
+                <div class="property-section">
+                    <label class="property-label">Theme</label>
+                    <select id="gammaThemeSelector" class="gamma-theme-selector">
+                        <option value="professional">Professional</option>
+                        <option value="creative">Creative</option>
+                        <option value="bold">Bold</option>
+                        <option value="minimal">Minimal</option>
+                    </select>
+                </div>
+
+                <div class="property-section">
+                    <label class="property-label">Layout</label>
+                    <div class="layout-grid">
+                        <div class="layout-option" data-layout="title">Title</div>
+                        <div class="layout-option" data-layout="title-content">Title + Content</div>
+                        <div class="layout-option" data-layout="two-column">Two Column</div>
+                        <div class="layout-option" data-layout="image-text">Image + Text</div>
+                    </div>
+                </div>
+
+                <div class="property-section">
+                    <label class="property-label">Add Elements</label>
+                    <div class="add-element-grid">
+                        <button class="add-element-btn" data-element="text">📝 Text</button>
+                        <button class="add-element-btn" data-element="image">🖼️ Image</button>
+                        <button class="add-element-btn" data-element="video">🎥 Video</button>
+                        <button class="add-element-btn" data-element="chart">📊 Chart</button>
+                        <button class="add-element-btn" data-element="table">📋 Table</button>
+                        <button class="add-element-btn" data-element="code">💻 Code</button>
+                    </div>
+                </div>
+
+                <div class="property-section">
+                    <label class="property-label">AI Features</label>
+                    <button class="gamma-btn gamma-btn-secondary" style="width: 100%; margin-bottom: 0.5rem;">
+                        ✨ Improve with AI
+                    </button>
+                    <button class="gamma-btn gamma-btn-secondary" style="width: 100%; margin-bottom: 0.5rem;">
+                        🎨 Generate Images
+                    </button>
+                    <button class="gamma-btn gamma-btn-secondary" style="width: 100%;">
+                        📝 Extend Content
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRESENT MODE -->
+        <div id="gammaPresent" class="gamma-present">
+            <div class="present-slide">
+                <h1>Presentation Mode</h1>
+                <p>Your slides will be displayed here in full-screen presentation mode</p>
+            </div>
+
+            <div class="present-controls">
+                <button class="present-btn" title="Previous">◀</button>
+                <button class="present-btn" title="Next">▶</button>
+                <button class="present-btn" title="Exit">✕</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Assist Modal -->
+<div id="gammaAiModal" class="gamma-ai-modal">
+    <div class="ai-modal-content">
+        <h2>AI Assistant</h2>
+        <p>How can AI help you improve this slide?</p>
+        <textarea 
+            placeholder="E.g., 'Make this more engaging' or 'Add bullet points about...'"
+            rows="4"
+            style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 8px; margin: 1rem 0;"
+        ></textarea>
+        <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <button class="gamma-btn gamma-btn-secondary" onclick="document.getElementById('gammaAiModal').style.display='none'">
+                Cancel
+            </button>
+            <button class="gamma-btn gamma-btn-primary">
+                Generate
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Tutorial Overlay -->
+<div id="gammaTutorialOverlay" class="gamma-tutorial-overlay" style="display: none;">
+    <div class="tutorial-pointer"></div>
+    <div class="tutorial-message">
+        <h3 id="tutorialTitle"></h3>
+        <p id="tutorialText"></p>
+        <button class="gamma-btn gamma-btn-primary" onclick="nextTutorialStep()">Next</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/gamma_module.js"></script>
+{% endblock %}

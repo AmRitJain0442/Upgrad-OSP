@@ -92,10 +92,18 @@ class TutorialBot {
     }
 
     defineTutorialSteps() {
-        const moduleId = window.location.pathname.includes('presentation-builder') ? 'presentation-builder' : 'general';
+        let moduleId = 'general';
+        
+        if (window.location.pathname.includes('gamma-tool')) {
+            moduleId = 'gamma-tool';
+        } else if (window.location.pathname.includes('presentation-builder')) {
+            moduleId = 'presentation-builder';
+        }
         
         // Use external tutorial steps if available, otherwise use defaults
-        if (moduleId === 'presentation-builder' && window.presentationTutorialSteps) {
+        if (moduleId === 'gamma-tool' && window.gammaTutorialSteps) {
+            this.tutorialSteps = window.gammaTutorialSteps;
+        } else if (moduleId === 'presentation-builder' && window.presentationTutorialSteps) {
             this.tutorialSteps = window.presentationTutorialSteps;
         } else if (window.generalTutorialSteps) {
             this.tutorialSteps = window.generalTutorialSteps;

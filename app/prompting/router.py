@@ -72,8 +72,13 @@ async def module_page(request: Request, module_id: str, submodule_id: int):
         session.current_module = module_id
         session.current_submodule = submodule_id
     
-    # Use different template for presentation builder module
-    template_name = "prompting/presentation_module.html" if module_id == "presentation-builder" else "prompting/module.html"
+    # Use different template for different modules
+    if module_id == "presentation-builder":
+        template_name = "prompting/presentation_module.html"
+    elif module_id == "gamma-tool":
+        template_name = "prompting/gamma_module.html"
+    else:
+        template_name = "prompting/module.html"
     
     response = templates.TemplateResponse(
         template_name,

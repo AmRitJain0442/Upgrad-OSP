@@ -3,6 +3,45 @@
  * Extended tutorial specific to presentation builder workflow
  */
 
+const gammaTutorialSteps = [
+    {
+        target: '.gamma-logo',
+        position: 'bottom',
+        message: "👋 **Welcome to Gamma AI Tool Mastery!** This is a replica of Gamma's interface. You'll learn everything about this powerful AI presentation tool!",
+        highlight: '.gamma-topbar'
+    },
+    {
+        target: '.gamma-mode-switcher',
+        position: 'bottom',
+        message: "Gamma has **3 modes**: Create (generate new), Edit (customize), and Present (show). Let's explore each one! 🎯",
+        highlight: '.gamma-mode-switcher'
+    },
+    {
+        target: '.create-options',
+        position: 'top',
+        message: "**Create Mode** offers 3 ways to start:\n\n📄 Blank canvas\n✨ AI generation (most powerful!)\n📥 Import existing content",
+        highlight: '.create-options'
+    },
+    {
+        target: '#gammaInputSection',
+        position: 'top',
+        message: "When using **AI generation**, describe your topic here. The more specific, the better your results! 💬",
+        highlight: '#gammaInputSection'
+    },
+    {
+        target: '.gamma-mode-btn[data-mode="edit"]',
+        position: 'bottom',
+        message: "Click **Edit mode** to see the customization interface. This is where you'll spend most of your time! ✏️",
+        highlight: '.gamma-mode-btn[data-mode="edit"]'
+    },
+    {
+        target: null,
+        position: 'center',
+        message: "🎯 **Ready to learn?**\n\nExplore each lesson to master:\n✅ AI generation strategies\n✅ Themes and layouts\n✅ Adding elements\n✅ Advanced AI features\n✅ Presenting and sharing\n\nLet's get started! 🚀",
+        highlight: null
+    }
+];
+
 const presentationTutorialSteps = [
     {
         target: '#leftPanel .panel-header',
@@ -101,6 +140,7 @@ const generalTutorialSteps = [
 
 // Export for use in tutorial_bot.js
 if (typeof window !== 'undefined') {
+    window.gammaTutorialSteps = gammaTutorialSteps;
     window.presentationTutorialSteps = presentationTutorialSteps;
     window.generalTutorialSteps = generalTutorialSteps;
 }

@@ -1,0 +1,427 @@
+/**
+ * Tutorial Bot Styles
+ * Animated floating guide character
+ */
+
+/* Overlay */
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9998;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.3s ease;
+}
+
+/* Bot Character */
+.tutorial-bot {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    z-index: 10000;
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.bot-character {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 8px 32px rgba(220, 38, 38, 0.4),
+        0 0 20px rgba(239, 68, 68, 0.3),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: botFloat 3s ease-in-out infinite;
+}
+
+.bot-character::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #dc2626;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
+.bot-character::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 8px;
+    background: #dc2626;
+}
+
+.bot-face {
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.bot-eyes {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.bot-eye {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    position: relative;
+    animation: botBlink 4s infinite;
+}
+
+.bot-eye::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    background: #1f2937;
+    border-radius: 50%;
+    animation: botLook 5s ease-in-out infinite;
+}
+
+.bot-eye.left {
+    margin-left: 8px;
+}
+
+.bot-eye.right {
+    margin-right: 8px;
+}
+
+.bot-mouth {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 12px;
+    border: 2px solid white;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    animation: botTalk 2s ease-in-out infinite;
+}
+
+/* Speech Bubble */
+.tutorial-bubble {
+    position: fixed;
+    min-width: 320px;
+    max-width: 400px;
+    z-index: 9999;
+    pointer-events: all;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.bubble-content {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.2),
+        0 0 0 2px rgba(220, 38, 38, 0.1);
+    position: relative;
+}
+
+.bubble-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.bubble-text {
+    margin: 0 0 1rem 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1f2937;
+}
+
+.bubble-text strong {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.bubble-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.bubble-btn {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.skip-btn {
+    background: #e5e7eb;
+    color: #6b7280;
+}
+
+.skip-btn:hover {
+    background: #d1d5db;
+    color: #4b5563;
+}
+
+.next-btn {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.next-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.bubble-tail {
+    display: none;
+}
+
+/* Pointer Arrow */
+.tutorial-pointer {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    animation: pointerPulse 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 8px rgba(220, 38, 38, 0.4));
+}
+
+/* Highlight Effect */
+.tutorial-highlight {
+    position: relative;
+    z-index: 9999 !important;
+    box-shadow: 
+        0 0 0 4px rgba(220, 38, 38, 0.3),
+        0 0 20px rgba(239, 68, 68, 0.4),
+        0 0 40px rgba(220, 38, 38, 0.2) !important;
+    animation: highlightPulse 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes botFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes botBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes botBlink {
+    0%, 48%, 52%, 100% {
+        height: 12px;
+    }
+    50% {
+        height: 2px;
+    }
+}
+
+@keyframes botLook {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(2px);
+    }
+    75% {
+        transform: translateX(-2px);
+    }
+}
+
+@keyframes botTalk {
+    0%, 100% {
+        height: 12px;
+    }
+    50% {
+        height: 8px;
+    }
+}
+
+@keyframes botEntry {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes botExit {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(180deg);
+    }
+}
+
+@keyframes bubbleEntry {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes bubbleExit {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+}
+
+@keyframes pointerPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes highlightPulse {
+    0%, 100% {
+        box-shadow: 
+            0 0 0 4px rgba(220, 38, 38, 0.3),
+            0 0 20px rgba(239, 68, 68, 0.4),
+            0 0 40px rgba(220, 38, 38, 0.2);
+    }
+    50% {
+        box-shadow: 
+            0 0 0 4px rgba(220, 38, 38, 0.5),
+            0 0 30px rgba(239, 68, 68, 0.6),
+            0 0 60px rgba(220, 38, 38, 0.4);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tutorial-bot {
+        width: 60px;
+        height: 60px;
+    }
+
+    .bot-face {
+        width: 40px;
+        height: 40px;
+    }
+
+    .tutorial-bubble {
+        min-width: 280px;
+        max-width: calc(100vw - 40px);
+    }
+
+    .bubble-content {
+        padding: 1rem;
+    }
+
+    .bubble-text {
+        font-size: 0.875rem;
+    }
+}
+
+/* Bot Sparkles Effect */
+.bot-sparkles {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 1.5rem;
+    animation: sparkleFloat 1s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-30px) scale(1.5);
+    }
+}
+
+/* Help Button to Restart Tutorial */
+.restart-tutorial-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.restart-tutorial-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
+}
+
+.restart-tutorial-btn:active {
+    transform: scale(0.95);
+}
+
+.restart-tutorial-btn::before {
+    content: '?';
+    font-weight: bold;
+}

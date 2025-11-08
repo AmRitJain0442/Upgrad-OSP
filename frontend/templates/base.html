@@ -12,11 +12,19 @@
     
     <!-- Base styles -->
     <link rel="stylesheet" href="/static/css/prompting.css">
+    <link rel="stylesheet" href="/static/css/tutorial_bot.css">
     
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% block content %}{% endblock %}
+    
+    <!-- Tutorial Bot Help Button -->
+    <button class="restart-tutorial-btn" onclick="restartTutorial()" title="Show Tutorial"></button>
+    
+    <!-- Tutorial Bot Scripts -->
+    <script src="/static/js/tutorial_steps.js"></script>
+    <script src="/static/js/tutorial_bot.js"></script>
     
     {% block scripts %}{% endblock %}
 </body>

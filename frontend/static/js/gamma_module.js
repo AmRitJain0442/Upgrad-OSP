@@ -11,10 +11,12 @@ class GammaModule {
             mode: 'create', // create, edit, present
             currentSlide: 0,
             slides: [],
+            currentTopic: '', // Track the topic for analysis
             theme: 'professional',
             aiGenerating: false,
             tutorialActive: true,
             tutorialStep: 0,
+            sessionId: '', // Store session ID for API calls
             userProgress: {
                 createdPresentation: false,
                 editedSlide: false,
@@ -326,6 +328,7 @@ class GammaModule {
         this.elements.createPanel = document.getElementById('gammaCreate');
         this.elements.editPanel = document.getElementById('gammaEdit');
         this.elements.presentPanel = document.getElementById('gammaPresent');
+        this.elements.analysisPanel = document.getElementById('gammaAnalysis');
         
         // Create mode elements
         this.elements.createOptions = document.querySelectorAll('.create-option-card');
@@ -480,6 +483,7 @@ class GammaModule {
         this.elements.createPanel.style.display = mode === 'create' ? 'flex' : 'none';
         this.elements.editPanel.style.display = mode === 'edit' ? 'flex' : 'none';
         this.elements.presentPanel.style.display = mode === 'present' ? 'flex' : 'none';
+        this.elements.analysisPanel.style.display = mode === 'analysis' ? 'block' : 'none';
 
         // Mode-specific actions
         if (mode === 'edit' && this.state.slides.length > 0) {
@@ -487,6 +491,9 @@ class GammaModule {
         } else if (mode === 'present') {
             this.enterPresentMode();
             this.state.userProgress.presented = true;
+        } else if (mode === 'analysis') {
+            // Trigger analysis
+            this.analyzePresentation();
         }
 
         // Show tutorial tip for current mode
@@ -558,7 +565,7 @@ class GammaModule {
     async generatePresentation() {
         const topic = this.elements.topicInput.value.trim();
         if (!topic) {
-            this.showNotification('Please enter a topic or description', 'warning');
+            this.showNotification('Please enter a topic or description', 'warning', 3000);
             return;
         }
 
@@ -566,45 +573,93 @@ class GammaModule {
         this.elements.generateBtn.disabled = true;
         this.elements.generateBtn.innerHTML = '<span class="spinner"></span> Generating...';
 
-        // Simulate AI generation
-        await this.simulateAiGeneration(topic);
+        try {
+            // Simulate AI generation
+            await this.simulateAiGeneration(topic);
 
-        this.state.aiGenerating = false;
-        this.elements.generateBtn.disabled = false;
-        this.elements.generateBtn.innerHTML = '✨ Generate with AI';
+            this.state.aiGenerating = false;
+            this.elements.generateBtn.disabled = false;
+            this.elements.generateBtn.innerHTML = '✨ Generate with AI';
 
-        // Switch to edit mode
-        this.switchMode('edit');
+            // Switch to edit mode after a brief delay
+            setTimeout(() => {
+                this.switchMode('edit');
+            }, 500);
+        } catch (error) {
+            console.error('Presentation generation failed:', error);
+            this.state.aiGenerating = false;
+            this.elements.generateBtn.disabled = false;
+            this.elements.generateBtn.innerHTML = '✨ Generate with AI';
+            this.showNotification('Failed to generate presentation. Please try again.', 'warning', 3000);
+        }
     }
 
     async simulateAiGeneration(topic) {
-        // Show generation progress
-        this.showGenerationProgress();
-        
-        // Simulate realistic AI generation with progress updates
-        await this.simulateGenerationSteps(topic);
+        try {
+            // Validate input
+            if (!topic || topic.trim().length === 0) {
+                this.showNotification('Please enter a topic first!', 'warning', 3000);
+                return;
+            }
 
-        // Get selected AI option
-        const selectedOption = document.querySelector('.ai-option.selected');
-        const optionType = selectedOption ? selectedOption.dataset.option : 'concise';
-        
-        // Generate slides based on topic and option
-        this.state.slides = this.generateSlideContent(topic, optionType);
+            // Save topic for analysis
+            this.state.currentTopic = topic;
 
-        this.renderSlides();
-        this.state.userProgress.createdPresentation = true;
-        
-        // Hide progress and show success
-        this.hideGenerationProgress();
-        this.showNotification('🎉 Your presentation is ready! Click any slide to start editing.', 'success', 4000);
-        
-        // Progress to next tutorial step
-        if (this.state.tutorialActive && this.state.tutorialStep === 3) {
-            setTimeout(() => this.showTutorialStep(4), 2000);
+            // Show generation progress
+            this.showGenerationProgress();
+            
+            // Wait a bit for modal to render
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // Simulate realistic AI generation with progress updates
+            await this.simulateGenerationSteps(topic);
+            
+            // Small delay before generating slides
+            await new Promise(resolve => setTimeout(resolve, 200));
+
+            // Get selected AI option
+            const selectedOption = document.querySelector('.ai-option.selected');
+            const optionType = selectedOption ? selectedOption.dataset.option : 'concise';
+            
+            // Generate slides based on topic and option
+            this.state.slides = this.generateSlideContent(topic, optionType);
+
+            // Render slides first
+            await new Promise(resolve => {
+                this.renderSlides();
+                setTimeout(resolve, 100);
+            });
+            
+            this.state.userProgress.createdPresentation = true;
+            
+            // Hide progress
+            await this.hideGenerationProgress();
+            
+            // Show success notification
+            this.showNotification('🎉 Your presentation is ready! Click any slide to start editing.', 'success', 4000);
+            
+            // Progress to next tutorial step
+            if (this.state.tutorialActive && this.state.tutorialStep === 3) {
+                setTimeout(() => this.showTutorialStep(4), 2000);
+            }
+        } catch (error) {
+            console.error('Generation error:', error);
+            this.hideGenerationProgress();
+            this.showNotification('Error creating presentation. Please try again.', 'warning', 3000);
         }
     }
     
     showGenerationProgress() {
+        // Remove existing progress if any
+        const existing = document.getElementById('generationProgress');
+        if (existing) {
+            try {
+                existing.remove();
+            } catch (e) {
+                console.error('Error removing existing progress:', e);
+            }
+        }
+        
         const progress = document.createElement('div');
         progress.id = 'generationProgress';
         progress.className = 'generation-progress';
@@ -614,37 +669,85 @@ class GammaModule {
                 <h3>✨ Creating your presentation</h3>
                 <p id="progressMessage">Analyzing your topic...</p>
                 <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
                 </div>
             </div>
         `;
+        
+        // Append to body
         document.body.appendChild(progress);
-        setTimeout(() => progress.classList.add('show'), 100);
+        
+        // Force reflow to ensure animation plays
+        progress.offsetHeight;
+        
+        // Add show class to trigger transition
+        setTimeout(() => {
+            const progressEl = document.getElementById('generationProgress');
+            if (progressEl) {
+                progressEl.classList.add('show');
+            }
+        }, 50);
     }
     
     async simulateGenerationSteps(topic) {
         const steps = [
-            { message: 'Analyzing your topic...', duration: 400, progress: 15 },
-            { message: 'Researching key concepts...', duration: 500, progress: 30 },
-            { message: 'Structuring content...', duration: 400, progress: 50 },
-            { message: 'Generating slides...', duration: 500, progress: 70 },
-            { message: 'Applying design...', duration: 300, progress: 85 },
-            { message: 'Finalizing presentation...', duration: 400, progress: 100 }
+            { message: 'Analyzing your topic...', duration: 500, progress: 15 },
+            { message: 'Researching key concepts...', duration: 600, progress: 30 },
+            { message: 'Structuring content...', duration: 500, progress: 50 },
+            { message: 'Generating slides...', duration: 600, progress: 70 },
+            { message: 'Applying design...', duration: 400, progress: 85 },
+            { message: 'Finalizing presentation...', duration: 500, progress: 100 }
         ];
         
         for (const step of steps) {
-            document.getElementById('progressMessage').textContent = step.message;
-            document.getElementById('progressFill').style.width = `${step.progress}%`;
-            await new Promise(resolve => setTimeout(resolve, step.duration));
+            try {
+                // Update progress message and bar
+                const messageEl = document.getElementById('progressMessage');
+                const fillEl = document.getElementById('progressFill');
+                
+                if (messageEl) {
+                    messageEl.textContent = step.message;
+                }
+                if (fillEl) {
+                    fillEl.style.width = `${step.progress}%`;
+                }
+                
+                // Wait for this step duration
+                await new Promise(resolve => setTimeout(resolve, step.duration));
+            } catch (error) {
+                console.error('Step error:', error);
+                // Continue to next step even if there's an error
+                continue;
+            }
         }
+        
+        // Ensure final state is set
+        const finalMessage = document.getElementById('progressMessage');
+        const finalFill = document.getElementById('progressFill');
+        if (finalMessage) finalMessage.textContent = 'Complete!';
+        if (finalFill) finalFill.style.width = '100%';
     }
     
     hideGenerationProgress() {
-        const progress = document.getElementById('generationProgress');
-        if (progress) {
-            progress.classList.remove('show');
-            setTimeout(() => progress.remove(), 300);
-        }
+        return new Promise((resolve) => {
+            const progress = document.getElementById('generationProgress');
+            if (progress) {
+                progress.classList.remove('show');
+                setTimeout(() => {
+                    const progressEl = document.getElementById('generationProgress');
+                    if (progressEl) {
+                        try {
+                            progressEl.remove();
+                        } catch (e) {
+                            console.error('Error removing progress element:', e);
+                        }
+                    }
+                    resolve();
+                }, 300);
+            } else {
+                resolve();
+            }
+        });
     }
     
     generateSlideContent(topic, optionType) {
@@ -1063,6 +1166,86 @@ class GammaModule {
         `;
         
         indicator.style.display = 'flex';
+    }
+
+    async analyzePresentation() {
+        try {
+            // Show loading state
+            const analysisPanel = this.elements.analysisPanel;
+            const loadingDiv = analysisPanel.querySelector('#analysisLoading');
+            const resultDiv = analysisPanel.querySelector('#analysisResult');
+            
+            loadingDiv.style.display = 'flex';
+            resultDiv.style.display = 'none';
+            
+            // Prepare presentation data for analysis
+            const presentationData = {
+                slides: this.state.slides,
+                topic: this.state.currentTopic || 'Untitled Presentation',
+                session_id: this.state.sessionId || ''
+            };
+            
+            // Call backend API for analysis
+            const response = await fetch('/prompting/api/presentation/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(presentationData)
+            });
+            
+            if (!response.ok) {
+                throw new Error('Analysis failed');
+            }
+            
+            const analysis = await response.json();
+            
+            // Render analysis results
+            this.renderAnalysisResults(analysis);
+            
+            // Hide loading and show results
+            loadingDiv.style.display = 'none';
+            resultDiv.style.display = 'block';
+            
+        } catch (error) {
+            console.error('Error analyzing presentation:', error);
+            this.showNotification('Error analyzing presentation. Please try again.', 'warning', 3000);
+            this.switchMode('edit');
+        }
+    }
+
+    renderAnalysisResults(analysis) {
+        const strengthsList = document.getElementById('analysisStrengths');
+        const improvementsList = document.getElementById('analysisImprovements');
+        const suggestionsList = document.getElementById('analysisSuggestions');
+        
+        // Render strengths
+        strengthsList.innerHTML = analysis.strengths
+            .map(strength => `
+                <div class="analysis-item strength">
+                    <p>✅ ${strength}</p>
+                </div>
+            `).join('');
+        
+        // Render improvements
+        improvementsList.innerHTML = analysis.improvements
+            .map(improvement => `
+                <div class="analysis-item improvement">
+                    <p>🎯 ${improvement}</p>
+                </div>
+            `).join('');
+        
+        // Render suggestions
+        suggestionsList.innerHTML = analysis.suggestions
+            .map(suggestion => `
+                <div class="analysis-item suggestion">
+                    <p>💡 ${suggestion}</p>
+                </div>
+            `).join('');
+    }
+
+    regenerateAnalysis() {
+        this.analyzePresentation();
     }
 }
 

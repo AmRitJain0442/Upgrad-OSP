@@ -11,7 +11,8 @@ from fastapi.templating import Jinja2Templates
 from app.prompting.models import (
     ChatMessage, PromptAnalysisRequest,
     UploadResponse, SummarizeRequest, QuizAnswer, QuizResult,
-    SessionInfo, SubmoduleUnlockRequest
+    SessionInfo, SubmoduleUnlockRequest, PresentationAnalysisRequest,
+    PresentationAnalysis
 )
 from app.prompting.curriculum import get_curriculum, get_module, get_submodule, FULL_CURRICULUM
 from app.prompting.session_manager import session_manager
@@ -394,14 +395,15 @@ async def summarize_stream(request: SummarizeRequest):
             analysis = analyze_prompt_quality(request.prompt)
             
             # Send completion with metadata
-            yield f"data: {json.dumps({
+            metadata_payload = {
                 'chunk': '',
                 'done': True,
                 'metadata': {
                     'has_constraints': analysis['has_constraints'],
                     'quality_score': analysis['score']
                 }
-            })}\n\n"
+            }
+            yield f"data: {json.dumps(metadata_payload)}\n\n"
             
             # Save complete response
             session.add_workspace_message("assistant", full_response)
@@ -479,3 +481,34 @@ async def get_session_info(session_id: str) -> SessionInfo:
         document_uploaded=session.uploaded_document is not None,
         progress=session.completed_modules
     )
+
+
+@router.post("/api/presentation/analyze")
+async def analyze_presentation(request: PresentationAnalysisRequest) -> PresentationAnalysis:
+    """Analyze presentation using Gemini API"""
+    try:
+        # Build a comprehensive presentation summary for analysis
+        presentation_text = f"Topic: {request.topic}\n\nSlides:\n"
+        
+        for i, slide in enumerate(request.slides, 1):
+            presentation_text += f"\nSlide {i}:\n"
+            if isinstance(slide, dict):
+                if "title" in slide:
+                    presentation_text += f"Title: {slide['title']}\n"
+                if "content" in slide:
+                    content = slide['content']
+                    if isinstance(content, str):
+                        presentation_text += f"Content: {content}\n"
+                    elif isinstance(content, dict):
+                        presentation_text += f"Content: {str(content)}\n"
+        
+        # Use Gemini API to analyze the presentation
+        from app.prompting.agents import generate_presentation_analysis
+        
+        analysis = await generate_presentation_analysis(presentation_text, request.topic)
+        
+        return analysis
+    
+    except Exception as e:
+        logger.error(f"Presentation analysis error: {e}")
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")

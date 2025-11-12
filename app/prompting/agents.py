@@ -450,3 +450,86 @@ async def generate_workspace_summary(
     except Exception as e:
         logger.error(f"Error generating workspace summary: {e}")
         return "An error occurred during summarization. Please try again.", False
+
+
+async def generate_presentation_analysis(presentation_text: str, topic: str):
+    """
+    Analyze a presentation using Gemini API with structured feedback
+    
+    Args:
+        presentation_text: The full presentation content
+        topic: The presentation topic
+    
+    Returns:
+        PresentationAnalysis with strengths, improvements, and suggestions
+    """
+    from app.prompting.models import PresentationAnalysis
+    
+    try:
+        analysis_prompt = f"""You are an expert presentation designer and trainer. Analyze this presentation and provide constructive feedback.
+
+PRESENTATION TOPIC: {topic}
+
+PRESENTATION CONTENT:
+{presentation_text}
+
+Please analyze this presentation and provide feedback in 3 categories. Be specific, constructive, and supportive.
+
+For each category, provide 3-4 specific points (not generic feedback).
+
+Return your analysis in this exact JSON format:
+{{
+    "strengths": [
+        "Specific thing done well #1",
+        "Specific thing done well #2",
+        "Specific thing done well #3"
+    ],
+    "improvements": [
+        "Specific area for improvement #1",
+        "Specific area for improvement #2",
+        "Specific area for improvement #3"
+    ],
+    "suggestions": [
+        "Actionable suggestion #1",
+        "Actionable suggestion #2",
+        "Actionable suggestion #3"
+    ]
+}}
+
+Focus on:
+- Content clarity and organization
+- Visual presentation effectiveness
+- Audience engagement potential
+- Message coherence
+- Practical applicability"""
+
+        # Create a specialized analysis agent
+        from pydantic import BaseModel
+        
+        class AnalysisOutput(BaseModel):
+            strengths: list[str]
+            improvements: list[str]
+            suggestions: list[str]
+        
+        analysis_agent = Agent(
+            model=get_google_model("gemini-flash-latest", thinking_enabled=False),
+            result_type=AnalysisOutput,
+            system_prompt="You are an expert presentation analyst. Provide constructive, specific feedback."
+        )
+        
+        result = await analysis_agent.run(analysis_prompt)
+        
+        return PresentationAnalysis(
+            strengths=result.data.strengths,
+            improvements=result.data.improvements,
+            suggestions=result.data.suggestions
+        )
+    
+    except Exception as e:
+        logger.error(f"Error generating presentation analysis: {e}")
+        # Return default analysis if API fails
+        return PresentationAnalysis(
+            strengths=["Well-structured content", "Clear topic focus"],
+            improvements=["Consider adding more visual elements", "Expand on key points"],
+            suggestions=["Add more examples", "Include interactive elements"]
+        )

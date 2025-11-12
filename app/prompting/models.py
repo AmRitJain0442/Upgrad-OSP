@@ -112,3 +112,25 @@ class StreamChunk(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(
         default=None, description="Additional metadata"
     )
+
+
+class PresentationAnalysisRequest(BaseModel):
+    """Request for presentation analysis"""
+
+    slides: List[Dict[str, Any]] = Field(..., description="List of presentation slides")
+    topic: str = Field(..., description="Presentation topic")
+    session_id: str = Field(..., description="Session ID")
+
+
+class PresentationAnalysis(BaseModel):
+    """Presentation analysis response"""
+
+    strengths: List[str] = Field(
+        ..., description="List of things done well"
+    )
+    improvements: List[str] = Field(
+        ..., description="Areas for improvement"
+    )
+    suggestions: List[str] = Field(
+        ..., description="Constructive suggestions"
+    )

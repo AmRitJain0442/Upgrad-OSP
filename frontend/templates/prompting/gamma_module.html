@@ -208,7 +208,51 @@
             <div class="present-controls">
                 <button class="present-btn" title="Previous">◀</button>
                 <button class="present-btn" title="Next">▶</button>
+                <button class="present-btn" title="Get Analysis" onclick="window.gammaModule.switchMode('analysis')">📊</button>
                 <button class="present-btn" title="Exit">✕</button>
+            </div>
+        </div>
+
+        <!-- ANALYSIS MODE -->
+        <div id="gammaAnalysis" class="gamma-analysis" style="display: none;">
+            <div class="analysis-container">
+                <div class="analysis-header">
+                    <h2>📊 Presentation Analysis</h2>
+                    <p>AI-powered feedback on your presentation</p>
+                </div>
+
+                <div class="analysis-content">
+                    <div id="analysisLoading" class="analysis-loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Analyzing your presentation...</p>
+                    </div>
+
+                    <div id="analysisResult" class="analysis-result" style="display: none;">
+                        <div class="analysis-section">
+                            <h3 class="analysis-section-title">✅ What You Did Well</h3>
+                            <div id="analysisStrengths" class="analysis-list"></div>
+                        </div>
+
+                        <div class="analysis-section">
+                            <h3 class="analysis-section-title">🎯 Areas for Improvement</h3>
+                            <div id="analysisImprovements" class="analysis-list"></div>
+                        </div>
+
+                        <div class="analysis-section">
+                            <h3 class="analysis-section-title">💡 Suggestions</h3>
+                            <div id="analysisSuggestions" class="analysis-list"></div>
+                        </div>
+
+                        <div class="analysis-footer">
+                            <button class="gamma-btn gamma-btn-secondary" onclick="window.gammaModule.switchMode('edit')">
+                                ✏️ Back to Edit
+                            </button>
+                            <button class="gamma-btn gamma-btn-primary" onclick="window.gammaModule.regenerateAnalysis()">
+                                🔄 Regenerate Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

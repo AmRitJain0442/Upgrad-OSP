@@ -217,23 +217,41 @@
 <!-- AI Assist Modal -->
 <div id="gammaAiModal" class="gamma-ai-modal">
     <div class="ai-modal-content">
-        <h2>AI Assistant</h2>
+        <h2>✨ AI Assistant</h2>
         <p>How can AI help you improve this slide?</p>
         <textarea 
+            id="aiAssistInput"
             placeholder="E.g., 'Make this more engaging' or 'Add bullet points about...'"
             rows="4"
             style="width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 8px; margin: 1rem 0;"
         ></textarea>
+        <div class="ai-suggestions" style="margin-bottom: 1rem;">
+            <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.5rem;">Quick suggestions:</p>
+            <button class="gamma-btn gamma-btn-secondary" style="margin-right: 0.5rem; margin-bottom: 0.5rem;" onclick="document.getElementById('aiAssistInput').value = 'Make this slide more engaging and persuasive'">
+                ✨ More engaging
+            </button>
+            <button class="gamma-btn gamma-btn-secondary" style="margin-right: 0.5rem; margin-bottom: 0.5rem;" onclick="document.getElementById('aiAssistInput').value = 'Add bullet points summarizing the key ideas'">
+                📝 Add bullets
+            </button>
+            <button class="gamma-btn gamma-btn-secondary" style="margin-bottom: 0.5rem;" onclick="document.getElementById('aiAssistInput').value = 'Simplify this content for a general audience'">
+                🎯 Simplify
+            </button>
+        </div>
         <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
             <button class="gamma-btn gamma-btn-secondary" onclick="document.getElementById('gammaAiModal').style.display='none'">
                 Cancel
             </button>
-            <button class="gamma-btn gamma-btn-primary">
+            <button class="gamma-btn gamma-btn-primary" onclick="window.gammaModule.processAiAssist(document.getElementById('aiAssistInput').value)">
                 Generate
             </button>
         </div>
     </div>
 </div>
+
+<!-- Help Button -->
+<button class="gamma-help-btn" onclick="window.gammaModule.restartTutorial()" title="Show Tutorial">
+    ?
+</button>
 
 <!-- Tutorial Overlay -->
 <div id="gammaTutorialOverlay" class="gamma-tutorial-overlay" style="display: none;">

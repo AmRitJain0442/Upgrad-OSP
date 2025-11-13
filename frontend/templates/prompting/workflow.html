@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Workflow Automation - Upgrad OSP{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/workflow.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="workflow-container">
+    <!-- Header Section -->
+    <div class="workflow-header">
+        <h1>Tell Us What you wanna Learn !</h1>
+        <p class="subtitle">Discover AI tools and create automated workflows for your mundane tasks</p>
+    </div>
+
+    <!-- Step 1: Task Discovery -->
+    <div id="taskDiscoverySection" class="workflow-section active">
+        <div class="section-header">
+            <h2>Step 1: What do you want to automate?</h2>
+            <p>Describe the mundane task you'd like to automate using AI</p>
+        </div>
+        
+        <div class="task-input-container">
+            <label for="taskInput">Your Task</label>
+            <textarea 
+                id="taskInput" 
+                placeholder="Example: I want to create a presentation about my scientific research findings..."
+                rows="4"
+            ></textarea>
+            
+            <button id="discoverTaskBtn" class="primary-btn">
+                <span class="btn-text">Discover Solutions</span>
+                <span class="btn-loader" style="display: none;">
+                    <span class="spinner"></span> Analyzing...
+                </span>
+            </button>
+        </div>
+
+        <!-- Example Tasks -->
+        <div class="example-tasks">
+            <p class="example-label">Need inspiration? Try these:</p>
+            <div class="example-grid">
+                <button class="example-task" data-task="Create a presentation from my research data">
+                    Research Presentation
+                </button>
+                <button class="example-task" data-task="Summarize long documents and extract key insights">
+                    Document Analysis
+                </button>
+                <button class="example-task" data-task="Generate social media content from blog posts">
+                    Content Repurposing
+                </button>
+                <button class="example-task" data-task="Create marketing copy for my product">
+                    Marketing Copy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Follow-up Questions -->
+    <div id="questionsSection" class="workflow-section">
+        <div class="section-header">
+            <h2>Step 2: Tell us more</h2>
+            <p>Answer a few questions to help us find the perfect tools</p>
+        </div>
+        
+        <div id="questionsContainer" class="questions-container">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+
+        <button id="submitAnswersBtn" class="primary-btn" style="display: none;">
+            <span class="btn-text">Find AI Tools</span>
+            <span class="btn-loader" style="display: none;">
+                <span class="spinner"></span> Searching...
+            </span>
+        </button>
+    </div>
+
+    <!-- Step 3: AI Tools Search Results -->
+    <div id="toolsSection" class="workflow-section">
+        <div class="section-header">
+            <h2>Step 3: Recommended AI Tools</h2>
+            <p>We found these AI tools that can help you</p>
+        </div>
+        
+        <div id="toolsGrid" class="tools-grid">
+            <!-- Tools will be dynamically inserted here -->
+        </div>
+
+        <button id="generateRoadmapBtn" class="primary-btn" style="display: none;">
+            <span class="btn-text">Generate Workflow</span>
+            <span class="btn-loader" style="display: none;">
+                <span class="spinner"></span> Creating roadmap...
+            </span>
+        </button>
+    </div>
+
+    <!-- Step 4: Workflow Roadmap (Tree Visualization) -->
+    <div id="roadmapSection" class="workflow-section">
+        <div class="section-header">
+            <h2>Step 4: Your Workflow Roadmap</h2>
+            <p>Follow these steps to automate your task</p>
+        </div>
+
+        <div class="roadmap-header">
+            <h3 id="roadmapTitle">Your Workflow</h3>
+            <div class="roadmap-meta">
+                <span id="roadmapDifficulty" class="difficulty-badge">Intermediate</span>
+                <span id="roadmapTime" class="time-badge">Estimated: 2-3 hours</span>
+            </div>
+        </div>
+
+        <div id="roadmapTree" class="roadmap-tree">
+            <!-- Tree will be dynamically generated here -->
+        </div>
+
+        <!-- Step Details Modal -->
+        <div id="stepModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="stepDetails"></div>
+            </div>
+        </div>
+
+        <div class="roadmap-actions">
+            <button id="exportRoadmapBtn" class="secondary-btn">
+                Export Roadmap
+            </button>
+            <button id="startOverBtn" class="secondary-btn">
+                Start Over
+            </button>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-bar">
+        <div class="progress-step active" data-step="1">
+            <div class="step-number">1</div>
+            <div class="step-label">Task</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="2">
+            <div class="step-number">2</div>
+            <div class="step-label">Questions</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="3">
+            <div class="step-number">3</div>
+            <div class="step-label">Tools</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="4">
+            <div class="step-number">4</div>
+            <div class="step-label">Roadmap</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', path='js/workflow.js') }}"></script>
+{% endblock %}

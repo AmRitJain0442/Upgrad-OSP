@@ -52,6 +52,15 @@ async def index(request: Request):
     )
 
 
+@router.get("/workflow")
+async def workflow_page(request: Request):
+    """Workflow automation module page"""
+    return templates.TemplateResponse(
+        "prompting/workflow.html",
+        {"request": request}
+    )
+
+
 @router.get("/module/{module_id}/{submodule_id}")
 async def module_page(request: Request, module_id: str, submodule_id: int):
     """Individual module/submodule page"""

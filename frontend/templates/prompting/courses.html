@@ -17,6 +17,34 @@
     </header>
 
     <main class="container courses-container">
+        <!-- Workflow Automation Module - Featured -->
+        <div class="course-card featured-module" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; margin-bottom: 2rem;">
+            <div class="course-header">
+                <h2 class="course-title" style="color: white;">AI Workflow Automation</h2>
+                <span class="badge" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">New!</span>
+            </div>
+            
+            <p class="course-description" style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
+                Discover AI tools and create automated workflows for your mundane tasks. Get personalized recommendations and step-by-step roadmaps.
+            </p>
+            
+            <div style="margin-top: 1.5rem;">
+                <a href="/prompting/workflow" 
+                   class="submodule-card" 
+                   style="background: white; color: #ef4444; border: none; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.2rem; color: #ef4444;">Launch Workflow Builder</h3>
+                            <p style="margin: 0.25rem 0 0 0; color: #64748b; font-size: 0.95rem;">Create your custom AI automation workflow</p>
+                        </div>
+                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
         {% for course in courses %}
         <div class="course-card" data-course-id="{{ course.id }}">
             <div class="course-header">

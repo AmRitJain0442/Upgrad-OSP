@@ -15,14 +15,21 @@ from app.workflow.models import (
     AIToolSearchResult,
     WorkflowQuestionsResponse
 )
+from app.workflow.ai_tools_database import (
+    get_relevant_tools,
+    get_all_tools,
+    format_tools_for_prompt
+)
 
 # Configure Gemini API
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
 PERPLEXITY_API_KEY = os.getenv('PERPLEXITY_API_KEY')
 TAVILY_API_KEY = os.getenv('TAVILY_API_KEY')
 
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
+else:
+    print("WARNING: No Gemini API key found. Set GEMINI_API_KEY or GOOGLE_API_KEY in .env")
 
 
 async def generate_workflow_questions(task_input: str) -> List[WorkflowQuestion]:
@@ -30,7 +37,10 @@ async def generate_workflow_questions(task_input: str) -> List[WorkflowQuestion]
     Use Gemini to generate follow-up questions about the task
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        if api_key:
+            genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""You are helping a user automate a mundane task using AI tools.
 They want to: {task_input}
@@ -98,7 +108,7 @@ async def search_perplexity(query: str) -> List[AIToolSearchResult]:
                     "Content-Type": "application/json"
                 },
                 json={
-                    "model": "llama-3.1-sonar-small-128k-online",
+                    "model": "sonar",
                     "messages": [
                         {
                             "role": "system",
@@ -183,34 +193,54 @@ async def generate_workflow_roadmap(
     Generate a complete workflow roadmap using Gemini
     """
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        if api_key:
+            genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-pro')
         
         tools_summary = "\n".join([
-            f"- {tool.tool_name}: {tool.description} ({tool.url})"
-            for tool in ai_tools[:10]
+            f"- **{tool.tool_name}** ({tool.pricing})\n  URL: {tool.url}\n  Description: {tool.description}\n  Use Case: {tool.use_case}"
+            for tool in ai_tools[:15]
         ])
         
         answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
         
-        prompt = f"""Create a detailed workflow roadmap for this task:
+        prompt = f"""You are an expert workflow architect with deep knowledge of AI tools. Create a COMPREHENSIVE, DETAILED, step-by-step workflow roadmap.
 
 TASK: {task_description}
 
 USER REQUIREMENTS:
 {answers_summary}
 
-AVAILABLE AI TOOLS:
+AVAILABLE AI TOOLS (including mainstream and specialized):
 {tools_summary}
 
-Create a step-by-step workflow. Each step should include:
-1. A clear title and description
-2. Which AI tool to use
-3. 3-5 specific prompts/commands for that tool
-4. 3-5 practical tips
-5. 3 pros and 3 cons of using this tool
-6. Estimated time
-7. Dependencies on previous steps
-8. Alternative tools (if any)
+Create a THOROUGH workflow that:
+✓ Breaks the task into 5-8 logical, sequential steps
+✓ Recommends BOTH mainstream AND lesser-known specialized tools
+✓ Provides COPY-PASTE ready prompts for each tool
+✓ Includes specific tips from real-world usage
+✓ Lists honest pros and cons (be realistic, not promotional)
+✓ Estimates accurate time requirements
+✓ Suggests free alternatives where applicable
+✓ Explains WHY each tool is chosen for each step
+
+For EACH step, provide:
+1. **Clear title** - What this step accomplishes
+2. **Detailed description** - Exactly what to do (2-3 sentences)
+3. **AI tool selection** - Which tool and WHY it's best for this step
+4. **Tool URL** - Direct link to the tool
+5. **5 SPECIFIC prompts** - Ready-to-use, task-specific prompts (not generic)
+6. **5 practical tips** - Actionable advice for best results
+7. **3 pros** - Real advantages of this approach
+8. **3 cons** - Honest limitations or challenges
+9. **Realistic time** - Actual estimated time needed
+10. **Dependencies** - Which previous steps must be completed
+11. **2 alternatives** - Other tools that could work (with free options if possible)
+
+IMPORTANT: Make prompts SPECIFIC to the user's task, not generic templates.
+IMPORTANT: Include both popular tools AND hidden gems/specialized tools.
+IMPORTANT: Suggest free alternatives alongside paid options.
 
 Return ONLY valid JSON with this exact structure:
 {{
@@ -300,28 +330,164 @@ Return ONLY valid JSON with this exact structure:
         )
 
 
+async def search_with_gemini_web(task_description: str, answers: Dict[str, str]) -> List[AIToolSearchResult]:
+    """
+    Use Gemini with web search to find AI tools
+    """
+    try:
+        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        if api_key:
+            genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-pro')
+        
+        answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
+        
+        # Extract keywords from task
+        keywords = task_description.lower().split()
+        relevant_db_tools = get_relevant_tools(keywords[:5])  # Get relevant tools from database
+        
+        db_tools_context = format_tools_for_prompt(relevant_db_tools[:15]) if relevant_db_tools else "No specific database matches"
+        
+        prompt = f"""You are an expert AI tools researcher. Find the BEST AI tools for this task using web search.
+
+TASK: {task_description}
+
+USER REQUIREMENTS:
+{answers_summary}
+
+REFERENCE TOOLS DATABASE (include these if relevant):
+{db_tools_context}
+
+Search the web thoroughly and recommend 8-15 specific AI tools, including:
+1. Both mainstream AND lesser-known specialized tools
+2. Free alternatives alongside paid options
+3. Tools specifically designed for this use case
+4. Mix of established and emerging AI tools
+
+For EACH tool, provide:
+- Exact official name
+- Clear 1-2 sentence description of capabilities
+- Official website URL (verify it's correct)
+- Specific use case for THIS task
+- Accurate pricing (Free/Paid/Freemium)
+
+Return ONLY valid JSON array:
+[{{
+  "tool_name": "Exact Tool Name",
+  "description": "Clear description focusing on key capabilities",
+  "url": "https://official-website.com",
+  "use_case": "Exactly how it helps with this specific task",
+  "pricing": "Free/Paid/Freemium"
+}}]"""
+
+        response = model.generate_content(
+            prompt,
+            safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+            }
+        )
+        
+        content = response.text.strip()
+        if content.startswith('```json'):
+            content = content[7:-3].strip()
+        elif content.startswith('```'):
+            content = content[3:-3].strip()
+        
+        tools_data = json.loads(content)
+        return [AIToolSearchResult(**tool) for tool in tools_data]
+        
+    except Exception as e:
+        print(f"Gemini web search error: {e}")
+        return []
+
+
+async def search_with_database(task_description: str) -> List[AIToolSearchResult]:
+    """
+    Search the curated AI tools database
+    """
+    try:
+        # Extract keywords from task description
+        keywords = [word.lower() for word in task_description.split() if len(word) > 3]
+        
+        # Get relevant tools from database
+        relevant_tools = get_relevant_tools(keywords)
+        
+        # Convert to AIToolSearchResult format
+        results = []
+        for tool in relevant_tools[:10]:
+            results.append(AIToolSearchResult(
+                tool_name=tool['tool_name'],
+                description=tool['description'],
+                url=tool['url'],
+                use_case=tool['use_case'],
+                pricing=tool['pricing']
+            ))
+        
+        return results
+        
+    except Exception as e:
+        print(f"Database search error: {e}")
+        return []
+
+
 async def search_ai_tools(task_description: str, answers: Dict[str, str]) -> List[AIToolSearchResult]:
     """
-    Search for AI tools using both Perplexity and Tavily
+    Comprehensive AI tools search using multiple methods:
+    1. Curated database search (fast, reliable)
+    2. Gemini web search (thorough, up-to-date)
+    3. Perplexity and Tavily (supplementary)
     """
     # Create search query from task and answers
     query_parts = [task_description]
     query_parts.extend(answers.values())
     search_query = " ".join(query_parts)
     
-    # Search both APIs concurrently
+    # Try all search methods in parallel
+    database_results = await search_with_database(task_description)
+    gemini_web_results = await search_with_gemini_web(task_description, answers)
     perplexity_results = await search_perplexity(search_query)
     tavily_results = await search_tavily(search_query)
     
-    # Combine and deduplicate results
-    all_results = perplexity_results + tavily_results
+    # Prioritize: Database first (most reliable), then Gemini web, then others
+    all_results = database_results + gemini_web_results + perplexity_results + tavily_results
+    
+    # If we got no results, return fallback tools
+    if not all_results:
+        return [
+            AIToolSearchResult(
+                tool_name="ChatGPT",
+                description="Versatile AI assistant for text generation, analysis, and automation",
+                url="https://chat.openai.com",
+                use_case="General purpose automation and content creation",
+                pricing="Free/Paid"
+            ),
+            AIToolSearchResult(
+                tool_name="Claude",
+                description="Advanced AI assistant with strong reasoning and long context",
+                url="https://claude.ai",
+                use_case="Complex task analysis and detailed workflow planning",
+                pricing="Free/Paid"
+            ),
+            AIToolSearchResult(
+                tool_name="Gemini",
+                description="Google's AI model with web search and multimodal capabilities",
+                url="https://gemini.google.com",
+                use_case="Research and information synthesis",
+                pricing="Free/Paid"
+            )
+        ]
+    
+    # Deduplicate results
     seen_tools = set()
     unique_results = []
     
     for tool in all_results:
-        tool_key = tool.tool_name.lower()
+        tool_key = tool.tool_name.lower().replace(" ", "")
         if tool_key not in seen_tools:
             seen_tools.add(tool_key)
             unique_results.append(tool)
     
-    return unique_results[:15]  # Return top 15 unique tools
+    return unique_results[:12]  # Return top 12 unique tools

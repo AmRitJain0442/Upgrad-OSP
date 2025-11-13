@@ -1,9 +1,21 @@
 /* Workflow Automation Module Styles */
 
+/* Override base styles to allow scrolling */
+body:has(.workflow-container) {
+    overflow-y: auto !important;
+    height: auto !important;
+}
+
+html:has(.workflow-container) {
+    overflow-y: auto !important;
+    height: auto !important;
+}
+
 .workflow-container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    min-height: 100vh;
 }
 
 .workflow-header {

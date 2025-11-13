@@ -47,6 +47,7 @@
 ## Data Flow
 
 ### Request Flow
+
 ```json
 {
   "slides": [
@@ -65,6 +66,7 @@
 ```
 
 ### Response Flow
+
 ```json
 {
   "strengths": [
@@ -90,6 +92,7 @@
 ### Frontend: GammaModule JavaScript Class
 
 #### analyzePresentation()
+
 ```javascript
 async analyzePresentation() {
     // 1. Show loading state
@@ -103,12 +106,14 @@ async analyzePresentation() {
 ```
 
 **Key responsibilities:**
+
 - DOM element state management
 - API request handling
 - Error management
 - User feedback (notifications)
 
 **Integration points:**
+
 - Uses `this.state.slides` - presentation content
 - Uses `this.state.currentTopic` - for context
 - Uses `this.state.sessionId` - for server-side tracking
@@ -116,6 +121,7 @@ async analyzePresentation() {
 - Updates `#analysisResult` - results display
 
 #### renderAnalysisResults()
+
 ```javascript
 renderAnalysisResults(analysis) {
     // Create HTML from analysis data
@@ -126,12 +132,14 @@ renderAnalysisResults(analysis) {
 ```
 
 **Generates HTML for:**
+
 - Strengths section with green styling
 - Improvements section with amber styling
 - Suggestions section with blue styling
 - Each item animated in sequence
 
 #### regenerateAnalysis()
+
 ```javascript
 regenerateAnalysis() {
     // Simply calls analyzePresentation() again
@@ -144,6 +152,7 @@ regenerateAnalysis() {
 #### POST /prompting/api/presentation/analyze
 
 **Request Model:**
+
 ```python
 class PresentationAnalysisRequest(BaseModel):
     slides: List[Dict[str, Any]]
@@ -152,6 +161,7 @@ class PresentationAnalysisRequest(BaseModel):
 ```
 
 **Response Model:**
+
 ```python
 class PresentationAnalysis(BaseModel):
     strengths: List[str]
@@ -160,6 +170,7 @@ class PresentationAnalysis(BaseModel):
 ```
 
 **Endpoint Handler:**
+
 ```python
 @router.post("/api/presentation/analyze")
 async def analyze_presentation(request: PresentationAnalysisRequest):
@@ -177,9 +188,10 @@ async def analyze_presentation(request: PresentationAnalysisRequest):
 **Location:** `app/prompting/agents.py`
 
 **Implementation:**
+
 ```python
 async def generate_presentation_analysis(
-    presentation_text: str, 
+    presentation_text: str,
     topic: str
 ) -> PresentationAnalysis:
     # 1. Create detailed analysis prompt
@@ -191,12 +203,14 @@ async def generate_presentation_analysis(
 ```
 
 **Key Features:**
+
 - Uses Gemini Flash (faster, cheaper)
 - Structured output via Pydantic
 - Graceful error handling with fallback
 - Comprehensive analysis prompt
 
 **Analysis Prompt Template:**
+
 ```
 You are an expert presentation designer analyzing a presentation.
 
@@ -223,6 +237,7 @@ Focus on: clarity, visuals, engagement, coherence, practicality
 ## CSS Architecture
 
 ### Layout Structure
+
 ```
 .gamma-analysis (position: flex, height: 100vh)
 ├── .analysis-container (max-width: 900px)
@@ -239,12 +254,14 @@ Focus on: clarity, visuals, engagement, coherence, practicality
 ```
 
 ### Color Scheme
+
 - **Strengths:** Green (#10b981) with light green background
 - **Improvements:** Amber (#f59e0b) with light amber background
 - **Suggestions:** Blue (#3b82f6) with light blue background
 - **Accent:** Purple (#7c3aed) - primary brand color
 
 ### Responsive Breakpoints
+
 ```css
 /* Desktop: > 1024px - Full layout */
 /* Tablet: 768px - 1024px - Adjusted padding */
@@ -254,6 +271,7 @@ Focus on: clarity, visuals, engagement, coherence, practicality
 ## State Management
 
 ### GammaModule.state Object
+
 ```javascript
 {
     mode: 'analysis',              // Current view mode
@@ -268,6 +286,7 @@ Focus on: clarity, visuals, engagement, coherence, practicality
 ```
 
 ### Session Tracking
+
 - `sessionId` generated and stored in Gamma module
 - Passed to backend for all analysis requests
 - Enables future server-side analysis history
@@ -275,6 +294,7 @@ Focus on: clarity, visuals, engagement, coherence, practicality
 ## Error Handling Strategy
 
 ### Frontend Error Handling
+
 ```javascript
 try {
     const response = await fetch(...);
@@ -289,6 +309,7 @@ try {
 ```
 
 ### Backend Error Handling
+
 ```python
 try:
     analysis = await generate_presentation_analysis(...)
@@ -299,7 +320,9 @@ except Exception as e:
 ```
 
 ### API Fallback
+
 If Gemini API fails, returns default analysis:
+
 ```python
 PresentationAnalysis(
     strengths=["Well-structured content", "Clear topic focus"],
@@ -311,18 +334,21 @@ PresentationAnalysis(
 ## Performance Optimization
 
 ### Frontend Optimization
+
 - **Lazy loading:** Analysis only loads when user switches mode
 - **DOM batching:** Uses innerHTML for efficient rendering
 - **Event delegation:** Single listener for multiple buttons
 - **CSS animations:** GPU-accelerated transitions
 
 ### Backend Optimization
+
 - **Fast model:** Uses Gemini Flash instead of full model
 - **Structured output:** JSON parsing instead of text processing
 - **Caching:** Could cache similar presentations (future)
 - **Async/await:** Non-blocking API calls
 
 ### Network Optimization
+
 - **Single request:** One API call per analysis (not per slide)
 - **Compact payload:** Only essential data sent to server
 - **Streaming ready:** Architecture supports streaming (future)
@@ -330,24 +356,28 @@ PresentationAnalysis(
 ## Testing Checklist
 
 ### Unit Tests (Frontend)
+
 - [ ] analyzePresentation() validates input
 - [ ] renderAnalysisResults() creates DOM correctly
 - [ ] regenerateAnalysis() triggers new analysis
 - [ ] Error handling displays notifications
 
 ### Unit Tests (Backend)
+
 - [ ] API endpoint validates request structure
 - [ ] Agent function formats text correctly
 - [ ] Gemini API call handles timeout
 - [ ] Response model validates JSON
 
 ### Integration Tests
+
 - [ ] End-to-end: Create → Analyze → View results
 - [ ] Error recovery: API failure → graceful fallback
 - [ ] State management: Data persists across modes
 - [ ] Session tracking: Session ID passed correctly
 
 ### UI/UX Tests
+
 - [ ] Animations smooth and performant
 - [ ] Colors contrast properly (accessibility)
 - [ ] Responsive on mobile/tablet/desktop
@@ -355,6 +385,7 @@ PresentationAnalysis(
 - [ ] Error messages are clear
 
 ### Performance Tests
+
 - [ ] Load time < 2 seconds
 - [ ] Analysis completes in < 5 seconds
 - [ ] No memory leaks with repeated analyses
@@ -363,18 +394,21 @@ PresentationAnalysis(
 ## Future Enhancements
 
 ### Short-term (Next Sprint)
+
 - [ ] Save analysis results to database
 - [ ] Show analysis history
 - [ ] Compare analyses over time
 - [ ] Export analysis as PDF
 
 ### Medium-term
+
 - [ ] Real-time suggestions while editing
 - [ ] Slide-by-slide feedback
 - [ ] Audience sentiment analysis
 - [ ] A/B testing suggestions
 
 ### Long-term
+
 - [ ] ML-based trend detection
 - [ ] Custom analysis profiles
 - [ ] Team collaboration features
@@ -384,18 +418,21 @@ PresentationAnalysis(
 ## Security Considerations
 
 ### Data Privacy
+
 - Session-based tracking only
 - No personal data stored
 - Analysis discarded after session
 - GDPR-compliant data handling
 
 ### API Security
+
 - Rate limiting on endpoints
 - Input validation on all requests
 - Error messages don't expose internals
 - CORS properly configured
 
 ### Frontend Security
+
 - XSS protection via innerHTML safety
 - CSRF protection via FastAPI
 - No sensitive data in localStorage
@@ -404,18 +441,21 @@ PresentationAnalysis(
 ## Monitoring & Logging
 
 ### Backend Logging
+
 ```python
 logger.error(f"Analysis error: {e}")  # Errors
 logger.info(f"Analysis generated for: {topic}")  # Info
 ```
 
 ### Frontend Monitoring
+
 ```javascript
-console.error('Analysis failed:', error);  // Development
+console.error("Analysis failed:", error); // Development
 // Production: send to analytics service
 ```
 
 ### Metrics to Track
+
 - Analysis request count
 - Average analysis time
 - Error rates
@@ -424,11 +464,13 @@ console.error('Analysis failed:', error);  // Development
 ## Documentation
 
 ### Code Comments
+
 - Inline comments for complex logic
 - JSDoc comments for functions
 - Docstrings for Python functions
 
 ### Architecture Diagrams
+
 - Sequence diagram in this file
 - Component tree in CSS section
 - Data flow visualizations
@@ -436,6 +478,7 @@ console.error('Analysis failed:', error);  // Development
 ## Version History
 
 **v1.0** (Current)
+
 - Basic presentation analysis
 - Three-section feedback
 - Gemini Flash API integration
@@ -446,6 +489,7 @@ console.error('Analysis failed:', error);  // Development
 ## Quick Reference
 
 ### Files Modified
+
 1. `frontend/templates/prompting/gamma_module.html` (+60 lines)
 2. `frontend/static/css/gamma_module.css` (+200 lines)
 3. `frontend/static/js/gamma_module.js` (+100 lines)
@@ -454,11 +498,13 @@ console.error('Analysis failed:', error);  // Development
 6. `app/prompting/agents.py` (+60 lines)
 
 ### API Endpoint
+
 - **POST** `/prompting/api/presentation/analyze`
 - **Request** `PresentationAnalysisRequest`
 - **Response** `PresentationAnalysis`
 
 ### Environment Requirements
+
 - Python 3.13+
 - FastAPI 0.120+
 - Pydantic 2.12+

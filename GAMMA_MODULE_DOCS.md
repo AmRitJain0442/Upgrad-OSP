@@ -1,10 +1,13 @@
 # Gamma AI Tool Learning Module 🎨
 
 ## Overview
+
 The Gamma module is an interactive learning experience that teaches students how to use Gamma - a revolutionary AI-powered presentation tool. Students interact with a **full replica** of Gamma's interface while learning all its features through 6 comprehensive lessons.
 
 ## What is Gamma?
+
 Gamma is an AI-first presentation tool that revolutionizes how presentations are created:
+
 - ✨ **AI Generation**: Create complete presentations from topics or documents
 - 🎨 **Smart Themes**: Beautiful, professional designs that auto-adapt
 - ✏️ **Live Editing**: Direct content editing with instant visual feedback
@@ -14,18 +17,22 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 ## Module Structure
 
 ### Lesson 1: Introduction to Gamma
+
 **Learning Objectives:**
+
 - Understand what Gamma is and why it's revolutionary
 - Navigate the three main modes (Create, Edit, Present)
 - Learn when to use Gamma vs traditional tools
 
 **Key Topics:**
+
 - Interface overview with top navigation bar
 - Mode switcher functionality
 - Core features and capabilities
 - Use cases and best practices
 
 **Interactive Elements:**
+
 - Live interface exploration
 - Mode switching practice
 - Feature discovery tutorial
@@ -33,18 +40,23 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 ---
 
 ### Lesson 2: Create Mode - AI Generation
+
 **Learning Objectives:**
+
 - Master the three creation methods
 - Learn effective AI prompt techniques
 - Understand generation options
 
 **Creation Methods:**
+
 1. **Start from Blank** 📄
+
    - Complete creative control
    - Custom layouts and designs
    - Best for: Unique presentations
 
 2. **Generate with AI** ✨
+
    - AI creates full presentations
    - From topics or documents
    - Best for: Quick, comprehensive decks
@@ -55,12 +67,14 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
    - Best for: Enhancing existing work
 
 **AI Generation Options:**
+
 - 📝 Concise (5-7 slides)
 - 📚 Detailed (10-15 slides)
 - 🎯 Pitch Deck format
 - 🎓 Educational style
 
 **Pro Tips:**
+
 - Be specific in topic descriptions
 - Include key points to cover
 - Mention target audience
@@ -69,7 +83,9 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 ---
 
 ### Lesson 3: Edit Mode - Customization
+
 **Learning Objectives:**
+
 - Master the three-panel editing interface
 - Learn toolbar features and shortcuts
 - Understand theme customization
@@ -77,6 +93,7 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 **Interface Layout:**
 
 **Left Sidebar - Slides Panel**
+
 - View all slides at a glance
 - Thumbnail previews
 - Drag to reorder
@@ -84,6 +101,7 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 - Quick navigation
 
 **Center - Canvas**
+
 - Main editing area
 - Direct text editing (click and type)
 - Drag & drop elements
@@ -91,12 +109,14 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 - Real-time preview
 
 **Right Sidebar - Properties**
+
 - Theme selector
 - Layout options
 - Add elements panel
 - AI features access
 
 **Toolbar Features:**
+
 - ↶↷ Undo/Redo history
 - **B** I U Text formatting
 - 🎨 Color customization
@@ -104,6 +124,7 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 - ✨ AI Assist button
 
 **Themes:**
+
 - 🎯 Professional: Clean, business-ready
 - 🎨 Creative: Bold, colorful
 - 💪 Bold: High-contrast, impactful
@@ -112,7 +133,9 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 ---
 
 ### Lesson 4: Layouts & Elements
+
 **Learning Objectives:**
+
 - Master all slide layout types
 - Learn to add and customize elements
 - Understand layout best practices
@@ -120,16 +143,19 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 **Layout Types:**
 
 1. **Title Slide**
+
    - Main title + subtitle
    - Best for: Opening slides, section dividers
    - Use case: Presentation intro
 
 2. **Title + Content**
+
    - Header with body content
    - Best for: Main content slides
    - Use case: Explanations, details
 
 3. **Two Column**
+
    - Split layout (50/50)
    - Best for: Comparisons, pros/cons
    - Use case: Before/after, feature comparison
@@ -141,16 +167,17 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 
 **Elements Library:**
 
-| Element | Icon | Use Case |
-|---------|------|----------|
-| Text | 📝 | Custom text boxes with formatting |
-| Image | 🖼️ | Upload or AI-generated images |
-| Video | 🎥 | Embed YouTube/Vimeo |
-| Chart | 📊 | Data visualizations |
-| Table | 📋 | Structured data |
-| Code | 💻 | Syntax-highlighted code blocks |
+| Element | Icon | Use Case                          |
+| ------- | ---- | --------------------------------- |
+| Text    | 📝   | Custom text boxes with formatting |
+| Image   | 🖼️   | Upload or AI-generated images     |
+| Video   | 🎥   | Embed YouTube/Vimeo               |
+| Chart   | 📊   | Data visualizations               |
+| Table   | 📋   | Structured data                   |
+| Code    | 💻   | Syntax-highlighted code blocks    |
 
 **Best Practices:**
+
 - Use title slides for sections
 - Two-column for comparisons
 - Keep text concise
@@ -160,7 +187,9 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 ---
 
 ### Lesson 5: AI Features Deep Dive
+
 **Learning Objectives:**
+
 - Master all AI assistance features
 - Learn effective AI prompting
 - Understand when to use each feature
@@ -168,17 +197,20 @@ Gamma is an AI-first presentation tool that revolutionizes how presentations are
 **AI Capabilities:**
 
 **1. AI Assist** (Main feature)
+
 - Available anytime via toolbar
 - Context-aware suggestions
 - Interactive prompt interface
 
 Example prompts:
+
 - "Make this more engaging"
 - "Add bullet points about [topic]"
 - "Simplify for general audience"
 - "Make this more technical"
 
 **2. Improve with AI**
+
 - Enhance existing content
 - Fix clarity and readability
 - Make content persuasive
@@ -186,28 +218,33 @@ Example prompts:
 - Grammar and style fixes
 
 **3. Generate Images**
+
 - Create custom visuals with AI
 - Describe what you need
 - Instant image generation
 
 Example prompts:
+
 - "Abstract background for technology"
 - "Icon representing collaboration"
 - "Illustration of cloud computing"
 - "Professional photo of teamwork"
 
 **4. Extend Content**
+
 - Add more slides automatically
 - Expand existing sections
 - Create supporting content
 
 Example requests:
+
 - "Add 3 slides about [subtopic]"
 - "Expand this with examples"
 - "Create conclusion section"
 - "Add supporting slides"
 
 **Best Practices:**
+
 - 🎯 Be specific in AI requests
 - ✅ Always review AI content
 - 🔄 Iterate and refine
@@ -217,7 +254,9 @@ Example requests:
 ---
 
 ### Lesson 6: Present Mode & Sharing
+
 **Learning Objectives:**
+
 - Master presentation mode controls
 - Learn all sharing options
 - Understand export formats
@@ -225,6 +264,7 @@ Example requests:
 **Present Mode Features:**
 
 **Display Options:**
+
 - 🖥️ Full-screen presentation view
 - 📱 Mobile-responsive display
 - 🎯 Presenter notes (private)
@@ -232,12 +272,14 @@ Example requests:
 - 📱 Phone remote control
 
 **Keyboard Controls:**
+
 - → Next slide
 - ← Previous slide
 - ESC Exit presentation
 - F Full screen toggle
 
 **Presentation Tips:**
+
 - Practice timing beforehand
 - Use presenter notes
 - Have PDF backup ready
@@ -247,30 +289,35 @@ Example requests:
 **Sharing Options:**
 
 **1. Live Link**
+
 - Always shows latest version
 - Real-time collaboration
 - No downloads needed
 - Best for: Teams, live presentations
 
 **2. Export PDF**
+
 - Offline viewing
 - Printable handouts
 - Email attachments
 - Best for: Static distribution
 
 **3. Export PowerPoint**
+
 - Full .pptx compatibility
 - Edit in PowerPoint
 - Legacy system support
 - Best for: Traditional workflows
 
 **4. Embed Code**
+
 - Integrate in websites
 - Blog posts
 - Documentation sites
 - Best for: Online portfolios
 
 **Collaboration Features:**
+
 - Real-time multi-user editing
 - Comment and feedback
 - Version history
@@ -281,6 +328,7 @@ Example requests:
 ## Technical Implementation
 
 ### Files Structure
+
 ```
 frontend/
 ├── static/
@@ -299,28 +347,32 @@ app/prompting/
 ### Key Components
 
 **1. Three-Mode Interface**
+
 - Create Mode: AI generation and setup
 - Edit Mode: Full editing environment
 - Present Mode: Presentation display
 
 **2. Interactive Elements**
+
 - Live theme switching
 - Real-time canvas updates
 - Drag & drop slide reordering
 - Direct content editing (contenteditable)
 
 **3. State Management**
+
 ```javascript
 state = {
-    mode: 'create',          // Current mode
-    currentSlide: 0,         // Active slide index
-    slides: [],              // Slide data array
-    theme: 'professional',   // Current theme
-    aiGenerating: false      // AI status
-}
+  mode: "create", // Current mode
+  currentSlide: 0, // Active slide index
+  slides: [], // Slide data array
+  theme: "professional", // Current theme
+  aiGenerating: false, // AI status
+};
 ```
 
 **4. Notification System**
+
 - Success, warning, info types
 - Auto-dismiss after duration
 - Slide-in animation
@@ -329,17 +381,20 @@ state = {
 ### Styling Highlights
 
 **Color Scheme:**
+
 - Primary: Purple gradient (#7c3aed to #a78bfa)
 - Background: Light gray (#fafafa)
 - Accent: White panels with borders
 
 **Layout:**
+
 - Top bar: 60px fixed height
 - Three-panel edit mode (200px | flex | 280px)
 - Canvas: 1000px width, 16:9 aspect ratio
 - Responsive breakpoints at 1024px and 768px
 
 **Animations:**
+
 - Smooth transitions (0.2-0.3s ease)
 - Hover effects with scale/shadow
 - Slide-in notifications
@@ -352,26 +407,31 @@ state = {
 By completing this module, students will:
 
 ✅ **Understand Gamma's value proposition**
+
 - When to use Gamma vs PowerPoint/Google Slides
 - Key differentiators and advantages
 - Real-world use cases
 
 ✅ **Master AI generation**
+
 - Write effective topic descriptions
 - Choose appropriate generation options
 - Get best results from AI
 
 ✅ **Customize presentations professionally**
+
 - Navigate the three-panel interface
 - Apply themes and layouts effectively
 - Add and arrange elements
 
 ✅ **Leverage advanced AI features**
+
 - Use AI Assist for improvements
 - Generate custom images
 - Extend content intelligently
 
 ✅ **Present and share effectively**
+
 - Control presentation mode
 - Choose appropriate sharing methods
 - Export in different formats
@@ -380,36 +440,40 @@ By completing this module, students will:
 
 ## Comparison: Gamma vs Traditional Tools
 
-| Feature | Gamma | PowerPoint | Google Slides |
-|---------|-------|-----------|---------------|
-| AI Generation | ✅ Full | ❌ No | ❌ No |
-| Theme Intelligence | ✅ Auto-adapt | ⚠️ Manual | ⚠️ Manual |
-| Live Editing | ✅ Direct | ⚠️ Limited | ✅ Yes |
-| Responsive | ✅ Built-in | ❌ No | ⚠️ Limited |
-| Learning Curve | ✅ Easy | ⚠️ Moderate | ✅ Easy |
-| Collaboration | ✅ Real-time | ⚠️ Limited | ✅ Real-time |
-| AI Assistance | ✅ Extensive | ❌ Minimal | ❌ Minimal |
+| Feature            | Gamma         | PowerPoint  | Google Slides |
+| ------------------ | ------------- | ----------- | ------------- |
+| AI Generation      | ✅ Full       | ❌ No       | ❌ No         |
+| Theme Intelligence | ✅ Auto-adapt | ⚠️ Manual   | ⚠️ Manual     |
+| Live Editing       | ✅ Direct     | ⚠️ Limited  | ✅ Yes        |
+| Responsive         | ✅ Built-in   | ❌ No       | ⚠️ Limited    |
+| Learning Curve     | ✅ Easy       | ⚠️ Moderate | ✅ Easy       |
+| Collaboration      | ✅ Real-time  | ⚠️ Limited  | ✅ Real-time  |
+| AI Assistance      | ✅ Extensive  | ❌ Minimal  | ❌ Minimal    |
 
 ---
 
 ## Use Cases & Examples
 
 ### Business Presentations
+
 - **Pitch Decks**: AI generates investor-ready structure
 - **Sales Presentations**: Quick customization for clients
 - **Team Updates**: Fast creation with consistent branding
 
 ### Education
+
 - **Lecture Slides**: Generate from course materials
 - **Student Projects**: Easy for beginners
 - **Training Materials**: Professional results quickly
 
 ### Marketing
+
 - **Campaign Proposals**: Visual and persuasive
 - **Client Reports**: Data visualization built-in
 - **Product Launches**: Beautiful, responsive design
 
 ### Technical
+
 - **Documentation**: Code blocks and technical layouts
 - **Architecture Diagrams**: Import and enhance
 - **Technical Training**: Complex concepts made clear
@@ -421,16 +485,19 @@ By completing this module, students will:
 ### For Instructors:
 
 1. **Start with Demo**
+
    - Show AI generation live
    - Demonstrate time savings
    - Compare to traditional workflow
 
 2. **Hands-on Practice**
+
    - Let students create real presentations
    - Provide diverse topics
    - Encourage experimentation
 
 3. **Emphasize AI Prompting**
+
    - Good vs bad prompts
    - Specificity importance
    - Iteration techniques
@@ -443,16 +510,19 @@ By completing this module, students will:
 ### For Students:
 
 1. **Follow Lesson Order**
+
    - Build foundational knowledge
    - Each lesson builds on previous
    - Don't skip ahead
 
 2. **Practice Each Feature**
+
    - Try all creation methods
    - Test every layout type
    - Experiment with AI features
 
 3. **Create Real Projects**
+
    - Apply to actual needs
    - Build portfolio pieces
    - Share and get feedback
@@ -469,21 +539,25 @@ By completing this module, students will:
 ### Common Issues:
 
 **AI Generation Not Working**
+
 - Check topic description specificity
 - Ensure generation option is selected
 - Try different prompt phrasing
 
 **Theme Not Applying**
+
 - Verify canvas is active
 - Check for custom overrides
 - Refresh and reapply
 
 **Elements Not Adding**
+
 - Click on canvas first
 - Ensure edit mode is active
 - Check element type compatibility
 
 **Present Mode Issues**
+
 - Exit full-screen and re-enter
 - Check browser permissions
 - Use keyboard shortcuts
@@ -493,6 +567,7 @@ By completing this module, students will:
 ## Future Enhancements
 
 Planned features:
+
 - [ ] Real AI integration (currently simulated)
 - [ ] More theme options
 - [ ] Animation timeline
@@ -516,6 +591,7 @@ Students demonstrate mastery by:
 6. **Sharing** in appropriate format
 
 **Grading Rubric:**
+
 - AI Generation: 20%
 - Customization: 25%
 - Content Quality: 25%
@@ -527,18 +603,21 @@ Students demonstrate mastery by:
 ## Resources & References
 
 **Official Gamma Resources:**
+
 - Website: gamma.app
 - Documentation: gamma.app/docs
 - Community: gamma.app/community
 - Templates: gamma.app/templates
 
 **Related Learning:**
+
 - AI Prompting Techniques
 - Presentation Design Principles
 - Visual Communication
 - Storytelling with Data
 
 **Complementary Tools:**
+
 - Canva (design)
 - Figma (prototyping)
 - Miro (brainstorming)
@@ -549,6 +628,7 @@ Students demonstrate mastery by:
 ## Instructor Notes
 
 **Teaching Time:**
+
 - Lesson 1: 15-20 minutes
 - Lesson 2: 25-30 minutes
 - Lesson 3: 30-35 minutes
@@ -558,12 +638,14 @@ Students demonstrate mastery by:
 - **Total: ~2.5-3 hours**
 
 **Prerequisites:**
+
 - Basic computer skills
 - Understanding of presentations
 - Familiarity with web interfaces
 - (Optional) Basic design principles
 
 **Materials Needed:**
+
 - Computer with modern browser
 - Internet connection
 - Practice topics/content
@@ -573,7 +655,7 @@ Students demonstrate mastery by:
 
 ## Success Stories
 
-*Example outcomes from this module:*
+_Example outcomes from this module:_
 
 **Student A - Business Major**
 "I created my entire marketing presentation in 15 minutes using Gamma's AI. What would have taken me 3 hours in PowerPoint was done in minutes, and it looked more professional!"

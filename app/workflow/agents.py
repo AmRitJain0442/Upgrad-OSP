@@ -190,18 +190,52 @@ async def generate_workflow_roadmap(
     ai_tools: List[AIToolSearchResult]
 ) -> WorkflowRoadmap:
     """
-    Generate a complete workflow roadmap using Gemini
+    Generate a complete workflow roadmap using Gemini - utilizing ALL found tools
     """
     try:
         api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
-        tools_summary = "\n".join([
-            f"- **{tool.tool_name}** ({tool.pricing})\n  URL: {tool.url}\n  Description: {tool.description}\n  Use Case: {tool.use_case}"
-            for tool in ai_tools[:15]
-        ])
+        # Group tools by category/type for better organization
+        tools_by_category = {}
+        for tool in ai_tools:
+            # Extract category from description or tool name
+            if any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
+                   for keyword in ['research', 'search', 'chatgpt', 'perplexity', 'claude']):
+                category = 'research'
+            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
+                     for keyword in ['present', 'slide', 'gamma', 'pitch']):
+                category = 'presentation'
+            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
+                     for keyword in ['write', 'content', 'copy', 'grammar']):
+                category = 'writing'
+            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
+                     for keyword in ['code', 'programming', 'developer']):
+                category = 'coding'
+            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
+                     for keyword in ['image', 'visual', 'design', 'graphic']):
+                category = 'image'
+            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
+                     for keyword in ['video', 'audio', 'voice']):
+                category = 'multimedia'
+            else:
+                category = 'general'
+            
+            if category not in tools_by_category:
+                tools_by_category[category] = []
+            tools_by_category[category].append(tool)
+        
+        # Create detailed tools summary with ALL tools organized by category
+        tools_summary = ""
+        for category, tools in tools_by_category.items():
+            tools_summary += f"\n**{category.upper()} TOOLS:**\n"
+            for tool in tools:
+                tools_summary += f"- **{tool.tool_name}** ({tool.pricing})\n"
+                tools_summary += f"  URL: {tool.url}\n"
+                tools_summary += f"  Description: {tool.description}\n"
+                tools_summary += f"  Use Case: {tool.use_case}\n\n"
         
         answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
         
@@ -212,35 +246,45 @@ TASK: {task_description}
 USER REQUIREMENTS:
 {answers_summary}
 
-AVAILABLE AI TOOLS (including mainstream and specialized):
+AVAILABLE AI TOOLS (USE ALL OF THESE - organized by category):
 {tools_summary}
 
-Create a THOROUGH workflow that:
+Create a THOROUGH, PRESENTABLE, MINIMALISTIC workflow that:
 ✓ Breaks the task into 5-8 logical, sequential steps
-✓ Recommends BOTH mainstream AND lesser-known specialized tools
-✓ Provides COPY-PASTE ready prompts for each tool
+✓ UTILIZES ALL AVAILABLE TOOLS - show multiple options when relevant
+✓ For each step, recommend PRIMARY tool + list ALL OTHER applicable tools as alternatives
+✓ Provides COPY-PASTE ready prompts specific to the user's task
 ✓ Includes specific tips from real-world usage
 ✓ Lists honest pros and cons (be realistic, not promotional)
 ✓ Estimates accurate time requirements
-✓ Suggests free alternatives where applicable
-✓ Explains WHY each tool is chosen for each step
+✓ Groups similar tools together as options
+✓ Explains WHY each tool is chosen
 
 For EACH step, provide:
 1. **Clear title** - What this step accomplishes
-2. **Detailed description** - Exactly what to do (2-3 sentences)
-3. **AI tool selection** - Which tool and WHY it's best for this step
-4. **Tool URL** - Direct link to the tool
-5. **5 SPECIFIC prompts** - Ready-to-use, task-specific prompts (not generic)
+2. **Detailed description** - Exactly what to do (2-3 sentences minimum)
+3. **Primary AI tool** - The BEST tool for this specific step and WHY
+4. **Tool URL** - Direct link to the primary tool
+5. **5 SPECIFIC prompts** - Ready-to-use, customized for the user's exact task (NOT generic)
 6. **5 practical tips** - Actionable advice for best results
 7. **3 pros** - Real advantages of this approach
 8. **3 cons** - Honest limitations or challenges
 9. **Realistic time** - Actual estimated time needed
-10. **Dependencies** - Which previous steps must be completed
-11. **2 alternatives** - Other tools that could work (with free options if possible)
+10. **Dependencies** - Which previous steps must be completed first
+11. **All alternatives** - List ALL other tools from the available tools that could work for this step, with:
+    - Tool name from the provided list
+    - Specific reason why it's suitable
+    - Whether it's free or paid
+    - When to choose it over the primary tool
 
-IMPORTANT: Make prompts SPECIFIC to the user's task, not generic templates.
-IMPORTANT: Include both popular tools AND hidden gems/specialized tools.
-IMPORTANT: Suggest free alternatives alongside paid options.
+CRITICAL REQUIREMENTS:
+- Make prompts SPECIFIC to "{task_description}" - reference the actual task in each prompt
+- Use ALL the tools provided above - distribute them across steps as primary or alternatives
+- Show 3-5 alternatives per step when applicable
+- Include both mainstream tools (ChatGPT, Gamma) AND specialized tools (SciSpace, Elicit, etc.)
+- For alternatives, ONLY use tools from the available tools list above
+- Make the roadmap detailed but presentable - clear structure, easy to scan
+- Prioritize free tools in alternatives when available
 
 Return ONLY valid JSON with this exact structure:
 {{
@@ -338,7 +382,7 @@ async def search_with_gemini_web(task_description: str, answers: Dict[str, str])
         api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
         

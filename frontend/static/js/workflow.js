@@ -298,6 +298,11 @@ class WorkflowAutomation {
         this.roadmap.steps.forEach((step, index) => {
             const stepDiv = document.createElement('div');
             stepDiv.className = 'tree-step';
+            
+            // Count alternatives for display
+            const altCount = step.alternatives ? step.alternatives.length : 0;
+            const altText = altCount > 0 ? `+${altCount} alternative${altCount > 1 ? 's' : ''}` : '';
+            
             stepDiv.innerHTML = `
                 <div class="step-node" data-step-index="${index}">
                     <div class="step-number">${index + 1}</div>
@@ -307,10 +312,12 @@ class WorkflowAutomation {
                     </div>
                     <p class="step-description">${step.description}</p>
                     <div class="step-tool">
-                        AI Tool: ${step.ai_tool}
+                        <span class="tool-icon">🎯</span>
+                        <strong>${step.ai_tool}</strong>
+                        ${altCount > 0 ? `<span class="alt-badge">${altText}</span>` : ''}
                     </div>
                     <div class="step-expand">
-                        Click to view prompts, tips, pros & cons
+                        Click to view prompts, tips, alternatives & more →
                     </div>
                 </div>
             `;
@@ -329,57 +336,73 @@ class WorkflowAutomation {
 
         detailsContainer.innerHTML = `
             <h2>${step.title}</h2>
-            <p style="color: #64748b; margin-bottom: 2rem;">${step.description}</p>
+            <p style="color: #64748b; margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.7;">${step.description}</p>
 
-            <div class="detail-section">
-                <h3>AI Tool</h3>
-                <div style="padding: 1rem; background: #f8fafc; border-radius: 8px;">
-                    <strong>${step.ai_tool}</strong>
-                    ${step.tool_url ? `<br><a href="${step.tool_url}" target="_blank" style="color: #ef4444;">Visit tool</a>` : ''}
+            <div class="detail-section primary-tool-section">
+                <h3>🎯 Primary Tool</h3>
+                <div class="primary-tool-card">
+                    <div class="tool-name-large">${step.ai_tool}</div>
+                    ${step.tool_url ? `<a href="${step.tool_url}" target="_blank" class="tool-link-primary">Visit tool →</a>` : ''}
                 </div>
             </div>
 
-            <div class="detail-section">
-                <h3>Prompts to Use</h3>
-                <ul class="detail-list">
-                    ${step.prompts.map(prompt => `<li>${prompt}</li>`).join('')}
-                </ul>
-            </div>
-
-            <div class="detail-section">
-                <h3>Tips</h3>
-                <ul class="detail-list">
-                    ${step.tips.map(tip => `<li>${tip}</li>`).join('')}
-                </ul>
-            </div>
-
-            <div class="detail-section">
-                <h3>Pros</h3>
-                <ul class="detail-list pros-list">
-                    ${step.pros.map(pro => `<li>${pro}</li>`).join('')}
-                </ul>
-            </div>
-
-            <div class="detail-section">
-                <h3>Cons</h3>
-                <ul class="detail-list cons-list">
-                    ${step.cons.map(con => `<li>${con}</li>`).join('')}
-                </ul>
-            </div>
-
             ${step.alternatives && step.alternatives.length > 0 ? `
-                <div class="detail-section">
-                    <h3>Alternative Tools</h3>
-                    <div class="alternatives-grid">
+                <div class="detail-section alternatives-section">
+                    <h3>🔄 Alternative Tools (${step.alternatives.length})</h3>
+                    <div class="alternatives-grid-enhanced">
                         ${step.alternatives.map(alt => `
-                            <div class="alternative-item">
-                                <div class="alternative-name">${alt.tool}</div>
-                                <div>${alt.reason}</div>
+                            <div class="alternative-card">
+                                <div class="alt-header">
+                                    <span class="alt-tool-name">${alt.tool}</span>
+                                    ${alt.pricing ? `<span class="alt-pricing">${alt.pricing}</span>` : ''}
+                                </div>
+                                <p class="alt-reason">${alt.reason}</p>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             ` : ''}
+
+            <div class="detail-section prompts-section">
+                <h3>💬 Ready-to-Use Prompts</h3>
+                <div class="prompts-container">
+                    ${step.prompts.map((prompt, idx) => `
+                        <div class="prompt-card" onclick="navigator.clipboard.writeText('${prompt.replace(/'/g, "\\'")}').then(() => {
+                            const el = event.currentTarget;
+                            const original = el.innerHTML;
+                            el.innerHTML = '<span class=\"copied-badge\">✓ Copied!</span>' + original;
+                            setTimeout(() => el.innerHTML = original, 2000);
+                        })">
+                            <div class="prompt-number">${idx + 1}</div>
+                            <div class="prompt-text">${prompt}</div>
+                            <div class="copy-hint">Click to copy</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="detail-section tips-section">
+                <h3>💡 Pro Tips</h3>
+                <ul class="detail-list tips-list">
+                    ${step.tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="pros-cons-grid">
+                <div class="detail-section">
+                    <h3>✅ Pros</h3>
+                    <ul class="detail-list pros-list">
+                        ${step.pros.map(pro => `<li>${pro}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="detail-section">
+                    <h3>⚠️ Cons</h3>
+                    <ul class="detail-list cons-list">
+                        ${step.cons.map(con => `<li>${con}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
         `;
 
         modal.style.display = 'block';

@@ -440,12 +440,27 @@ html:has(.workflow-container) {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: #f8fafc;
-    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    border-radius: 8px;
     font-weight: 600;
-    color: #ef4444;
+    color: #1e293b;
     margin-bottom: 0.75rem;
+    border: 1px solid #fecaca;
+}
+
+.tool-icon {
+    font-size: 1.2rem;
+}
+
+.alt-badge {
+    padding: 0.25rem 0.6rem;
+    background: #ef4444;
+    color: white;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
 }
 
 .step-expand {
@@ -453,6 +468,9 @@ html:has(.workflow-container) {
     font-size: 0.9rem;
     font-weight: 600;
     margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 /* Step Details Modal */
@@ -546,6 +564,201 @@ html:has(.workflow-container) {
     margin-bottom: 0.5rem;
 }
 
+/* Enhanced Modal Styles */
+.primary-tool-section {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #fecaca;
+}
+
+.primary-tool-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tool-name-large {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.tool-link-primary {
+    padding: 0.75rem 1.5rem;
+    background: #ef4444;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tool-link-primary:hover {
+    background: #dc2626;
+    transform: translateX(5px);
+}
+
+/* Enhanced Alternatives Section */
+.alternatives-section {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+}
+
+.alternatives-grid-enhanced {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.alternative-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.alternative-card:hover {
+    border-color: #ef4444;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+    transform: translateY(-2px);
+}
+
+.alt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.alt-tool-name {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 1.05rem;
+}
+
+.alt-pricing {
+    padding: 0.25rem 0.6rem;
+    background: #e0f2fe;
+    color: #0369a1;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.alt-reason {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Prompts Section */
+.prompts-section {
+    background: #ecfdf5;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #a7f3d0;
+}
+
+.prompts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.prompt-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 2px solid #d1fae5;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+}
+
+.prompt-card:hover {
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    transform: translateX(5px);
+}
+
+.prompt-number {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.prompt-text {
+    flex: 1;
+    color: #1e293b;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.copy-hint {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 0.75rem;
+    color: #10b981;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.prompt-card:hover .copy-hint {
+    opacity: 1;
+}
+
+.copied-badge {
+    background: #10b981;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+/* Tips Section */
+.tips-section {
+    background: #fffbeb;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #fde68a;
+}
+
+.tips-list li {
+    background: white;
+    border-left-color: #f59e0b;
+}
+
+/* Pros/Cons Grid */
+.pros-cons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
 /* Progress Bar */
 .progress-bar {
     position: fixed;
@@ -636,6 +849,30 @@ html:has(.workflow-container) {
     }
 }
 
+/* Modal Content Enhancements */
+.modal-content h2 {
+    color: #1e293b;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.modal-content h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.detail-section {
+    margin-bottom: 2rem;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Smooth Scrolling for Modal */
+.modal-content {
+    scroll-behavior: smooth;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .workflow-container {
@@ -687,5 +924,34 @@ html:has(.workflow-container) {
         width: 95%;
         padding: 1.5rem;
         margin: 10% auto;
+    }
+
+    .primary-tool-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .tool-name-large {
+        font-size: 1.3rem;
+    }
+
+    .alternatives-grid-enhanced {
+        grid-template-columns: 1fr;
+    }
+
+    .pros-cons-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prompt-card {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .copy-hint {
+        position: static;
+        opacity: 1;
+        margin-top: 0.5rem;
     }
 }

@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}Glass Buttons Demo - Upgrad OSP{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/aurora-background.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='/css/glass-buttons.css') }}">
+<style>
+  .demo-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  .demo-title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .demo-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-bottom: 3rem;
+  }
+
+  .button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .button-showcase {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .button-showcase h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .button-showcase p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .code-snippet {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    overflow-x: auto;
+  }
+
+  .code-snippet pre {
+    margin: 0;
+    color: #a8dadc;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .code-snippet code {
+    color: #f1faee;
+  }
+
+  @media (max-width: 768px) {
+    .demo-title {
+      font-size: 2rem;
+    }
+
+    .button-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .demo-section {
+      padding: 2rem 1rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="glassDemo" data-aurora-background data-aurora-radial="true">
+  
+  <div class="demo-section">
+    <h1 class="demo-title">Glass-Themed Buttons</h1>
+    <p class="demo-subtitle">Premium button components with liquid glass and metallic effects</p>
+
+    <div class="button-grid">
+      
+      <!-- Liquid Glass Buttons -->
+      <div class="button-showcase">
+        <h3>Liquid Glass Button</h3>
+        <p>Translucent frosted glass effect with SVG distortion filters and interactive hover states</p>
+        <div class="button-wrapper">
+          <button class="liquid-glass-btn btn-sm">
+            <span>Small Button</span>
+          </button>
+          <button class="liquid-glass-btn">
+            <span>Default Button</span>
+          </button>
+          <button class="liquid-glass-btn btn-lg">
+            <span>Large Button</span>
+          </button>
+          <button class="liquid-glass-btn btn-xl">
+            <span>Extra Large</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Metal Buttons - Default -->
+      <div class="button-showcase">
+        <h3>Metal Button - Default</h3>
+        <p>Premium metallic finish with multi-layered gradients and 3D press effects</p>
+        <div class="button-wrapper">
+          <div class="metal-btn">
+            <div class="metal-btn-inner"></div>
+            <div class="metal-btn-content">
+              <span>Default Metal</span>
+            </div>
+            <div class="metal-btn-shine"></div>
+            <div class="metal-btn-hover-overlay"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metal Buttons - Primary -->
+      <div class="button-showcase">
+        <h3>Metal Button - Primary</h3>
+        <p>Vibrant red gradient with enhanced shine and hover brightness</p>
+        <div class="button-wrapper">
+          <div class="metal-btn metal-primary">
+            <div class="metal-btn-inner"></div>
+            <div class="metal-btn-content">
+              <span>Primary Action</span>
+            </div>
+            <div class="metal-btn-shine"></div>
+            <div class="metal-btn-hover-overlay"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metal Buttons - Success -->
+      <div class="button-showcase">
+        <h3>Metal Button - Success</h3>
+        <p>Emerald green finish for success states and confirmations</p>
+        <div class="button-wrapper">
+          <div class="metal-btn metal-success">
+            <div class="metal-btn-inner"></div>
+            <div class="metal-btn-content">
+              <span>Success State</span>
+            </div>
+            <div class="metal-btn-shine"></div>
+            <div class="metal-btn-hover-overlay"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metal Buttons - Gold -->
+      <div class="button-showcase">
+        <h3>Metal Button - Gold</h3>
+        <p>Luxurious gold finish for premium features and highlights</p>
+        <div class="button-wrapper">
+          <div class="metal-btn metal-gold">
+            <div class="metal-btn-inner"></div>
+            <div class="metal-btn-content">
+              <span>Premium Gold</span>
+            </div>
+            <div class="metal-btn-shine"></div>
+            <div class="metal-btn-hover-overlay"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combined Example -->
+      <div class="button-showcase">
+        <h3>Mixed Usage</h3>
+        <p>Combine different button styles for varied interaction patterns</p>
+        <div class="button-wrapper">
+          <div class="metal-btn metal-primary">
+            <div class="metal-btn-inner"></div>
+            <div class="metal-btn-content">
+              <span>Start Now</span>
+            </div>
+            <div class="metal-btn-shine"></div>
+            <div class="metal-btn-hover-overlay"></div>
+          </div>
+          <button class="liquid-glass-btn btn-lg">
+            <span>Learn More</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Code Examples -->
+    <div class="code-snippet">
+      <h3 style="color: #f1faee; margin-bottom: 1rem;">Usage Example</h3>
+      <pre><code>&lt;!-- Liquid Glass Button --&gt;
+&lt;button class="liquid-glass-btn btn-lg"&gt;
+  &lt;span&gt;Click Me&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- Metal Button (Primary) --&gt;
+&lt;div class="metal-btn metal-primary"&gt;
+  &lt;div class="metal-btn-inner"&gt;&lt;/div&gt;
+  &lt;div class="metal-btn-content"&gt;
+    &lt;span&gt;Primary Action&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="metal-btn-shine"&gt;&lt;/div&gt;
+  &lt;div class="metal-btn-hover-overlay"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Include CSS and JS --&gt;
+&lt;link rel="stylesheet" href="/static/css/glass-buttons.css"&gt;
+&lt;script src="/static/js/glass-buttons.js"&gt;&lt;/script&gt;</code></pre>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/aurora-background.js') }}"></script>
+<script src="{{ url_for('static', path='/js/glass-buttons.js') }}"></script>
+<script>
+  console.log('Glass buttons demo loaded');
+  console.log('Total buttons:', document.querySelectorAll('.liquid-glass-btn, .metal-btn').length);
+</script>
+{% endblock %}

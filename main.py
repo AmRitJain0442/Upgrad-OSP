@@ -78,6 +78,13 @@ async def landing_page(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
 
 
+@app.get("/glass-demo")
+async def glass_demo(request: Request):
+    """Glass-themed buttons demo page"""
+    templates = Jinja2Templates(directory="frontend/templates")
+    return templates.TemplateResponse("glass-demo.html", {"request": request})
+
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""

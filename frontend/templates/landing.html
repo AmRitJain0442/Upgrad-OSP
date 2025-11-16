@@ -5,6 +5,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', path='/css/aurora-background.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glowing-effect.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='/css/glass-buttons.css') }}">
 <style>
   /* Override to ensure scrolling works */
   body, html {
@@ -206,14 +207,19 @@
       beginner to expert with our interactive learning platform.
     </p>
     
-    <!-- Call to Action Buttons -->
+    <!-- Call to Action Buttons with Glass Theme -->
     <div class="cta-buttons">
-      <a href="/prompting/" class="cta-primary">
-        Start Learning Now
+      <a href="/prompting/" class="metal-btn metal-primary" style="text-decoration: none;">
+        <div class="metal-btn-inner"></div>
+        <div class="metal-btn-content">
+          <span>Start Learning Now</span>
+        </div>
+        <div class="metal-btn-shine"></div>
+        <div class="metal-btn-hover-overlay"></div>
       </a>
-      <a href="/workflow" class="cta-secondary">
-        Try Workflow Automation
-      </a>
+      <button class="liquid-glass-btn btn-lg" onclick="window.location.href='/prompting/workflow'">
+        <span>Try Workflow Automation</span>
+      </button>
     </div>
     
     <!-- Features Preview with Glowing Effect -->
@@ -345,6 +351,7 @@
 <script src="{{ url_for('static', path='/js/aurora-background.js') }}"></script>
 <script src="{{ url_for('static', path='/js/glowing-effect.js') }}"></script>
 <script src="{{ url_for('static', path='/js/icons.js') }}"></script>
+<script src="{{ url_for('static', path='/js/glass-buttons.js') }}"></script>
 <script>
   // Dark mode toggle
   document.getElementById('darkModeToggle').addEventListener('click', () => {

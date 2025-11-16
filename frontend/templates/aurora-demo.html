@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Aurora Background Demo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/aurora-background.css') }}">
+<style>
+  /* Demo-specific styles */
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .demo-title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .demo-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+  }
+
+  .demo-button {
+    background: #000;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .demo-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .dark-mode .demo-button {
+    background: #fff;
+    color: #000;
+  }
+
+  .dark-toggle {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .dark-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    .demo-title {
+      font-size: 2rem;
+    }
+
+    .demo-subtitle {
+      font-size: 1.2rem;
+    }
+
+    .dark-toggle {
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Aurora Background Container -->
+<div id="auroraDemo" data-aurora-background data-aurora-radial="true" data-aurora-animate="true">
+  
+  <!-- Content goes inside the aurora container -->
+  <div class="demo-title">
+    Background lights are cool you know.
+  </div>
+  
+  <div class="demo-subtitle">
+    And this, is chemical burn.
+  </div>
+  
+  <button class="demo-button" onclick="alert('Debug mode activated!')">
+    Debug now
+  </button>
+  
+</div>
+
+<!-- Dark Mode Toggle Button -->
+<button class="dark-toggle" id="darkModeToggle">
+  🌓 Toggle Dark Mode
+</button>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/aurora-background.js') }}"></script>
+<script>
+  // Dark mode toggle handler
+  document.getElementById('darkModeToggle').addEventListener('click', () => {
+    const auroraElement = document.getElementById('auroraDemo');
+    if (auroraElement.auroraInstance) {
+      auroraElement.auroraInstance.toggleDarkMode();
+    }
+  });
+
+  // Optional: Add smooth scroll behavior
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('Aurora Background Demo loaded successfully');
+  });
+</script>
+{% endblock %}

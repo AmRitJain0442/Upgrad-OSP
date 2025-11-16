@@ -1,0 +1,260 @@
+/**
+ * Aurora Background Effect - Pure CSS Implementation
+ * Recreates the React aurora-background component in vanilla CSS
+ */
+
+:root {
+  /* Aurora color palette */
+  --aurora-blue-500: #3b82f6;
+  --aurora-blue-400: #60a5fa;
+  --aurora-blue-300: #93c5fd;
+  --aurora-indigo-300: #a5b4fc;
+  --aurora-violet-200: #ddd6fe;
+  
+  /* Base colors */
+  --aurora-white: rgba(255, 255, 255, 0.1);
+  --aurora-black: rgba(0, 0, 0, 0.1);
+  --aurora-transparent: transparent;
+  
+  /* Light mode colors */
+  --aurora-bg-light: #fafafa;
+  --aurora-text-light: #0f172a;
+  
+  /* Dark mode colors */
+  --aurora-bg-dark: #18181b;
+  --aurora-text-dark: #f8fafc;
+}
+
+/* Aurora Container */
+.aurora-background {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--aurora-bg-light);
+  color: var(--aurora-text-light);
+  transition: background-color 0.3s ease;
+}
+
+/* Dark mode */
+.aurora-background.dark-mode {
+  background-color: var(--aurora-bg-dark);
+  color: var(--aurora-text-dark);
+}
+
+/* Aurora Effect Container */
+.aurora-effect {
+  position: absolute;
+  inset: -10px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.5;
+  will-change: transform;
+}
+
+/* Aurora Gradient Layers */
+.aurora-gradient {
+  position: absolute;
+  inset: 0;
+  filter: blur(10px);
+  background-image: 
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-white) 0%,
+      var(--aurora-white) 7%,
+      var(--aurora-transparent) 10%,
+      var(--aurora-transparent) 12%,
+      var(--aurora-white) 16%
+    ),
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-blue-500) 10%,
+      var(--aurora-indigo-300) 15%,
+      var(--aurora-blue-300) 20%,
+      var(--aurora-violet-200) 25%,
+      var(--aurora-blue-400) 30%
+    );
+  background-size: 300% 200%, 200% 200%;
+  background-position: 50% 50%, 50% 50%;
+  animation: aurora-move 60s linear infinite;
+}
+
+/* Dark mode gradient */
+.aurora-background.dark-mode .aurora-gradient {
+  background-image: 
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-black) 0%,
+      var(--aurora-black) 7%,
+      var(--aurora-transparent) 10%,
+      var(--aurora-transparent) 12%,
+      var(--aurora-black) 16%
+    ),
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-blue-500) 10%,
+      var(--aurora-indigo-300) 15%,
+      var(--aurora-blue-300) 20%,
+      var(--aurora-violet-200) 25%,
+      var(--aurora-blue-400) 30%
+    );
+  filter: blur(10px) invert(0);
+}
+
+.aurora-background:not(.dark-mode) .aurora-gradient {
+  filter: blur(10px) invert(1);
+}
+
+/* Secondary Aurora Layer */
+.aurora-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-white) 0%,
+      var(--aurora-white) 7%,
+      var(--aurora-transparent) 10%,
+      var(--aurora-transparent) 12%,
+      var(--aurora-white) 16%
+    ),
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-blue-500) 10%,
+      var(--aurora-indigo-300) 15%,
+      var(--aurora-blue-300) 20%,
+      var(--aurora-violet-200) 25%,
+      var(--aurora-blue-400) 30%
+    );
+  background-size: 200% 100%, 100% 100%;
+  background-attachment: fixed;
+  animation: aurora-move 60s linear infinite;
+  mix-blend-mode: difference;
+}
+
+/* Dark mode secondary layer */
+.aurora-background.dark-mode .aurora-gradient::after {
+  background-image: 
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-black) 0%,
+      var(--aurora-black) 7%,
+      var(--aurora-transparent) 10%,
+      var(--aurora-transparent) 12%,
+      var(--aurora-black) 16%
+    ),
+    repeating-linear-gradient(
+      100deg,
+      var(--aurora-blue-500) 10%,
+      var(--aurora-indigo-300) 15%,
+      var(--aurora-blue-300) 20%,
+      var(--aurora-violet-200) 25%,
+      var(--aurora-blue-400) 30%
+    );
+}
+
+/* Radial gradient mask */
+.aurora-gradient.with-radial-mask {
+  -webkit-mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+}
+
+/* Aurora Animation */
+@keyframes aurora-move {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+/* Content Container */
+.aurora-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Fade in animation for content */
+@keyframes aurora-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aurora-content.animate-in {
+  animation: aurora-fade-in 0.8s ease-out 0.3s both;
+}
+
+/* Utility Classes */
+.aurora-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.aurora-subtitle {
+  font-size: 1rem;
+  font-weight: 300;
+  text-align: center;
+  padding: 1rem 0;
+  opacity: 0.8;
+}
+
+.aurora-button {
+  background-color: #000;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.aurora-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.aurora-background.dark-mode .aurora-button {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .aurora-title {
+    font-size: 4.5rem;
+  }
+  
+  .aurora-subtitle {
+    font-size: 2.25rem;
+  }
+}
+
+/* Performance optimizations */
+.aurora-effect,
+.aurora-gradient,
+.aurora-gradient::after {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}

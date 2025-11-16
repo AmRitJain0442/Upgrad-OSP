@@ -4,9 +4,10 @@ Main FastAPI application
 
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -61,6 +62,20 @@ async def root():
     from fastapi.responses import RedirectResponse
 
     return RedirectResponse(url="/prompting/")
+
+
+@app.get("/aurora-demo")
+async def aurora_demo(request: Request):
+    """Aurora background demo page"""
+    templates = Jinja2Templates(directory="frontend/templates")
+    return templates.TemplateResponse("aurora-demo.html", {"request": request})
+
+
+@app.get("/landing")
+async def landing_page(request: Request):
+    """Landing page with aurora background"""
+    templates = Jinja2Templates(directory="frontend/templates")
+    return templates.TemplateResponse("landing.html", {"request": request})
 
 
 @app.get("/health")

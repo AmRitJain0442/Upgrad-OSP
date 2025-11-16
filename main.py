@@ -58,10 +58,10 @@ app.include_router(workflow_router)
 
 @app.get("/")
 async def root():
-    """Root endpoint - redirect to prompting module"""
+    """Root endpoint - redirect to landing page"""
     from fastapi.responses import RedirectResponse
 
-    return RedirectResponse(url="/prompting/")
+    return RedirectResponse(url="/landing")
 
 
 @app.get("/aurora-demo")

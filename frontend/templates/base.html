@@ -10,14 +10,108 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     
+    <!-- Favicon -->
+    <link rel="icon" href="/static/images/upgrad-logo.png" type="image/png">
+    
     <!-- Base styles -->
     <link rel="stylesheet" href="/static/css/prompting.css">
     <link rel="stylesheet" href="/static/css/tutorial_bot.css">
     
+    <style>
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 0;
+        }
+
+        .site-header .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .site-logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .site-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .site-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .site-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .site-nav a:hover {
+            color: #ef4444;
+        }
+
+        .content-wrapper {
+            padding-top: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .site-header .container {
+                padding: 0 1rem;
+            }
+
+            .site-logo {
+                height: 32px;
+            }
+
+            .site-nav {
+                gap: 1rem;
+            }
+
+            .site-nav a {
+                font-size: 0.9rem;
+            }
+
+            .content-wrapper {
+                padding-top: 70px;
+            }
+        }
+    </style>
+    
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    {% block content %}{% endblock %}
+    <header class="site-header">
+        <div class="container">
+            <a href="/">
+                <img src="/static/images/upgrad-logo.png" alt="upGrad" class="site-logo">
+            </a>
+            <nav class="site-nav">
+                <a href="/">Home</a>
+                <a href="/prompting/">Courses</a>
+                <a href="/prompting/workflow">Workflows</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
     
     <!-- Tutorial Bot Help Button -->
     <button class="restart-tutorial-btn" onclick="restartTutorial()" title="Show Tutorial"></button>

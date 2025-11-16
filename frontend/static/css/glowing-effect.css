@@ -1,0 +1,234 @@
+/**
+ * Glowing Effect - Pure CSS/JS Implementation
+ * Recreates the React glowing-effect component with mouse-tracking borders
+ */
+
+:root {
+  --glowing-border-width: 3px;
+  --glowing-spread: 40;
+  --glowing-blur: 0px;
+  --glowing-proximity: 64px;
+  --glowing-inactive-zone: 0.01;
+  --glowing-active: 0;
+  --glowing-start: 0deg;
+  
+  /* Gradient colors */
+  --glow-pink: #dd7bbb;
+  --glow-yellow: #d79f1e;
+  --glow-green: #5a922c;
+  --glow-blue: #4c7894;
+}
+
+/* Glowing Container */
+.glowing-container {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 0.75px solid rgba(229, 231, 235, 1);
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .glowing-container {
+    border-radius: 1.5rem;
+    padding: 0.75rem;
+  }
+}
+
+/* Inner content wrapper */
+.glowing-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 0.75px solid rgba(229, 231, 235, 1);
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .glowing-inner {
+  background: #18181b;
+  box-shadow: 0px 0px 27px 0px rgba(45, 45, 45, 0.3);
+}
+
+/* Glowing effect layer */
+.glowing-effect {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Glow gradient layer */
+.glowing-gradient {
+  border-radius: inherit;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.glowing-gradient::after {
+  content: "";
+  border-radius: inherit;
+  position: absolute;
+  inset: calc(-1 * var(--glowing-border-width));
+  border: var(--glowing-border-width) solid transparent;
+  background: 
+    radial-gradient(circle, var(--glow-pink) 10%, transparent 20%),
+    radial-gradient(circle at 40% 40%, var(--glow-yellow) 5%, transparent 15%),
+    radial-gradient(circle at 60% 60%, var(--glow-green) 10%, transparent 20%), 
+    radial-gradient(circle at 40% 60%, var(--glow-blue) 10%, transparent 20%),
+    repeating-conic-gradient(
+      from var(--glowing-start),
+      var(--glow-pink) 0deg,
+      var(--glow-yellow) 18deg,
+      var(--glow-green) 36deg, 
+      var(--glow-blue) 54deg,
+      var(--glow-pink) 72deg
+    );
+  background-attachment: fixed;
+  opacity: var(--glowing-active);
+  transition: opacity 0.3s ease;
+  -webkit-mask-clip: padding-box, border-box;
+  mask-clip: padding-box, border-box;
+  -webkit-mask-composite: intersect;
+  mask-composite: intersect;
+  -webkit-mask-image: 
+    linear-gradient(transparent, transparent),
+    conic-gradient(
+      from calc((var(--glowing-start) - calc(var(--glowing-spread) * 1deg))),
+      transparent 0deg,
+      white,
+      transparent calc(var(--glowing-spread) * 2deg)
+    );
+  mask-image: 
+    linear-gradient(transparent, transparent),
+    conic-gradient(
+      from calc((var(--glowing-start) - calc(var(--glowing-spread) * 1deg))),
+      transparent 0deg,
+      white,
+      transparent calc(var(--glowing-spread) * 2deg)
+    );
+}
+
+/* Grid layout */
+.glowing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .glowing-grid {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .glowing-grid {
+    grid-template-rows: repeat(2, 1fr);
+    max-height: 34rem;
+  }
+}
+
+/* Grid item positions */
+.grid-item-1 {
+  min-height: 14rem;
+}
+
+@media (min-width: 768px) {
+  .grid-item-1 { grid-area: 1 / 1 / 2 / 7; }
+  .grid-item-2 { grid-area: 1 / 7 / 2 / 13; }
+  .grid-item-3 { grid-area: 2 / 1 / 3 / 7; }
+  .grid-item-4 { grid-area: 2 / 7 / 3 / 13; }
+  .grid-item-5 { grid-area: 3 / 1 / 4 / 13; }
+}
+
+@media (min-width: 1280px) {
+  .grid-item-1 { grid-area: 1 / 1 / 2 / 5; }
+  .grid-item-2 { grid-area: 2 / 1 / 3 / 5; }
+  .grid-item-3 { grid-area: 1 / 5 / 3 / 8; }
+  .grid-item-4 { grid-area: 1 / 8 / 2 / 13; }
+  .grid-item-5 { grid-area: 2 / 8 / 3 / 13; }
+}
+
+/* Card content styles */
+.card-icon-wrapper {
+  width: fit-content;
+  border-radius: 0.5rem;
+  border: 0.75px solid rgba(229, 231, 235, 1);
+  background: rgba(249, 250, 251, 1);
+  padding: 0.5rem;
+}
+
+.dark-mode .card-icon-wrapper {
+  background: rgba(39, 39, 42, 1);
+  border-color: rgba(63, 63, 70, 1);
+}
+
+.card-icon {
+  width: 1rem;
+  height: 1rem;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+.card-title {
+  padding-top: 0.125rem;
+  font-size: 1.25rem;
+  line-height: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: rgba(15, 23, 42, 1);
+}
+
+.dark-mode .card-title {
+  color: rgba(248, 250, 252, 1);
+}
+
+@media (min-width: 768px) {
+  .card-title {
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+  }
+}
+
+.card-description {
+  font-size: 0.875rem;
+  line-height: 1.125rem;
+  color: rgba(100, 116, 139, 1);
+}
+
+@media (min-width: 768px) {
+  .card-description {
+    font-size: 1rem;
+    line-height: 1.375rem;
+  }
+}
+
+.card-content {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.card-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

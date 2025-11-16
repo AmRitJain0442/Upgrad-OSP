@@ -4,18 +4,43 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', path='/css/aurora-background.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='/css/glowing-effect.css') }}">
 <style>
+  /* Override to ensure scrolling works */
+  body, html {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    height: auto !important;
+    scroll-behavior: smooth;
+  }
+
   /* Landing page specific styles */
   .landing-container {
     text-align: center;
     padding: 2rem;
-    max-width: 1200px;
+    padding-bottom: 4rem;
+    max-width: 1400px;
+  }
+
+  /* Logo branding */
+  .brand-logo {
+    width: 180px;
+    height: auto;
+    margin: 0 auto 2rem;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+  }
+
+  .brand-logo:hover {
+    transform: scale(1.05);
   }
 
   .landing-title {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
     line-height: 1.2;
   }
 
@@ -27,6 +52,7 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
   }
 
   .cta-buttons {
@@ -80,41 +106,10 @@
     border-color: white;
   }
 
-  .features-preview {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
-
-  .feature-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-  }
-
-  .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  .feature-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 0.75rem;
-  }
-
-  .feature-description {
-    opacity: 0.8;
-    line-height: 1.6;
+  /* Glowing grid spacing */
+  .glowing-grid {
+    margin-top: 4rem;
+    margin-bottom: 3rem;
   }
 
   .dark-toggle-landing {
@@ -130,13 +125,38 @@
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .dark-toggle-landing:hover {
     background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+
+  /* Footer section */
+  .landing-footer {
+    margin-top: 4rem;
+    padding: 2rem 0;
+    text-align: center;
+    opacity: 0.7;
+    font-size: 0.9rem;
+  }
+
+  .landing-footer a {
+    color: inherit;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+  }
+
+  .landing-footer a:hover {
+    opacity: 1;
   }
 
   @media (max-width: 768px) {
+    .brand-logo {
+      width: 140px;
+    }
+
     .landing-title {
       font-size: 2.5rem;
     }
@@ -156,10 +176,6 @@
       max-width: 300px;
     }
 
-    .features-preview {
-      grid-template-columns: 1fr;
-    }
-
     .dark-toggle-landing {
       top: 1rem;
       right: 1rem;
@@ -175,6 +191,9 @@
 <div id="landingAurora" data-aurora-background data-aurora-radial="true" data-aurora-animate="true">
   
   <div class="landing-container">
+    
+    <!-- Logo Branding -->
+    <img src="/static/images/upgrad-logo.png" alt="upGrad" class="brand-logo">
     
     <!-- Hero Section -->
     <h1 class="landing-title">
@@ -197,42 +216,119 @@
       </a>
     </div>
     
-    <!-- Features Preview -->
-    <div class="features-preview">
+    <!-- Features Preview with Glowing Effect -->
+    <ul class="glowing-grid">
       
-      <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <div class="feature-title">Interactive Lessons</div>
-        <div class="feature-description">
-          Step-by-step guided learning with real-time AI feedback
-          on your prompts
+      <!-- Card 1: Interactive Lessons -->
+      <li class="grid-item-1">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3" data-glowing-duration="2000">
+          <div class="glowing-effect">
+            <div class="glowing-gradient"></div>
+          </div>
+          <div class="glowing-inner">
+            <div class="card-content">
+              <div class="card-icon-wrapper">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              </div>
+              <div class="card-text-wrapper">
+                <h3 class="card-title">Interactive Lessons</h3>
+                <p class="card-description">Step-by-step guided learning with real-time AI feedback on your prompts</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">🤖</div>
-        <div class="feature-title">AI Tutor</div>
-        <div class="feature-description">
-          Get instant help, tips, and personalized guidance as you learn
+      </li>
+
+      <!-- Card 2: AI Tutor -->
+      <li class="grid-item-2">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+          <div class="glowing-effect">
+            <div class="glowing-gradient"></div>
+          </div>
+          <div class="glowing-inner">
+            <div class="card-content">
+              <div class="card-icon-wrapper">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </div>
+              <div class="card-text-wrapper">
+                <h3 class="card-title">Intelligent AI Tutor</h3>
+                <p class="card-description">Get instant help, tips, and personalized guidance as you learn prompt engineering</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <div class="feature-title">Workflow Automation</div>
-        <div class="feature-description">
-          Discover AI tools and generate complete workflow roadmaps
+      </li>
+
+      <!-- Card 3: Workflow Automation -->
+      <li class="grid-item-3">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+          <div class="glowing-effect">
+            <div class="glowing-gradient"></div>
+          </div>
+          <div class="glowing-inner">
+            <div class="card-content">
+              <div class="card-icon-wrapper">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <div class="card-text-wrapper">
+                <h3 class="card-title">Workflow Automation</h3>
+                <p class="card-description">Discover 80+ AI tools and generate detailed workflow roadmaps for your projects</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <div class="feature-title">Track Progress</div>
-        <div class="feature-description">
-          Complete lessons, pass quizzes, and unlock advanced modules
+      </li>
+
+      <!-- Card 4: Track Progress -->
+      <li class="grid-item-4">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+          <div class="glowing-effect">
+            <div class="glowing-gradient"></div>
+          </div>
+          <div class="glowing-inner">
+            <div class="card-content">
+              <div class="card-icon-wrapper">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>
+              </div>
+              <div class="card-text-wrapper">
+                <h3 class="card-title">Advanced Features</h3>
+                <p class="card-description">Real-time streaming responses, markdown rendering, and intelligent prompt analysis</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </li>
+
+      <!-- Card 5: Progress Tracking -->
+      <li class="grid-item-5">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+          <div class="glowing-effect">
+            <div class="glowing-gradient"></div>
+          </div>
+          <div class="glowing-inner">
+            <div class="card-content">
+              <div class="card-icon-wrapper">
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+              </div>
+              <div class="card-text-wrapper">
+                <h3 class="card-title">Track Your Progress</h3>
+                <p class="card-description">Complete lessons, pass quizzes, and unlock advanced modules as you master prompt engineering</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
       
+    </ul>
+
+    <!-- Footer -->
+    <div class="landing-footer">
+      <p>Built with ❤️ for prompt engineering enthusiasts</p>
+      <p style="margin-top: 0.5rem;">
+        <a href="/prompting/">Start Learning</a> • 
+        <a href="/workflow">Workflow Automation</a> • 
+        <a href="/aurora-demo">View Demos</a>
+      </p>
     </div>
     
   </div>
@@ -247,6 +343,8 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', path='/js/aurora-background.js') }}"></script>
+<script src="{{ url_for('static', path='/js/glowing-effect.js') }}"></script>
+<script src="{{ url_for('static', path='/js/icons.js') }}"></script>
 <script>
   // Dark mode toggle
   document.getElementById('darkModeToggle').addEventListener('click', () => {
@@ -263,5 +361,8 @@
       console.log('Navigating to:', link.href);
     });
   });
+
+  // Log glowing effect initialization
+  console.log('Glowing effects initialized on', document.querySelectorAll('[data-glowing-effect]').length, 'elements');
 </script>
 {% endblock %}

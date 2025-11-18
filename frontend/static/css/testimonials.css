@@ -1,0 +1,219 @@
+/* Testimonials Column Scrolling - Pure CSS Implementation */
+
+.testimonials-section {
+  position: relative;
+  padding: 5rem 2rem;
+  background: #030303;
+  overflow: hidden;
+}
+
+.testimonials-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Header */
+.testimonials-header {
+  max-width: 540px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUpTestimonial 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.testimonials-badge {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+}
+
+.testimonials-title {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: white;
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+}
+
+.testimonials-description {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Columns Container */
+.testimonials-columns {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  max-height: 740px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+}
+
+/* Individual Column */
+.testimonials-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: scrollTestimonials linear infinite;
+}
+
+.testimonials-column-1 {
+  animation-duration: 15s;
+}
+
+.testimonials-column-2 {
+  animation-duration: 19s;
+}
+
+.testimonials-column-3 {
+  animation-duration: 17s;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
+  max-width: 320px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 15px 40px rgba(239, 68, 68, 0.15);
+  transform: translateY(-4px);
+}
+
+.testimonial-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(239, 68, 68, 0.3);
+}
+
+.testimonial-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.testimonial-name {
+  font-weight: 600;
+  color: white;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.testimonial-role {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Scroll Animation */
+@keyframes scrollTestimonials {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes fadeUpTestimonial {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .testimonials-column-3 {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials-section {
+    padding: 3rem 1rem;
+  }
+
+  .testimonials-column-2 {
+    display: none;
+  }
+
+  .testimonials-columns {
+    gap: 1rem;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+    max-width: 100%;
+  }
+
+  .testimonials-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Performance Optimizations */
+.testimonials-column {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Pause on hover */
+.testimonials-columns:hover .testimonials-column {
+  animation-play-state: paused;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-column {
+    animation: none;
+  }
+
+  .testimonials-header {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

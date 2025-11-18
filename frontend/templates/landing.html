@@ -3,9 +3,10 @@
 {% block title %}Upgrad OSP - Master Prompt Engineering{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', path='/css/aurora-background.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='/css/geometric-hero.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glowing-effect.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glass-buttons.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', path='/css/testimonials.css') }}">
 <style>
   /* Override to ensure scrolling works */
   body, html {
@@ -188,39 +189,91 @@
 {% endblock %}
 
 {% block content %}
-<!-- Aurora Background Landing Page -->
-<div id="landingAurora" data-aurora-background data-aurora-radial="true" data-aurora-animate="true">
+<!-- Geometric Hero Landing Page -->
+<div class="hero-geometric">
   
-  <div class="landing-container">
-    
-    <!-- Logo Branding -->
-    <img src="/static/images/upgrad-logo.png" alt="upGrad" class="brand-logo">
-    
-    <!-- Hero Section -->
-    <h1 class="landing-title">
-      Master the Art of<br>Prompt Engineering
-    </h1>
-    
-    <p class="landing-subtitle">
-      Learn to craft perfect AI prompts through hands-on lessons, 
-      real-time guidance, and intelligent feedback. Transform from 
-      beginner to expert with our interactive learning platform.
-    </p>
-    
-    <!-- Call to Action Buttons with Glass Theme -->
-    <div class="cta-buttons">
-      <a href="/prompting/" class="metal-btn metal-primary" style="text-decoration: none;">
-        <div class="metal-btn-inner"></div>
-        <div class="metal-btn-content">
-          <span>Start Learning Now</span>
-        </div>
-        <div class="metal-btn-shine"></div>
-        <div class="metal-btn-hover-overlay"></div>
-      </a>
-      <button class="liquid-glass-btn btn-lg" onclick="window.location.href='/prompting/workflow'">
-        <span>Try Workflow Automation</span>
-      </button>
+  <!-- Floating Shapes -->
+  <div class="hero-shapes">
+    <div class="elegant-shape shape-1">
+      <div class="elegant-shape-inner">
+        <div class="elegant-shape-ellipse"></div>
+      </div>
     </div>
+    
+    <div class="elegant-shape shape-2">
+      <div class="elegant-shape-inner">
+        <div class="elegant-shape-ellipse"></div>
+      </div>
+    </div>
+    
+    <div class="elegant-shape shape-3">
+      <div class="elegant-shape-inner">
+        <div class="elegant-shape-ellipse"></div>
+      </div>
+    </div>
+    
+    <div class="elegant-shape shape-4">
+      <div class="elegant-shape-inner">
+        <div class="elegant-shape-ellipse"></div>
+      </div>
+    </div>
+    
+    <div class="elegant-shape shape-5">
+      <div class="elegant-shape-inner">
+        <div class="elegant-shape-ellipse"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <div class="hero-text-center">
+      
+      <!-- Logo Branding -->
+      <img src="/static/images/upgrad-logo.png" alt="upGrad" class="brand-logo" style="width: 180px; height: auto; margin: 0 auto 2rem; display: block; filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));">
+      
+      <!-- Badge -->
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span class="hero-badge-text">Prompt Engineering Platform</span>
+      </div>
+      
+      <!-- Hero Title -->
+      <h1 class="hero-title">
+        <span class="hero-title-line1">Master the Art of</span>
+        <span class="hero-title-line2">Prompt Engineering</span>
+      </h1>
+      
+      <!-- Subtitle -->
+      <p class="hero-subtitle">
+        Crafting exceptional AI prompts through innovative learning and cutting-edge technology. Transform from beginner to expert with our interactive platform.
+      </p>
+      
+      <!-- Call to Action Buttons with Glass Theme -->
+      <div class="cta-buttons">
+        <a href="/prompting/" class="metal-btn metal-primary" style="text-decoration: none;">
+          <div class="metal-btn-inner"></div>
+          <div class="metal-btn-content">
+            <span>Start Learning Now</span>
+          </div>
+          <div class="metal-btn-shine"></div>
+          <div class="metal-btn-hover-overlay"></div>
+        </a>
+        <button class="liquid-glass-btn btn-lg" onclick="window.location.href='/prompting/workflow'">
+          <span>Try Workflow Automation</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Gradient Overlay -->
+  <div class="hero-gradient-overlay"></div>
+  
+</div>
+
+<!-- Features Section -->
+<div style="background: #030303; padding: 4rem 2rem; position: relative;">
+  <div style="max-width: 1400px; margin: 0 auto;">
     
     <!-- Features Preview with Glowing Effect -->
     <ul class="glowing-grid">
@@ -327,49 +380,309 @@
       
     </ul>
 
-    <!-- Footer -->
-    <div class="landing-footer">
-      <p>Built with ❤️ for prompt engineering enthusiasts</p>
-      <p style="margin-top: 0.5rem;">
-        <a href="/prompting/">Start Learning</a> • 
-        <a href="/workflow">Workflow Automation</a> • 
-        <a href="/aurora-demo">View Demos</a>
-      </p>
-    </div>
-    
   </div>
-  
 </div>
 
-<!-- Dark Mode Toggle -->
-<button class="dark-toggle-landing" id="darkModeToggle">
-  🌓 Dark Mode
-</button>
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    
+    <!-- Header -->
+    <div class="testimonials-header">
+      <div class="testimonials-badge">Student Success Stories</div>
+      <h2 class="testimonials-title">What our learners say</h2>
+      <p class="testimonials-description">
+        Discover how our platform has helped prompt engineers master their craft
+      </p>
+    </div>
+
+    <!-- Scrolling Columns -->
+    <div class="testimonials-columns">
+      
+      <!-- Column 1 -->
+      <div class="testimonials-column testimonials-column-1">
+        <!-- First set -->
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand complex concepts effortlessly."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Sarah Chen</div>
+              <div class="testimonial-role">AI Engineer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead of repetitive tasks."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=12" alt="Marcus Johnson" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Marcus Johnson</div>
+              <div class="testimonial-role">Content Creator</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt engineering enjoyable and effective."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=5" alt="Priya Sharma" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Priya Sharma</div>
+              <div class="testimonial-role">Marketing Manager</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate for infinite scroll -->
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand complex concepts effortlessly."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Sarah Chen</div>
+              <div class="testimonial-role">AI Engineer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead of repetitive tasks."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=12" alt="Marcus Johnson" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Marcus Johnson</div>
+              <div class="testimonial-role">Content Creator</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt engineering enjoyable and effective."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=5" alt="Priya Sharma" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Priya Sharma</div>
+              <div class="testimonial-role">Marketing Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2 (Hidden on mobile) -->
+      <div class="testimonials-column testimonials-column-2">
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating my learning curve dramatically."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivera" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Alex Rivera</div>
+              <div class="testimonial-role">Product Manager</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress tracking keeps me motivated!"
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=20" alt="Emma Wilson" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Emma Wilson</div>
+              <div class="testimonial-role">Data Scientist</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80% of my routine prompt tasks."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=15" alt="David Kim" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">David Kim</div>
+              <div class="testimonial-role">Software Developer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate -->
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating my learning curve dramatically."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivera" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Alex Rivera</div>
+              <div class="testimonial-role">Product Manager</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress tracking keeps me motivated!"
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=20" alt="Emma Wilson" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Emma Wilson</div>
+              <div class="testimonial-role">Data Scientist</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80% of my routine prompt tasks."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=15" alt="David Kim" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">David Kim</div>
+              <div class="testimonial-role">Software Developer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3 (Hidden on mobile & tablet) -->
+      <div class="testimonials-column testimonials-column-3">
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI responses consistently."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=27" alt="Lisa Anderson" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Lisa Anderson</div>
+              <div class="testimonial-role">UX Designer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated them into my workflow seamlessly."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=8" alt="James Taylor" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">James Taylor</div>
+              <div class="testimonial-role">Entrepreneur</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive, engaging, and results-driven."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=47" alt="Nina Patel" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Nina Patel</div>
+              <div class="testimonial-role">Researcher</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate -->
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI responses consistently."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=27" alt="Lisa Anderson" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Lisa Anderson</div>
+              <div class="testimonial-role">UX Designer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated them into my workflow seamlessly."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=8" alt="James Taylor" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">James Taylor</div>
+              <div class="testimonial-role">Entrepreneur</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive, engaging, and results-driven."
+          </div>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/150?img=47" alt="Nina Patel" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Nina Patel</div>
+              <div class="testimonial-role">Researcher</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div style="background: #030303; padding: 3rem 2rem; text-align: center;">
+  <div class="landing-footer">
+    <p>Built with ❤️ for prompt engineering enthusiasts</p>
+    <p style="margin-top: 0.5rem;">
+      <a href="/prompting/">Start Learning</a> • 
+      <a href="/prompting/workflow">Workflow Automation</a> • 
+      <a href="/glass-demo">View Demos</a>
+    </p>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', path='/js/aurora-background.js') }}"></script>
 <script src="{{ url_for('static', path='/js/glowing-effect.js') }}"></script>
 <script src="{{ url_for('static', path='/js/icons.js') }}"></script>
 <script src="{{ url_for('static', path='/js/glass-buttons.js') }}"></script>
 <script>
-  // Dark mode toggle
-  document.getElementById('darkModeToggle').addEventListener('click', () => {
-    const auroraElement = document.getElementById('landingAurora');
-    if (auroraElement.auroraInstance) {
-      auroraElement.auroraInstance.toggleDarkMode();
-    }
-  });
-
-  // Optional: Add smooth navigation
-  document.querySelectorAll('a[href^="/"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      // Add loading state or animation here if desired
-      console.log('Navigating to:', link.href);
+  // Smooth scroll to features
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   });
 
-  // Log glowing effect initialization
+  // Log initialization
+  console.log('Geometric hero loaded');
   console.log('Glowing effects initialized on', document.querySelectorAll('[data-glowing-effect]').length, 'elements');
+  console.log('Glass buttons initialized on', document.querySelectorAll('.liquid-glass-btn, .metal-btn').length, 'buttons');
 </script>
 {% endblock %}

@@ -1,5 +1,6 @@
 command to run :
  .venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000 
 
-http://127.0.0.1:8000/aurora-demo - Simple aurora demo
-http://127.0.0.1:8000/landing - Full landing page with aurora
+http://127.0.0.1:8000/landing - Geometric hero landing page with glass buttons
+http://127.0.0.1:8000/glass-demo - Glass-themed buttons showcase
+http://127.0.0.1:8000/aurora-demo - Simple aurora demo (legacy)

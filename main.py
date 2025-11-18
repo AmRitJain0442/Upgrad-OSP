@@ -85,6 +85,13 @@ async def glass_demo(request: Request):
     return templates.TemplateResponse("glass-demo.html", {"request": request})
 
 
+@app.get("/dashboard")
+async def dashboard(request: Request):
+    """User dashboard page"""
+    templates = Jinja2Templates(directory="frontend/templates")
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""

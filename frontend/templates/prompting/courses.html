@@ -2,95 +2,560 @@
 
 {% block title %}Prompt Engineering Courses - Upgrad OSP{% endblock %}
 
-{% block content %}
-<div class="courses-page">
-    <div class="cyber-bg"></div>
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/geometric-hero.css">
+<link rel="stylesheet" href="/static/css/glowing-effect.css">
+<style>
+    /* Override prompting.css light theme */
+    :root {
+        --bg-primary: #030303 !important;
+        --bg-secondary: #030303 !important;
+        --text-primary: #ffffff !important;
+    }
     
-    <header class="main-header">
-        <div class="container">
-            <h1 class="main-title">
-                <span class="title-accent">Prompt Engineering</span>
-                <span class="title-main">Mastery Platform</span>
-            </h1>
-            <p class="main-subtitle">Master the art of AI communication through hands-on, guided learning</p>
-        </div>
-    </header>
+    * {
+        box-sizing: border-box;
+    }
+    
+    html {
+        background: #030303 !important;
+        color: #ffffff !important;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh !important;
+    }
+    
+    body {
+        background: #030303 !important;
+        color: #ffffff !important;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: auto !important;
+        min-height: 100vh !important;
+    }
+    
+    .content-wrapper {
+        overflow-y: visible !important;
+        overflow-x: hidden !important;
+        height: auto !important;
+        min-height: auto !important;
+    }
+    
+    /* Courses Page Specific Styles */
+    .courses-hero {
+        position: relative;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #030303;
+    }
+    
+    /* Shape Container for floating shapes */
+    .shape-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    /* Floating shapes */
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: float 20s ease-in-out infinite;
+    }
+    
+    .shape-1 {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 70%);
+        top: -10%;
+        left: -10%;
+        animation-delay: 0s;
+    }
+    
+    .shape-2 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(244, 63, 94, 0.25), transparent 70%);
+        top: -5%;
+        right: -5%;
+        animation-delay: 3s;
+    }
+    
+    .shape-3 {
+        width: 550px;
+        height: 550px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent 70%);
+        bottom: -10%;
+        left: 10%;
+        animation-delay: 6s;
+    }
+    
+    .shape-4 {
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.2), transparent 70%);
+        top: 30%;
+        left: 50%;
+        animation-delay: 9s;
+    }
+    
+    .shape-5 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.25), transparent 70%);
+        bottom: 5%;
+        right: 5%;
+        animation-delay: 12s;
+    }
+    
+    @keyframes float {
+        0%, 100% {
+            transform: translate(0, 0) scale(1);
+        }
+        25% {
+            transform: translate(30px, -30px) scale(1.1);
+        }
+        50% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+        75% {
+            transform: translate(20px, 30px) scale(1.05);
+        }
+    }
+    
+    .courses-hero .gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08), transparent 70%);
+        pointer-events: none;
+    }
+    
+    .courses-hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+        max-width: 900px;
+    }
+    
+    .courses-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+    }
+    
+    .courses-main-title {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .courses-subtitle {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 2rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Courses Grid Section */
+    .courses-section {
+        background: #030303;
+        padding: 4rem 2rem;
+        min-height: 40vh;
+    }
+    
+    .courses-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+    
+    /* Glass Course Card */
+    .glass-course-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+    }
+    
+    .glass-course-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+    
+    .glass-course-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .glass-course-card:hover::before {
+        opacity: 1;
+    }
+    
+    .course-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+    }
+    
+    .course-card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0;
+    }
+    
+    .course-badge {
+        padding: 0.25rem 0.75rem;
+        background: rgba(99, 102, 241, 0.2);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        color: #a5b4fc;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .course-card-description {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+    
+    .course-progress-section {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 0.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .progress-label {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .progress-percentage {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #a5b4fc;
+    }
+    
+    .progress-bar-container {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    
+    .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        border-radius: 3px;
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .submodules-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .submodule-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.75rem;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .submodule-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: linear-gradient(180deg, #6366f1, #8b5cf6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .submodule-link:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(99, 102, 241, 0.3);
+        transform: translateX(4px);
+    }
+    
+    .submodule-link:hover::before {
+        opacity: 1;
+    }
+    
+    .submodule-link.locked {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    
+    .submodule-link.locked:hover {
+        transform: none;
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+    
+    .submodule-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 0.5rem;
+        font-weight: 700;
+        font-size: 0.875rem;
+        color: #a5b4fc;
+        flex-shrink: 0;
+    }
+    
+    .submodule-info {
+        flex: 1;
+    }
+    
+    .submodule-name {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.25rem;
+    }
+    
+    .submodule-desc {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .submodule-icon {
+        color: rgba(255, 255, 255, 0.4);
+        flex-shrink: 0;
+    }
+    
+    .submodule-link.locked .submodule-icon {
+        color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Featured Workflow Card */
+    .featured-workflow {
+        grid-column: 1 / -1;
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+        border-color: rgba(239, 68, 68, 0.3);
+    }
+    
+    .featured-workflow .course-card-title {
+        background: linear-gradient(135deg, #ef4444, #f87171);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .featured-badge {
+        background: rgba(239, 68, 68, 0.2);
+        border-color: rgba(239, 68, 68, 0.4);
+        color: #fca5a5;
+    }
+    
+    /* Ensure dark theme throughout */
+    .courses-page,
+    #app,
+    main {
+        background: #030303 !important;
+        color: #ffffff !important;
+    }
+    
+    /* Hide any old cyber background */
+    .cyber-bg {
+        display: none !important;
+    }
+    
+    @media (max-width: 768px) {
+        .courses-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .courses-hero {
+            min-height: 50vh;
+        }
+        
+        .shape {
+            width: 300px !important;
+            height: 300px !important;
+        }
+    }
+</style>
+{% endblock %}
 
-    <main class="container courses-container">
-        <!-- Workflow Automation Module - Featured -->
-        <div class="course-card featured-module" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; margin-bottom: 2rem;">
-            <div class="course-header">
-                <h2 class="course-title" style="color: white;">AI Workflow Automation</h2>
-                <span class="badge" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">New!</span>
+{% block content %}
+<div style="background: #030303; min-height: 100vh; width: 100%;">
+<!-- Geometric Hero Section -->
+<section class="courses-hero">
+    <!-- Floating Geometric Shapes -->
+    <div class="shape-container">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+    
+    <div class="gradient-overlay"></div>
+    
+    <div class="courses-hero-content">
+        <div class="courses-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+            </svg>
+            <span>Interactive Learning Platform</span>
+        </div>
+        
+        <h1 class="courses-main-title">
+            Master Prompt Engineering
+        </h1>
+        
+        <p class="courses-subtitle">
+            Learn AI communication through hands-on projects, real-world scenarios, and guided tutorials
+        </p>
+    </div>
+</section>
+
+<!-- Courses Grid Section -->
+<section class="courses-section">
+    <div class="courses-grid">
+        <!-- Workflow Automation - Featured -->
+        <div class="glass-course-card featured-workflow">
+            <div class="course-card-header">
+                <h2 class="course-card-title">AI Workflow Automation</h2>
+                <span class="course-badge featured-badge">New!</span>
             </div>
             
-            <p class="course-description" style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
-                Discover AI tools and create automated workflows for your mundane tasks. Get personalized recommendations and step-by-step roadmaps.
+            <p class="course-card-description">
+                Discover AI tools and create automated workflows for your mundane tasks. Get personalized recommendations and step-by-step roadmaps to boost productivity.
             </p>
             
-            <div style="margin-top: 1.5rem;">
-                <a href="/prompting/workflow" 
-                   class="submodule-card" 
-                   style="background: white; color: #ef4444; border: none; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; text-decoration: none;">
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div>
-                            <h3 style="margin: 0; font-size: 1.2rem; color: #ef4444;">Launch Workflow Builder</h3>
-                            <p style="margin: 0.25rem 0 0 0; color: #64748b; font-size: 0.95rem;">Create your custom AI automation workflow</p>
-                        </div>
+            <div class="submodules-list">
+                <a href="/prompting/workflow" class="submodule-link">
+                    <div class="submodule-number">01</div>
+                    <div class="submodule-info">
+                        <div class="submodule-name">Launch Workflow Builder</div>
+                        <div class="submodule-desc">Create custom AI automation workflows</div>
                     </div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                    <svg class="submodule-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 18l6-6-6-6"/>
                     </svg>
                 </a>
             </div>
         </div>
 
+        <!-- Course Cards -->
         {% for course in courses %}
-        <div class="course-card" data-course-id="{{ course.id }}">
-            <div class="course-header">
-                <h2 class="course-title">{{ course.title }}</h2>
-                <div class="course-progress">
-                    <span class="progress-text">0/{{ course.submodules|length }} Complete</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
+        <div class="glass-course-card" data-course-id="{{ course.id }}">
+            <div class="course-card-header">
+                <h2 class="course-card-title">{{ course.title }}</h2>
+                <span class="course-badge">{{ course.submodules|length }} Modules</span>
+            </div>
+            
+            <p class="course-card-description">{{ course.description }}</p>
+            
+            <div class="course-progress-section">
+                <div class="progress-info">
+                    <span class="progress-label">Progress</span>
+                    <span class="progress-percentage">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 0%"></div>
                 </div>
             </div>
             
-            <p class="course-description">{{ course.description }}</p>
-            
-            <div class="submodules-grid">
+            <div class="submodules-list">
                 {% for submodule in course.submodules %}
                 <a href="/prompting/module/{{ course.id }}/{{ submodule.id }}" 
-                   class="submodule-card {% if submodule.id != 1 %}locked{% endif %}">
+                   class="submodule-link {% if submodule.id != 1 %}locked{% endif %}">
                     <div class="submodule-number">{{ "%02d"|format(submodule.id) }}</div>
-                    <div class="submodule-content">
-                        <h3 class="submodule-title">{{ submodule.title }}</h3>
-                        <p class="submodule-description">{{ submodule.description }}</p>
+                    <div class="submodule-info">
+                        <div class="submodule-name">{{ submodule.title }}</div>
+                        <div class="submodule-desc">{{ submodule.description }}</div>
                     </div>
-                    <div class="submodule-status">
-                        {% if submodule.id == 1 %}
-                        <svg class="status-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 18l6-6-6-6"/>
-                        </svg>
-                        {% else %}
-                        <svg class="status-icon lock-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
-                        {% endif %}
-                    </div>
+                    {% if submodule.id == 1 %}
+                    <svg class="submodule-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                    {% else %}
+                    <svg class="submodule-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                    {% endif %}
                 </a>
                 {% endfor %}
             </div>
         </div>
         {% endfor %}
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Upgrad OSP. Built with Pydantic-AI and FastAPI.</p>
-        </div>
-    </footer>
+    </div>
+</section>
 </div>
 {% endblock %}

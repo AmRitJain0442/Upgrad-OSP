@@ -4,15 +4,173 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', path='css/workflow.css') }}">
+<link rel="stylesheet" href="/static/css/geometric-hero.css">
+<link rel="stylesheet" href="/static/css/glass-buttons.css">
+<style>
+    /* Override prompting.css */
+    html {
+        background: #030303 !important;
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    body {
+        background: #030303 !important;
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    .content-wrapper {
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+    
+    /* Workflow Hero Section */
+    .workflow-hero {
+        position: relative;
+        min-height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #030303;
+        overflow: hidden;
+        padding: 4rem 2rem 2rem;
+    }
+    
+    .workflow-hero .gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.15), transparent 70%);
+        pointer-events: none;
+    }
+    
+    /* Shape Container */
+    .shape-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: float 20s ease-in-out infinite;
+    }
+    
+    .shape-1 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(239, 68, 68, 0.4), transparent 70%);
+        top: -10%;
+        left: -5%;
+    }
+    
+    .shape-2 {
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.3), transparent 70%);
+        top: -5%;
+        right: -5%;
+        animation-delay: 5s;
+    }
+    
+    .shape-3 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(220, 38, 38, 0.35), transparent 70%);
+        bottom: -10%;
+        left: 20%;
+        animation-delay: 10s;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    
+    .workflow-hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        max-width: 800px;
+    }
+    
+    .workflow-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        color: #fca5a5;
+        margin-bottom: 1.5rem;
+    }
+    
+    .workflow-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .workflow-subtitle {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 0;
+    }
+    
+    /* Main Container */
+    .workflow-main {
+        background: #030303;
+        padding: 2rem;
+        min-height: 50vh;
+    }
+    
+    .workflow-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: transparent;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="workflow-container">
-    <!-- Header Section -->
-    <div class="workflow-header">
-        <h1>Tell Us What you wanna Learn !</h1>
-        <p class="subtitle">Discover AI tools and create automated workflows for your mundane tasks</p>
-    </div>
+<div style="background: #030303; min-height: 100vh;">
+    <!-- Hero Section -->
+    <section class="workflow-hero">
+        <div class="shape-container">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="gradient-overlay"></div>
+        
+        <div class="workflow-hero-content">
+            <div class="workflow-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                <span>AI Automation Builder</span>
+            </div>
+            <h1 class="workflow-title">Tell Us What You Want to Learn!</h1>
+            <p class="workflow-subtitle">Discover AI tools and create automated workflows for your tasks</p>
+        </div>
+    </section>
+
+    <!-- Main Workflow Content -->
+    <section class="workflow-main">
+        <div class="workflow-container">
 
     <!-- Step 1: Task Discovery -->
     <div id="taskDiscoverySection" class="workflow-section active">
@@ -154,6 +312,8 @@
             <div class="step-label">Roadmap</div>
         </div>
     </div>
+        </div>
+    </section>
 </div>
 {% endblock %}
 

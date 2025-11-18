@@ -1,0 +1,489 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Upgrad OSP{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/geometric-hero.css">
+<link rel="stylesheet" href="/static/css/glass-buttons.css">
+<style>
+    /* Override prompting.css */
+    html {
+        background: #030303 !important;
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    body {
+        background: #030303 !important;
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    .content-wrapper {
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+    
+    /* Dashboard Hero */
+    .dashboard-hero {
+        position: relative;
+        min-height: 40vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #030303;
+        overflow: hidden;
+        padding: 3rem 2rem 2rem;
+    }
+    
+    .dashboard-hero .gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.12), transparent 70%);
+        pointer-events: none;
+    }
+    
+    /* Shapes */
+    .shape-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: float 20s ease-in-out infinite;
+    }
+    
+    .shape-1 {
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent 70%);
+        top: -10%;
+        left: -5%;
+    }
+    
+    .shape-2 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.35), transparent 70%);
+        top: -5%;
+        right: 0%;
+        animation-delay: 7s;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -30px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    
+    .dashboard-hero-content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        max-width: 800px;
+    }
+    
+    .dashboard-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        color: #ffffff;
+    }
+    
+    .dashboard-subtitle {
+        font-size: clamp(0.95rem, 2vw, 1.1rem);
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0;
+    }
+    
+    /* Main Dashboard */
+    .dashboard-main {
+        background: #030303;
+        padding: 3rem 2rem;
+        min-height: 60vh;
+    }
+    
+    .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .stat-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        color: #a5b4fc;
+    }
+    
+    .stat-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+    }
+    
+    /* Activity Section */
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+    }
+    
+    .section-subtitle {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.95rem;
+    }
+    
+    .activity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .activity-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .activity-card:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .activity-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(99, 102, 241, 0.1);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #a5b4fc;
+    }
+    
+    .activity-info h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin-bottom: 0.25rem;
+    }
+    
+    .activity-time {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .activity-description {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    /* Progress Section */
+    .progress-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .progress-item {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .progress-item:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+    
+    .progress-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .progress-item-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+    
+    .progress-badge {
+        padding: 0.25rem 0.75rem;
+        background: rgba(99, 102, 241, 0.2);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 1rem;
+        font-size: 0.85rem;
+        color: #a5b4fc;
+    }
+    
+    .progress-bar-wrapper {
+        background: rgba(255, 255, 255, 0.05);
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+    
+    .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        border-radius: 4px;
+        transition: width 0.6s ease;
+    }
+    
+    .progress-text {
+        font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+    
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .activity-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="background: #030303; min-height: 100vh;">
+    <!-- Hero Section -->
+    <section class="dashboard-hero">
+        <div class="shape-container">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div class="gradient-overlay"></div>
+        
+        <div class="dashboard-hero-content">
+            <h1 class="dashboard-title">Welcome Back! 👋</h1>
+            <p class="dashboard-subtitle">Track your learning progress and achievements</p>
+        </div>
+    </section>
+
+    <!-- Main Dashboard Content -->
+    <section class="dashboard-main">
+        <div class="dashboard-container">
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Modules Completed</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-value">24h</div>
+                    <div class="stat-label">Learning Time</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Active Workflows</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <polyline points="17 11 19 13 23 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">Quiz Average</div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-header">
+                <h2 class="section-title">Recent Activity</h2>
+                <p class="section-subtitle">Your latest learning milestones</p>
+            </div>
+            
+            <div class="activity-grid">
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h3>Completed Module</h3>
+                            <span class="activity-time">2 hours ago</span>
+                        </div>
+                    </div>
+                    <p class="activity-description">
+                        Finished "Focused Summarization" module with 95% quiz score
+                    </p>
+                </div>
+                
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h3>Created Workflow</h3>
+                            <span class="activity-time">1 day ago</span>
+                        </div>
+                    </div>
+                    <p class="activity-description">
+                        Built "Content Creation Pipeline" using 3 AI tools
+                    </p>
+                </div>
+                
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h3>Started Course</h3>
+                            <span class="activity-time">2 days ago</span>
+                        </div>
+                    </div>
+                    <p class="activity-description">
+                        Enrolled in "Foundations of Prompting" course
+                    </p>
+                </div>
+            </div>
+
+            <!-- Learning Progress -->
+            <div class="section-header">
+                <h2 class="section-title">Learning Progress</h2>
+                <p class="section-subtitle">Continue where you left off</p>
+            </div>
+            
+            <div class="progress-list">
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-title">Foundations of Prompting</span>
+                        <span class="progress-badge">In Progress</span>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="progress-text">3 of 4 modules completed</div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-title">Advanced Techniques</span>
+                        <span class="progress-badge">Not Started</span>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text">0 of 5 modules completed</div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-item-header">
+                        <span class="progress-item-title">AI Workflow Automation</span>
+                        <span class="progress-badge">In Progress</span>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" style="width: 40%"></div>
+                    </div>
+                    <div class="progress-text">2 workflows created</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -23,5 +23,3 @@ Smart Features:
 • State management (tracks current step, attempts, completion)
 • Proactive intervention (detects weak prompts, offers suggestions)
 • Progressive unlocking of submodules
-
-///testing

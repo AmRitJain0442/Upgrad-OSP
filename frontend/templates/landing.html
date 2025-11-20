@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="{{ url_for('static', path='/css/testimonials.css') }}">
 <style>
   /* Override to ensure scrolling works */
-  body, html {
+  body,
+  html {
     overflow-y: auto !important;
     overflow-x: hidden;
     height: auto !important;
@@ -191,7 +192,7 @@
 {% block content %}
 <!-- Geometric Hero Landing Page -->
 <div class="hero-geometric">
-  
+
   <!-- Floating Shapes -->
   <div class="hero-shapes">
     <div class="elegant-shape shape-1">
@@ -199,56 +200,58 @@
         <div class="elegant-shape-ellipse"></div>
       </div>
     </div>
-    
+
     <div class="elegant-shape shape-2">
       <div class="elegant-shape-inner">
         <div class="elegant-shape-ellipse"></div>
       </div>
     </div>
-    
+
     <div class="elegant-shape shape-3">
       <div class="elegant-shape-inner">
         <div class="elegant-shape-ellipse"></div>
       </div>
     </div>
-    
+
     <div class="elegant-shape shape-4">
       <div class="elegant-shape-inner">
         <div class="elegant-shape-ellipse"></div>
       </div>
     </div>
-    
+
     <div class="elegant-shape shape-5">
       <div class="elegant-shape-inner">
         <div class="elegant-shape-ellipse"></div>
       </div>
     </div>
   </div>
-  
+
   <!-- Hero Content -->
   <div class="hero-content">
     <div class="hero-text-center">
-      
+
       <!-- Logo Branding -->
-      <img src="/static/images/upgrad-logo.png" alt="upGrad" class="brand-logo" style="width: 180px; height: auto; margin: 0 auto 2rem; display: block; filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));">
-      
+      <img src="/static/images/upgrad-logo.png" alt="upGrad" class="brand-logo"
+        style="width: 180px; height: auto; margin: 0 auto 1rem; display: block; filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));">
+
       <!-- Badge -->
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
         <span class="hero-badge-text">Prompt Engineering Platform</span>
       </div>
-      
+
       <!-- Hero Title -->
       <h1 class="hero-title">
         <span class="hero-title-line1">Master the Art of</span>
         <span class="hero-title-line2">Prompt Engineering</span>
       </h1>
-      
+
       <!-- Subtitle -->
       <p class="hero-subtitle">
-        Crafting exceptional AI prompts through innovative learning and cutting-edge technology. Transform from beginner to expert with our interactive platform.
+        Crafting exceptional AI prompts through innovative learning and cutting-edge technology. Transform from beginner
+        to expert with our interactive platform.
       </p>
-      
+
       <!-- Call to Action Buttons with Glass Theme -->
       <div class="cta-buttons">
         <a href="/prompting/" class="metal-btn metal-primary" style="text-decoration: none;">
@@ -265,29 +268,37 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Gradient Overlay -->
   <div class="hero-gradient-overlay"></div>
-  
+
 </div>
 
 <!-- Features Section -->
 <div style="background: #030303; padding: 4rem 2rem; position: relative;">
   <div style="max-width: 1400px; margin: 0 auto;">
-    
+
     <!-- Features Preview with Glowing Effect -->
     <ul class="glowing-grid">
-      
+
       <!-- Card 1: Interactive Lessons -->
       <li class="grid-item-1">
-        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3" data-glowing-duration="2000">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64"
+          data-glowing-inactive-zone="0.01" data-glowing-border-width="3" data-glowing-duration="2000">
           <div class="glowing-effect">
             <div class="glowing-gradient"></div>
           </div>
           <div class="glowing-inner">
             <div class="card-content">
               <div class="card-icon-wrapper">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                  </path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
               </div>
               <div class="card-text-wrapper">
                 <h3 class="card-title">Interactive Lessons</h3>
@@ -300,18 +311,26 @@
 
       <!-- Card 2: AI Tutor -->
       <li class="grid-item-2">
-        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64"
+          data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
           <div class="glowing-effect">
             <div class="glowing-gradient"></div>
           </div>
           <div class="glowing-inner">
             <div class="card-content">
               <div class="card-icon-wrapper">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                  </path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
               </div>
               <div class="card-text-wrapper">
                 <h3 class="card-title">Intelligent AI Tutor</h3>
-                <p class="card-description">Get instant help, tips, and personalized guidance as you learn prompt engineering</p>
+                <p class="card-description">Get instant help, tips, and personalized guidance as you learn prompt
+                  engineering</p>
               </div>
             </div>
           </div>
@@ -320,18 +339,24 @@
 
       <!-- Card 3: Workflow Automation -->
       <li class="grid-item-3">
-        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64"
+          data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
           <div class="glowing-effect">
             <div class="glowing-gradient"></div>
           </div>
           <div class="glowing-inner">
             <div class="card-content">
               <div class="card-icon-wrapper">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
               </div>
               <div class="card-text-wrapper">
                 <h3 class="card-title">Workflow Automation</h3>
-                <p class="card-description">Discover 80+ AI tools and generate detailed workflow roadmaps for your projects</p>
+                <p class="card-description">Discover 80+ AI tools and generate detailed workflow roadmaps for your
+                  projects</p>
               </div>
             </div>
           </div>
@@ -340,18 +365,29 @@
 
       <!-- Card 4: Track Progress -->
       <li class="grid-item-4">
-        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64"
+          data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
           <div class="glowing-effect">
             <div class="glowing-gradient"></div>
           </div>
           <div class="glowing-inner">
             <div class="card-content">
               <div class="card-icon-wrapper">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z">
+                  </path>
+                  <path d="M5 3v4"></path>
+                  <path d="M19 17v4"></path>
+                  <path d="M3 5h4"></path>
+                  <path d="M17 19h4"></path>
+                </svg>
               </div>
               <div class="card-text-wrapper">
                 <h3 class="card-title">Advanced Features</h3>
-                <p class="card-description">Real-time streaming responses, markdown rendering, and intelligent prompt analysis</p>
+                <p class="card-description">Real-time streaming responses, markdown rendering, and intelligent prompt
+                  analysis</p>
               </div>
             </div>
           </div>
@@ -360,24 +396,30 @@
 
       <!-- Card 5: Progress Tracking -->
       <li class="grid-item-5">
-        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64" data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
+        <div class="glowing-container" data-glowing-effect data-glowing-spread="40" data-glowing-proximity="64"
+          data-glowing-inactive-zone="0.01" data-glowing-border-width="3">
           <div class="glowing-effect">
             <div class="glowing-gradient"></div>
           </div>
           <div class="glowing-inner">
             <div class="card-content">
               <div class="card-icon-wrapper">
-                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
               </div>
               <div class="card-text-wrapper">
                 <h3 class="card-title">Track Your Progress</h3>
-                <p class="card-description">Complete lessons, pass quizzes, and unlock advanced modules as you master prompt engineering</p>
+                <p class="card-description">Complete lessons, pass quizzes, and unlock advanced modules as you master
+                  prompt engineering</p>
               </div>
             </div>
           </div>
         </div>
       </li>
-      
+
     </ul>
 
   </div>
@@ -386,7 +428,7 @@
 <!-- Testimonials Section -->
 <section class="testimonials-section">
   <div class="testimonials-container">
-    
+
     <!-- Header -->
     <div class="testimonials-header">
       <div class="testimonials-badge">Student Success Stories</div>
@@ -398,13 +440,14 @@
 
     <!-- Scrolling Columns -->
     <div class="testimonials-columns">
-      
+
       <!-- Column 1 -->
       <div class="testimonials-column testimonials-column-1">
         <!-- First set -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand complex concepts effortlessly."
+            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand
+            complex concepts effortlessly."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen" class="testimonial-avatar">
@@ -417,7 +460,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead of repetitive tasks."
+            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead
+            of repetitive tasks."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=12" alt="Marcus Johnson" class="testimonial-avatar">
@@ -430,7 +474,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt engineering enjoyable and effective."
+            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt
+            engineering enjoyable and effective."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=5" alt="Priya Sharma" class="testimonial-avatar">
@@ -444,7 +489,8 @@
         <!-- Duplicate for infinite scroll -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand complex concepts effortlessly."
+            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand
+            complex concepts effortlessly."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen" class="testimonial-avatar">
@@ -457,7 +503,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead of repetitive tasks."
+            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead
+            of repetitive tasks."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=12" alt="Marcus Johnson" class="testimonial-avatar">
@@ -470,7 +517,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt engineering enjoyable and effective."
+            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt
+            engineering enjoyable and effective."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=5" alt="Priya Sharma" class="testimonial-avatar">
@@ -486,7 +534,8 @@
       <div class="testimonials-column testimonials-column-2">
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating my learning curve dramatically."
+            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating
+            my learning curve dramatically."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivera" class="testimonial-avatar">
@@ -499,7 +548,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress tracking keeps me motivated!"
+            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress
+            tracking keeps me motivated!"
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=20" alt="Emma Wilson" class="testimonial-avatar">
@@ -512,7 +562,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80% of my routine prompt tasks."
+            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80%
+            of my routine prompt tasks."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=15" alt="David Kim" class="testimonial-avatar">
@@ -526,7 +577,8 @@
         <!-- Duplicate -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating my learning curve dramatically."
+            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating
+            my learning curve dramatically."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivera" class="testimonial-avatar">
@@ -539,7 +591,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress tracking keeps me motivated!"
+            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress
+            tracking keeps me motivated!"
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=20" alt="Emma Wilson" class="testimonial-avatar">
@@ -552,7 +605,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80% of my routine prompt tasks."
+            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80%
+            of my routine prompt tasks."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=15" alt="David Kim" class="testimonial-avatar">
@@ -568,7 +622,8 @@
       <div class="testimonials-column testimonials-column-3">
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI responses consistently."
+            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI
+            responses consistently."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=27" alt="Lisa Anderson" class="testimonial-avatar">
@@ -581,7 +636,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated them into my workflow seamlessly."
+            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated
+            them into my workflow seamlessly."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=8" alt="James Taylor" class="testimonial-avatar">
@@ -594,7 +650,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive, engaging, and results-driven."
+            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive,
+            engaging, and results-driven."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=47" alt="Nina Patel" class="testimonial-avatar">
@@ -608,7 +665,8 @@
         <!-- Duplicate -->
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI responses consistently."
+            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI
+            responses consistently."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=27" alt="Lisa Anderson" class="testimonial-avatar">
@@ -621,7 +679,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated them into my workflow seamlessly."
+            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated
+            them into my workflow seamlessly."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=8" alt="James Taylor" class="testimonial-avatar">
@@ -634,7 +693,8 @@
 
         <div class="testimonial-card">
           <div class="testimonial-text">
-            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive, engaging, and results-driven."
+            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive,
+            engaging, and results-driven."
           </div>
           <div class="testimonial-author">
             <img src="https://i.pravatar.cc/150?img=47" alt="Nina Patel" class="testimonial-avatar">
@@ -653,10 +713,10 @@
 <!-- Footer -->
 <div style="background: #030303; padding: 3rem 2rem; text-align: center;">
   <div class="landing-footer">
-    <p>Built with ❤️ for prompt engineering enthusiasts</p>
+    <p style="color: white;">Made with ❤️ by Learn-Kuch-bhi</p>
     <p style="margin-top: 0.5rem;">
-      <a href="/prompting/">Start Learning</a> • 
-      <a href="/prompting/workflow">Workflow Automation</a> • 
+      <a href="/prompting/">Start Learning</a> •
+      <a href="/prompting/workflow">Workflow Automation</a> •
       <a href="/glass-demo">View Demos</a>
     </p>
   </div>
@@ -682,7 +742,9 @@
 
   // Log initialization
   console.log('Geometric hero loaded');
-  console.log('Glowing effects initialized on', document.querySelectorAll('[data-glowing-effect]').length, 'elements');
-  console.log('Glass buttons initialized on', document.querySelectorAll('.liquid-glass-btn, .metal-btn').length, 'buttons');
+  console.log('Glowing effects initialized on', document.querySelectorAll('[data-glowing-effect]').length,
+    'elements');
+  console.log('Glass buttons initialized on', document.querySelectorAll('.liquid-glass-btn, .metal-btn').length,
+    'buttons');
 </script>
 {% endblock %}

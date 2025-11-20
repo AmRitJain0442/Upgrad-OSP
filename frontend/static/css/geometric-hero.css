@@ -2,7 +2,7 @@
 
 .hero-geometric {
   position: relative;
-  min-height: 100vh;
+  min-height: 85vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -147,11 +147,11 @@
   z-index: 10;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .hero-text-center {
-  max-width: 768px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
 }
@@ -165,7 +165,7 @@
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeUpContent 1s cubic-bezier(0.25, 0.4, 0.25, 1) 0.5s forwards;
@@ -186,11 +186,11 @@
 
 /* Title */
 .hero-title {
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.2;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeUpContent 1s cubic-bezier(0.25, 0.4, 0.25, 1) 0.7s forwards;
@@ -202,7 +202,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .hero-title-line2 {
@@ -211,13 +211,14 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  white-space: nowrap;
 }
 
 /* Subtitle */
 .hero-subtitle {
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
   font-weight: 300;
   letter-spacing: 0.02em;

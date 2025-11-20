@@ -2297,6 +2297,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "google-generativeai" },
+    { name = "httpx" },
     { name = "jinja2" },
     { name = "pydantic" },
     { name = "pydantic-ai" },
@@ -2313,6 +2314,7 @@ dependencies = [
 requires-dist = [
     { name = "fastapi", specifier = ">=0.120.4" },
     { name = "google-generativeai", specifier = ">=0.8.5" },
+    { name = "httpx", specifier = ">=0.27.0" },
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "pydantic", specifier = ">=2.12.3" },
     { name = "pydantic-ai", specifier = ">=1.9.1" },

@@ -195,18 +195,33 @@
         max-width: 800px;
     }
     
+    .system-label {
+        font-family: 'Courier New', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        color: #6366f1;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    
     .dashboard-title {
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 800;
-        line-height: 1.2;
-        margin-bottom: 0.5rem;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 1rem;
         color: #ffffff;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
     }
     
     .dashboard-subtitle {
-        font-size: clamp(0.95rem, 2vw, 1.1rem);
-        color: rgba(255, 255, 255, 0.6);
+        font-family: 'Courier New', monospace;
+        font-size: clamp(0.85rem, 2vw, 0.95rem);
+        color: rgba(255, 255, 255, 0.5);
         margin-bottom: 0;
+        letter-spacing: 0.1em;
     }
     
     /* Main Dashboard */
@@ -230,10 +245,10 @@
     }
     
     .stat-card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        background: rgba(10, 10, 10, 0.9);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: 0.25rem;
         padding: 2rem;
         transition: all 0.3s ease;
         position: relative;
@@ -245,23 +260,38 @@
         position: absolute;
         top: 0;
         left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, 
-            transparent 0%, 
-            rgba(99, 102, 241, 0.5) 50%, 
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, 
+            rgba(99, 102, 241, 0.8) 0%, 
             transparent 100%);
         opacity: 0;
         transition: opacity 0.3s ease;
     }
     
+    .stat-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(99, 102, 241, 0.03) 2px,
+            rgba(99, 102, 241, 0.03) 4px
+        );
+        pointer-events: none;
+    }
+    
     .stat-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(99, 102, 241, 0.4);
+        transform: translateY(-2px);
+        border-color: rgba(99, 102, 241, 0.5);
         box-shadow: 
-            0 12px 32px rgba(0, 0, 0, 0.3),
-            0 0 40px rgba(99, 102, 241, 0.1);
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+            0 0 30px rgba(99, 102, 241, 0.2),
+            inset 0 0 30px rgba(99, 102, 241, 0.05);
     }
     
     .stat-card:hover::before {
@@ -269,38 +299,55 @@
     }
     
     .stat-icon {
-        width: 48px;
-        height: 48px;
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        border-radius: 0.75rem;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        border-radius: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 1rem;
-        color: #a5b4fc;
+        margin-bottom: 1.5rem;
+        color: #6366f1;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        position: relative;
+    }
+    
+    .stat-icon::after {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
     .stat-card:hover .stat-icon {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(139, 92, 246, 0.2) 100%);
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
-        transform: scale(1.05);
+        border-color: #6366f1;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    
+    .stat-card:hover .stat-icon::after {
+        opacity: 1;
     }
     
     .stat-value {
-        font-size: 2.5rem;
-        font-weight: 800;
+        font-size: 3rem;
+        font-weight: 900;
         color: #ffffff;
         line-height: 1;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.05em;
     }
     
     .stat-label {
-        font-size: 0.95rem;
-        color: rgba(255, 255, 255, 0.6);
-        font-weight: 500;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-family: 'Courier New', monospace;
     }
     
     /* Activity Section */
@@ -309,15 +356,20 @@
     }
     
     .section-title {
-        font-size: 1.75rem;
-        font-weight: 700;
+        font-size: 1.5rem;
+        font-weight: 900;
         color: #ffffff;
         margin-bottom: 0.5rem;
+        font-family: 'Courier New', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
     }
     
     .section-subtitle {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.85rem;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.05em;
     }
     
     .activity-grid {
@@ -328,17 +380,34 @@
     }
     
     .activity-card {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(10, 10, 10, 0.8);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        border-radius: 0;
         padding: 1.5rem;
         transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .activity-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: #6366f1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
     .activity-card:hover {
-        border-color: rgba(99, 102, 241, 0.3);
-        transform: translateY(-2px);
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+    }
+    
+    .activity-card:hover::before {
+        opacity: 1;
     }
     
     .activity-header {
@@ -349,31 +418,36 @@
     }
     
     .activity-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(99, 102, 241, 0.1);
-        border-radius: 0.5rem;
+        width: 36px;
+        height: 36px;
+        background: transparent;
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        border-radius: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #a5b4fc;
+        color: #6366f1;
     }
     
     .activity-info h3 {
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-size: 0.95rem;
+        font-weight: 700;
         color: #ffffff;
         margin-bottom: 0.25rem;
+        font-family: 'Courier New', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
     
     .activity-time {
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Courier New', monospace;
     }
     
     .activity-description {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.9rem;
         line-height: 1.6;
     }
     
@@ -385,16 +459,34 @@
     }
     
     .progress-item {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(10, 10, 10, 0.8);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        border-radius: 0;
         padding: 1.5rem;
         transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .progress-item::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
     
     .progress-item:hover {
-        border-color: rgba(99, 102, 241, 0.3);
+        border-color: rgba(99, 102, 241, 0.4);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+    }
+    
+    .progress-item:hover::before {
+        opacity: 1;
     }
     
     .progress-item-header {
@@ -405,56 +497,66 @@
     }
     
     .progress-item-title {
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-size: 0.95rem;
+        font-weight: 700;
         color: #ffffff;
+        font-family: 'Courier New', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
     
     .progress-badge {
         padding: 0.25rem 0.75rem;
-        background: rgba(99, 102, 241, 0.2);
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        border-radius: 1rem;
-        font-size: 0.85rem;
-        color: #a5b4fc;
+        background: transparent;
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        border-radius: 0;
+        font-size: 0.7rem;
+        color: #6366f1;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
     }
     
     .progress-bar-wrapper {
-        background: rgba(255, 255, 255, 0.05);
-        height: 8px;
-        border-radius: 4px;
+        background: rgba(99, 102, 241, 0.1);
+        height: 4px;
+        border-radius: 0;
         overflow: hidden;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid rgba(99, 102, 241, 0.2);
     }
     
     .progress-bar-fill {
         height: 100%;
-        background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #a5b4fc 100%);
-        border-radius: 4px;
+        background: #6366f1;
+        border-radius: 0;
         transition: width 0.6s ease;
         position: relative;
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.6);
     }
     
     .progress-bar-fill::after {
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
         right: 0;
-        bottom: 0;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        width: 20px;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5));
         animation: shimmer 2s infinite;
     }
     
     @keyframes shimmer {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(200%); }
+        0% { transform: translateX(-20px); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateX(20px); opacity: 0; }
     }
     
     .progress-text {
-        font-size: 0.875rem;
-        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-family: 'Courier New', monospace;
+        letter-spacing: 0.05em;
     }
     
     @media (max-width: 768px) {
@@ -497,8 +599,9 @@
         <div class="gradient-overlay"></div>
         
         <div class="dashboard-hero-content">
-            <h1 class="dashboard-title">Welcome Back! 👋</h1>
-            <p class="dashboard-subtitle">Track your learning progress and achievements</p>
+            <div class="system-label">SYSTEM.DASHBOARD</div>
+            <h1 class="dashboard-title">CONTROL CENTER</h1>
+            <p class="dashboard-subtitle">Performance Metrics | Learning Analytics | System Status</p>
         </div>
     </section>
 

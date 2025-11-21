@@ -20,6 +20,7 @@ from app.workflow.ai_tools_database import (
     get_all_tools,
     format_tools_for_prompt
 )
+from app.prompting.curriculum import FULL_CURRICULUM
 
 # Configure Gemini API
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
@@ -184,6 +185,116 @@ async def search_tavily(query: str) -> List[AIToolSearchResult]:
         return []
 
 
+def generate_step_quiz(step_title: str, step_description: str, ai_tool: str) -> Optional[Dict[str, Any]]:
+    """
+    Generate an MCQ quiz for a workflow step using Gemini
+    """
+    try:
+        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        if api_key:
+            genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-2.5-flash')
+        
+        prompt = f"""Create a multiple-choice quiz question to test understanding of this workflow step:
+
+STEP TITLE: {step_title}
+STEP DESCRIPTION: {step_description}
+AI TOOL USED: {ai_tool}
+
+Generate 1 thoughtful MCQ question that tests:
+- Understanding of what this step accomplishes
+- Why this tool is appropriate for this step
+- Key concepts or best practices for this step
+
+Return ONLY valid JSON with this structure:
+{{
+  "question": "Clear, specific question about this step",
+  "options": ["Option A", "Option B", "Option C", "Option D"],
+  "correct_index": 0,
+  "explanation": "Why this answer is correct and what to learn"
+}}
+
+The correct answer should be at a random index (0-3), not always first."""
+
+        response = model.generate_content(
+            prompt,
+            safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+            }
+        )
+        
+        content = response.text.strip()
+        if content.startswith('```json'):
+            content = content[7:-3].strip()
+        elif content.startswith('```'):
+            content = content[3:-3].strip()
+        
+        quiz_data = json.loads(content)
+        return quiz_data
+        
+    except Exception as e:
+        print(f"Error generating quiz: {e}")
+        return None
+
+
+def get_relevant_course_for_step(step_category: str, step_description: str, step_title: str = "") -> Optional[Dict[str, str]]:
+    """
+    Map workflow step to a relevant prompting course from curriculum
+    """
+    # Keyword mappings for each course module
+    course_mappings = {
+        "foundations": {
+            "keywords": ["basic", "beginner", "start", "foundation", "fundamental", "summarize", "summary", "extract", "constraint", "research", "gather", "collect", "find"],
+            "module": FULL_CURRICULUM[0]  # Foundations of Prompting
+        },
+        "advanced-patterns": {
+            "keywords": ["format", "structure", "template", "json", "output", "pattern", "chain", "sequence", "organize", "arrange"],
+            "module": FULL_CURRICULUM[1]  # Advanced Prompting Patterns
+        },
+        "domain-specific": {
+            "keywords": ["technical", "business", "creative", "data", "analysis", "report", "documentation", "write", "content", "copy"],
+            "module": FULL_CURRICULUM[2]  # Domain-Specific Prompting
+        },
+        "advanced-techniques": {
+            "keywords": ["optimize", "improve", "refine", "meta", "context", "error", "robust", "advanced", "polish", "enhance"],
+            "module": FULL_CURRICULUM[3]  # Advanced AI Techniques
+        },
+        "presentation-builder": {
+            "keywords": ["presentation", "slide", "deck", "powerpoint", "visual", "html", "css", "display", "present", "show"],
+            "module": FULL_CURRICULUM[4]  # AI-Powered Presentation Builder
+        }
+    }
+    
+    # Check step category, description, and title for keyword matches
+    combined_text = f"{step_category} {step_description} {step_title}".lower()
+    
+    best_match = None
+    best_score = 0
+    
+    for course_key, course_data in course_mappings.items():
+        score = sum(1 for keyword in course_data["keywords"] if keyword in combined_text)
+        if score > best_score:
+            best_score = score
+            best_match = course_data["module"]
+    
+    # If no good match, recommend foundations as default
+    if not best_match or best_score == 0:
+        best_match = FULL_CURRICULUM[0]
+    
+    print(f"Course mapping: '{combined_text[:50]}...' -> Score: {best_score} -> {best_match['title']}")
+    
+    # Return course info
+    return {
+        "id": best_match["id"],
+        "title": best_match["title"],
+        "description": best_match["description"],
+        "url": f"/courses/{best_match['id']}"
+    }
+
+
 async def generate_workflow_roadmap(
     task_description: str,
     answers: Dict[str, str],
@@ -327,6 +438,41 @@ Return ONLY valid JSON with this exact structure:
             content = content[3:-3].strip()
         
         roadmap_data = json.loads(content)
+        
+        # Add course recommendations and evaluator links to each step
+        for step_data in roadmap_data.get('steps', []):
+            # Determine category from step description and title
+            step_text = f"{step_data.get('title', '')} {step_data.get('description', '')}"
+            category = 'general'
+            
+            # Categorize step
+            if any(keyword in step_text.lower() for keyword in ['research', 'search', 'find', 'gather']):
+                category = 'research'
+            elif any(keyword in step_text.lower() for keyword in ['present', 'slide', 'deck']):
+                category = 'presentation'
+            elif any(keyword in step_text.lower() for keyword in ['write', 'content', 'copy']):
+                category = 'writing'
+            
+            # Get relevant course
+            course_info = get_relevant_course_for_step(
+                category, 
+                step_data.get('description', ''),
+                step_data.get('title', '')
+            )
+            print(f"DEBUG: Step '{step_data.get('title')}' -> Category: {category} -> Course: {course_info['title']}")
+            step_data['related_course'] = course_info
+            step_data['evaluator_link'] = '/evaluator/'
+            
+            # Generate MCQ quiz for this step
+            quiz_data = generate_step_quiz(
+                step_data.get('title', ''),
+                step_data.get('description', ''),
+                step_data.get('ai_tool', '')
+            )
+            step_data['quiz'] = quiz_data
+            if quiz_data:
+                print(f"DEBUG: Generated quiz for '{step_data.get('title')}')")
+        
         return WorkflowRoadmap(**roadmap_data)
         
     except Exception as e:

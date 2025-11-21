@@ -510,6 +510,76 @@ html:has(.workflow-container) {
     gap: 0.25rem;
 }
 
+/* Course Recommendation Card in Step Node */
+.step-course-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.step-course-card:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.step-course-card .course-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.step-course-card .course-info {
+    flex: 1;
+}
+
+.step-course-card .course-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #60a5fa;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.step-course-card .course-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.step-course-card .course-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+}
+
+.step-course-card .course-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #60a5fa;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.step-course-card .course-btn:hover {
+    background: rgba(59, 130, 246, 0.3);
+    border-color: #3b82f6;
+    color: #ffffff;
+}
+
 /* Step Details Modal */
 .modal {
     display: none;
@@ -776,6 +846,120 @@ html:has(.workflow-container) {
     margin-right: 0.5rem;
 }
 
+/* Evaluator CTA in Modal */
+.evaluator-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.15));
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.evaluator-cta:hover {
+    border-color: #ef4444;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.2));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+}
+
+.evaluator-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.evaluator-text {
+    flex: 1;
+}
+
+.evaluator-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.evaluator-subtitle {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.evaluator-btn {
+    padding: 0.75rem 1.5rem;
+    background: #ef4444;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.evaluator-btn:hover {
+    background: #dc2626;
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Course Detail Section in Modal */
+.course-detail-section {
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #bfdbfe;
+}
+
+.course-detail-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 10px;
+    border: 2px solid #e0e7ff;
+}
+
+.course-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.course-detail-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.course-detail-btn {
+    padding: 0.75rem 1.5rem;
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.course-detail-btn:hover {
+    background: #2563eb;
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.course-detail-desc {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
 /* Tips Section */
 .tips-section {
     background: #fffbeb;
@@ -998,4 +1182,238 @@ html:has(.workflow-container) {
         opacity: 1;
         margin-top: 0.5rem;
     }
+}
+
+/* Step Actions (Evaluator Button in Tree) */
+.step-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.step-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.5rem;
+    color: #ef4444;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.step-action-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    transform: translateY(-2px);
+}
+
+.step-action-btn .btn-icon {
+    font-size: 1rem;
+}
+
+/* Evaluator CTA in Modal */
+.evaluator-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05));
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 0.75rem;
+}
+
+.evaluator-icon {
+    font-size: 2rem;
+    color: #ef4444;
+}
+
+.evaluator-text {
+    flex: 1;
+}
+
+.evaluator-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.evaluator-subtitle {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.evaluator-btn {
+    padding: 0.75rem 1.5rem;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.evaluator-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Quiz Section */
+.quiz-section {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.quiz-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.quiz-option:hover:not(:disabled) {
+    border-color: #3b82f6;
+    background: #f8fafc;
+    transform: translateX(4px);
+}
+
+.quiz-option:disabled {
+    cursor: not-allowed;
+}
+
+.quiz-option.correct {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.quiz-option.incorrect {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.option-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    font-weight: 700;
+    color: #475569;
+    flex-shrink: 0;
+}
+
+.quiz-option.correct .option-letter {
+    background: #10b981;
+    color: white;
+}
+
+.quiz-option.incorrect .option-letter {
+    background: #ef4444;
+    color: white;
+}
+
+.option-text {
+    flex: 1;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.quiz-feedback {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+}
+
+.feedback-correct {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.feedback-correct .feedback-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #10b981;
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.feedback-incorrect {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.feedback-incorrect .feedback-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #ef4444;
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.feedback-correct strong,
+.feedback-incorrect strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #1e293b;
+}
+
+.feedback-correct p,
+.feedback-incorrect p {
+    margin: 0;
+    color: #64748b;
+    line-height: 1.6;
 }

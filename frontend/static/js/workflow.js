@@ -303,6 +303,19 @@ class WorkflowAutomation {
             const altCount = step.alternatives ? step.alternatives.length : 0;
             const altText = altCount > 0 ? `+${altCount} alternative${altCount > 1 ? 's' : ''}` : '';
             
+            // Course recommendation if available
+            const courseHtml = step.related_course ? `
+                <div class="step-course-card">
+                    <div class="course-icon">📚</div>
+                    <div class="course-info">
+                        <div class="course-label">RECOMMENDED COURSE</div>
+                        <div class="course-title">${step.related_course.title}</div>
+                        <div class="course-desc">${step.related_course.description}</div>
+                    </div>
+                    <a href="${step.related_course.url}" class="course-btn">LEARN →</a>
+                </div>
+            ` : '';
+            
             stepDiv.innerHTML = `
                 <div class="step-node" data-step-index="${index}">
                     <div class="step-number">${index + 1}</div>
@@ -316,13 +329,28 @@ class WorkflowAutomation {
                         <strong>${step.ai_tool}</strong>
                         ${altCount > 0 ? `<span class="alt-badge">${altText}</span>` : ''}
                     </div>
+                    ${courseHtml}
+                    <div class="step-actions">
+                        <a href="${step.evaluator_link || '/evaluator/'}" class="step-action-btn evaluator-btn" target="_blank">
+                            <span class="btn-icon">✓</span>
+                            TEST YOUR PROMPT
+                        </a>
+                    </div>
                     <div class="step-expand">
-                        Click to view prompts, tips, alternatives & more →
+                        Click to view prompts, tips, quiz & more →
                     </div>
                 </div>
             `;
 
-            stepDiv.querySelector('.step-node').addEventListener('click', () => {
+            // Prevent action buttons from triggering modal
+            stepDiv.querySelectorAll('.step-action-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            });
+
+            stepDiv.querySelector('.step-node').addEventListener('click', (e) => {
+                e.preventDefault();
                 this.showStepDetails(step);
             });
 
@@ -333,6 +361,9 @@ class WorkflowAutomation {
     showStepDetails(step) {
         const modal = document.getElementById('stepModal');
         const detailsContainer = document.getElementById('stepDetails');
+
+        // Save current scroll position
+        const scrollY = window.scrollY;
 
         detailsContainer.innerHTML = `
             <h2>${step.title}</h2>
@@ -345,6 +376,19 @@ class WorkflowAutomation {
                     ${step.tool_url ? `<a href="${step.tool_url}" target="_blank" class="tool-link-primary">Visit tool →</a>` : ''}
                 </div>
             </div>
+
+            ${step.related_course ? `
+            <div class="detail-section course-detail-section">
+                <h3>📚 Recommended Course</h3>
+                <div class="course-detail-card">
+                    <div class="course-detail-header">
+                        <div class="course-detail-title">${step.related_course.title}</div>
+                        <a href="${step.related_course.url}" class="course-detail-btn">START COURSE →</a>
+                    </div>
+                    <p class="course-detail-desc">${step.related_course.description}</p>
+                </div>
+            </div>
+            ` : ''}
 
             ${step.alternatives && step.alternatives.length > 0 ? `
                 <div class="detail-section alternatives-section">
@@ -379,6 +423,16 @@ class WorkflowAutomation {
                         </div>
                     `).join('')}
                 </div>
+                ${step.evaluator_link ? `
+                <div class="evaluator-cta">
+                    <div class="evaluator-icon">⚡</div>
+                    <div class="evaluator-text">
+                        <div class="evaluator-title">TEST YOUR PROMPT</div>
+                        <div class="evaluator-subtitle">Use our AI Evaluator to analyze and improve your prompts</div>
+                    </div>
+                    <a href="${step.evaluator_link}" class="evaluator-btn">EVALUATE →</a>
+                </div>
+                ` : ''}
             </div>
 
             <div class="detail-section tips-section">
@@ -403,9 +457,77 @@ class WorkflowAutomation {
                     </ul>
                 </div>
             </div>
+
+            ${step.quiz ? `
+            <div class="detail-section quiz-section">
+                <h3>📝 Knowledge Check</h3>
+                <div class="quiz-container" data-step-quiz="${step.id}">
+                    <div class="quiz-question">${step.quiz.question}</div>
+                    <div class="quiz-options">
+                        ${step.quiz.options.map((option, idx) => `
+                            <button class="quiz-option" data-option-index="${idx}">
+                                <span class="option-letter">${String.fromCharCode(65 + idx)}</span>
+                                <span class="option-text">${option}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-feedback" style="display: none;"></div>
+                </div>
+            </div>
+            ` : ''}
         `;
 
+        // Add quiz functionality
+        if (step.quiz) {
+            setTimeout(() => {
+                const quizOptions = detailsContainer.querySelectorAll('.quiz-option');
+                const feedbackDiv = detailsContainer.querySelector('.quiz-feedback');
+                
+                quizOptions.forEach((btn, idx) => {
+                    btn.addEventListener('click', () => {
+                        // Disable all options
+                        quizOptions.forEach(opt => opt.disabled = true);
+                        
+                        // Check if correct
+                        const isCorrect = idx === step.quiz.correct_index;
+                        
+                        if (isCorrect) {
+                            btn.classList.add('correct');
+                            feedbackDiv.innerHTML = `
+                                <div class="feedback-correct">
+                                    <span class="feedback-icon">✓</span>
+                                    <div>
+                                        <strong>Correct!</strong>
+                                        <p>${step.quiz.explanation}</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            btn.classList.add('incorrect');
+                            quizOptions[step.quiz.correct_index].classList.add('correct');
+                            feedbackDiv.innerHTML = `
+                                <div class="feedback-incorrect">
+                                    <span class="feedback-icon">✗</span>
+                                    <div>
+                                        <strong>Not quite right.</strong>
+                                        <p>${step.quiz.explanation}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        feedbackDiv.style.display = 'block';
+                    });
+                });
+            }, 100);
+        }
+
         modal.style.display = 'block';
+        
+        // Restore scroll position
+        requestAnimationFrame(() => {
+            window.scrollTo(0, scrollY);
+        });
     }
 
     exportRoadmap() {

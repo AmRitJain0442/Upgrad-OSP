@@ -25,6 +25,9 @@ class WorkflowStep(BaseModel):
     estimated_time: str
     dependencies: List[str] = Field(default_factory=list)
     alternatives: List[Dict[str, str]] = Field(default_factory=list)
+    related_course: Optional[Dict[str, str]] = None  # Course recommendation: {id, title, description, url}
+    evaluator_link: str = "/evaluator/"  # Link to evaluator page
+    quiz: Optional[Dict[str, Any]] = None  # MCQ quiz: {question, options, correct_index, explanation}
 
 
 class WorkflowRoadmap(BaseModel):

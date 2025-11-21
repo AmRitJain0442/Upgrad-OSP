@@ -287,11 +287,14 @@ def get_relevant_course_for_step(step_category: str, step_description: str, step
     print(f"Course mapping: '{combined_text[:50]}...' -> Score: {best_score} -> {best_match['title']}")
     
     # Return course info
+    # Get first submodule for the URL (modules start at submodule 1)
+    first_submodule_id = 1
+    
     return {
         "id": best_match["id"],
         "title": best_match["title"],
         "description": best_match["description"],
-        "url": f"/courses/{best_match['id']}"
+        "url": f"/prompting/module/{best_match['id']}/{first_submodule_id}"
     }
 
 

@@ -115,8 +115,24 @@ async def generate_roadmap_endpoint(session_id: str):
         # Generate roadmap
         roadmap = await generate_workflow_roadmap(task_description, answers, tools)
         
+        # Debug: Check what's in the roadmap
+        roadmap_dict = roadmap.dict()
+        print(f"\n{'='*80}")
+        print(f"ROADMAP DATA BEING SENT TO FRONTEND:")
+        print(f"{'='*80}")
+        print(f"Task: {roadmap_dict['task_title']}")
+        print(f"Steps: {len(roadmap_dict['steps'])}")
+        if roadmap_dict['steps']:
+            first_step = roadmap_dict['steps'][0]
+            print(f"\nFirst Step Data:")
+            print(f"  - Title: {first_step.get('title')}")
+            print(f"  - related_course: {first_step.get('related_course', 'MISSING!')}")
+            print(f"  - evaluator_link: {first_step.get('evaluator_link', 'MISSING!')}")
+            print(f"  - quiz: {'Present' if first_step.get('quiz') else 'MISSING!'}")
+        print(f"{'='*80}\n")
+        
         # Store roadmap in session
-        workflow_sessions[session_id]["roadmap"] = roadmap.dict()
+        workflow_sessions[session_id]["roadmap"] = roadmap_dict
         
         return roadmap
         

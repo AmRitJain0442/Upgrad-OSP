@@ -9,6 +9,8 @@ class WorkflowQuestion(BaseModel):
     """Question for workflow discovery"""
     question: str
     context: Optional[str] = None
+    options: Optional[List[str]] = None  # MCQ options for quick selection
+    allow_custom: bool = True  # Allow custom text input alongside options
 
 
 class WorkflowStep(BaseModel):

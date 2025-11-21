@@ -157,17 +157,56 @@ class WorkflowAutomation {
         this.questions.forEach((question, index) => {
             const questionDiv = document.createElement('div');
             questionDiv.className = 'question-item';
+            
+            // Build options HTML if available
+            let optionsHtml = '';
+            if (question.options && question.options.length > 0) {
+                optionsHtml = `
+                    <div class="question-options">
+                        ${question.options.map((option, optIdx) => `
+                            <button type="button" class="option-btn" data-question-index="${index}" data-option-value="${option}">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
             questionDiv.innerHTML = `
                 <label>${question.question}</label>
                 ${question.context ? `<p class="question-context">${question.context}</p>` : ''}
-                <textarea 
-                    id="answer-${index}" 
-                    rows="3" 
-                    placeholder="Your answer..."
-                    data-question="${question.question}"
-                ></textarea>
+                ${optionsHtml}
+                ${question.allow_custom !== false ? `
+                    <textarea 
+                        id="answer-${index}" 
+                        rows="3" 
+                        placeholder="${question.options && question.options.length > 0 ? 'Or type your own answer...' : 'Your answer...'}"
+                        data-question="${question.question}"
+                    ></textarea>
+                ` : ''}
             `;
             container.appendChild(questionDiv);
+        });
+
+        // Add click handlers for option buttons
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const questionIndex = e.target.dataset.questionIndex;
+                const optionValue = e.target.dataset.optionValue;
+                
+                // Deselect all buttons in this question
+                const questionDiv = e.target.closest('.question-item');
+                questionDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                
+                // Select this button
+                e.target.classList.add('selected');
+                
+                // Update textarea with selected value
+                const textarea = document.getElementById(`answer-${questionIndex}`);
+                if (textarea) {
+                    textarea.value = optionValue;
+                }
+            });
         });
 
         // Show submit button

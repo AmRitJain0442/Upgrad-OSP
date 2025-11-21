@@ -53,8 +53,23 @@ Generate 3-5 follow-up questions to better understand their needs. Questions sho
 - Time constraints
 - Technical skill level
 
-Return ONLY a JSON array of objects with "question" and "context" fields.
-Example: [{{"question": "What format is your input data?", "context": "This helps me recommend the right tools"}}]
+For EACH question, provide 3-5 common answer options to make it easy for users to select.
+The user can also type a custom answer if none of the options fit.
+
+Return ONLY a JSON array of objects with these fields:
+- "question": The question text
+- "context": Why this question matters (optional)
+- "options": Array of 3-5 common answer choices
+- "allow_custom": true (always allow custom answers)
+
+Example: [
+  {{
+    "question": "What format is your input data?",
+    "context": "This helps me recommend the right tools",
+    "options": ["Text documents (PDF/DOCX)", "Spreadsheets (Excel/CSV)", "Images/Screenshots", "Audio/Video files", "Web pages/URLs"],
+    "allow_custom": true
+  }}
+]
 """
 
         response = model.generate_content(
@@ -79,19 +94,25 @@ Example: [{{"question": "What format is your input data?", "context": "This help
         
     except Exception as e:
         print(f"Error generating questions: {e}")
-        # Fallback questions
+        # Fallback questions with options
         return [
             WorkflowQuestion(
                 question="What is the main input you'll be working with?",
-                context="Understanding your input helps me recommend the right AI tools"
+                context="Understanding your input helps me recommend the right AI tools",
+                options=["Text documents (PDF/DOCX)", "Spreadsheets (Excel/CSV)", "Images/Screenshots", "Audio/Video files", "Web pages/URLs"],
+                allow_custom=True
             ),
             WorkflowQuestion(
                 question="What output format do you need?",
-                context="This determines which tools can deliver your desired results"
+                context="This determines which tools can deliver your desired results",
+                options=["Summary/Report", "Structured data (JSON/CSV)", "Presentation slides", "Images/Graphics", "Audio/Video content"],
+                allow_custom=True
             ),
             WorkflowQuestion(
                 question="How much time do you have for this task?",
-                context="Some AI tools are faster but less thorough than others"
+                context="Some AI tools are faster but less thorough than others",
+                options=["Under 5 minutes (Quick)", "15-30 minutes (Moderate)", "1+ hours (Detailed)", "Ongoing/Recurring task"],
+                allow_custom=True
             )
         ]
 

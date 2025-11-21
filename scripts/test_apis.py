@@ -57,7 +57,7 @@ async def test_gemini_api():
         model = genai.GenerativeModel('gemini-2.5-flash')
         
         response = model.generate_content(
-            "Say 'API test successful' in 3 words",
+            "Count from 1 to 3",
             safety_settings={
                 HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
@@ -66,11 +66,14 @@ async def test_gemini_api():
             }
         )
         
-        if response.text:
+        # Check if response has valid content
+        if response.parts:
             print_status("Gemini API", "SUCCESS", f"Response: {response.text[:50]}")
             return True
         else:
-            print_status("Gemini API", "FAILED", "No response received")
+            # Check finish reason
+            finish_reason = response.candidates[0].finish_reason if response.candidates else None
+            print_status("Gemini API", "FAILED", f"No response received. Finish reason: {finish_reason}")
             return False
             
     except Exception as e:

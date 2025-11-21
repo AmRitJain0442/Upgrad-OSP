@@ -32,7 +32,7 @@ class SummaryResult(BaseModel):
 
 # AI Tutor Agent - Fast model for real-time guidance
 tutor_agent = Agent(
-    model=get_google_model("gemini-flash-latest", thinking_enabled=False),
+    model=get_google_model("gemini-2.5-flash", thinking_enabled=False),
     system_prompt="""You are an expert AI prompt engineering tutor guiding learners through a structured curriculum.
 
     🎯 YOUR ROLE:
@@ -111,7 +111,7 @@ tutor_agent = Agent(
 
 # Workspace Agent - For executing user prompts on documents
 workspace_agent = Agent(
-    model=get_google_model("gemini-flash-latest"),
+    model=get_google_model("gemini-2.5-flash"),
     system_prompt="""You are a Workspace AI assistant helping learners practice prompt engineering.
 
     🎯 YOUR PURPOSE:

@@ -8,6 +8,7 @@ import json
 import re
 from typing import Optional
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
 from .models import EvaluationFeedback
 
 
@@ -115,34 +116,33 @@ Return your analysis in the JSON format specified in the system prompt.
 def parse_gemini_response(response_text: str) -> dict:
     """Parse Gemini's response and extract JSON"""
     try:
-        # Try to find JSON in the response
+        # First, try to parse directly as JSON
+        try:
+            return json.loads(response_text)
+        except json.JSONDecodeError:
+            pass
+        
+        # Remove markdown code blocks if present
+        response_text = re.sub(r'```json\s*', '', response_text)
+        response_text = re.sub(r'```\s*', '', response_text)
+        
+        # Try parsing again after cleanup
+        try:
+            return json.loads(response_text.strip())
+        except json.JSONDecodeError:
+            pass
+        
+        # Try to find JSON in the response using regex
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
             json_str = json_match.group(0)
             return json.loads(json_str)
-        else:
-            # If no JSON found, return a structured error
-            return {
-                "overall_score": 50,
-                "prompt_quality": {
-                    "clarity_score": 50,
-                    "specificity_score": 50,
-                    "structure_score": 50,
-                    "context_score": 50,
-                    "summary": "Unable to parse evaluation"
-                },
-                "output_analysis": {
-                    "relevance_score": 50,
-                    "completeness_score": 50,
-                    "quality_score": 50,
-                    "summary": "Unable to parse evaluation"
-                },
-                "what_went_wrong": ["Could not parse Gemini response"],
-                "what_went_right": [],
-                "improvement_suggestions": ["Please try again"],
-                "revised_prompt": ""
-            }
-    except json.JSONDecodeError:
+        
+        # If no JSON found, return a structured error
+        raise ValueError("No valid JSON found in response")
+        
+    except Exception as e:
+        # Return a structured fallback response
         return {
             "overall_score": 50,
             "prompt_quality": {
@@ -150,15 +150,15 @@ def parse_gemini_response(response_text: str) -> dict:
                 "specificity_score": 50,
                 "structure_score": 50,
                 "context_score": 50,
-                "summary": "JSON parsing error"
+                "summary": f"Unable to parse evaluation: {str(e)}"
             },
             "output_analysis": {
                 "relevance_score": 50,
                 "completeness_score": 50,
                 "quality_score": 50,
-                "summary": "JSON parsing error"
+                "summary": "Could not analyze output due to parsing error"
             },
-            "what_went_wrong": ["JSON parsing error"],
+            "what_went_wrong": [f"JSON parsing error: {str(e)}"],
             "what_went_right": [],
             "improvement_suggestions": ["Please try again"],
             "revised_prompt": ""
@@ -190,20 +190,28 @@ async def evaluate_prompt_output(
         
         # Use Gemini to evaluate
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.5-flash",
             generation_config={
                 "temperature": 0.7,
                 "top_p": 0.95,
                 "top_k": 40,
-                "max_output_tokens": 2048,
+                "max_output_tokens": 8192,
+                "response_mime_type": "application/json",
+            },
+            safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
             }
         )
         
         # Generate evaluation
-        response = model.generate_content([
-            EVALUATION_SYSTEM_PROMPT,
-            eval_prompt
-        ])
+        response = model.generate_content([EVALUATION_SYSTEM_PROMPT, eval_prompt])
+        
+        # Check if response has valid content
+        if not response.parts:
+            raise Exception(f"No response from Gemini. Finish reason: {response.candidates[0].finish_reason if response.candidates else 'unknown'}")
         
         raw_analysis = response.text
         
@@ -250,7 +258,7 @@ def format_evaluation_for_display(feedback: EvaluationFeedback) -> str:
     output.append(f"## Overall Score: {feedback.overall_score}/100\n")
     
     # Prompt Quality
-    output.append("### 📝 Prompt Quality Analysis")
+    output.append("### Prompt Quality Analysis")
     pq = feedback.prompt_quality
     output.append(f"- **Clarity**: {pq.get('clarity_score', 0)}/100")
     output.append(f"- **Specificity**: {pq.get('specificity_score', 0)}/100")
@@ -259,7 +267,7 @@ def format_evaluation_for_display(feedback: EvaluationFeedback) -> str:
     output.append(f"\n{pq.get('summary', '')}\n")
     
     # Output Analysis
-    output.append("### 🎯 Output Analysis")
+    output.append("### Output Analysis")
     oa = feedback.output_analysis
     output.append(f"- **Relevance**: {oa.get('relevance_score', 0)}/100")
     output.append(f"- **Completeness**: {oa.get('completeness_score', 0)}/100")
@@ -268,28 +276,28 @@ def format_evaluation_for_display(feedback: EvaluationFeedback) -> str:
     
     # What Went Right
     if feedback.what_went_right:
-        output.append("### ✅ What Went Right")
+        output.append("### What Went Right")
         for item in feedback.what_went_right:
             output.append(f"- {item}")
         output.append("")
     
     # What Went Wrong
     if feedback.what_went_wrong:
-        output.append("### ❌ What Went Wrong")
+        output.append("### What Went Wrong")
         for item in feedback.what_went_wrong:
             output.append(f"- {item}")
         output.append("")
     
     # Improvement Suggestions
     if feedback.improvement_suggestions:
-        output.append("### 💡 Improvement Suggestions")
+        output.append("### Improvement Suggestions")
         for i, suggestion in enumerate(feedback.improvement_suggestions, 1):
             output.append(f"{i}. {suggestion}")
         output.append("")
     
     # Revised Prompt
     if feedback.revised_prompt:
-        output.append("### ✨ Revised Prompt Suggestion")
+        output.append("### Revised Prompt Suggestion")
         output.append(f"```\n{feedback.revised_prompt}\n```")
     
     return "\n".join(output)

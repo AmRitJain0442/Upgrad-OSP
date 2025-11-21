@@ -7,6 +7,7 @@ This is a **pure CSS/JavaScript implementation** of premium glass-themed buttons
 ## Components Included
 
 ### 1. Liquid Glass Button
+
 - Translucent frosted glass effect
 - SVG distortion filters for liquid appearance
 - Advanced multi-layered box shadows
@@ -14,6 +15,7 @@ This is a **pure CSS/JavaScript implementation** of premium glass-themed buttons
 - Mouse-tracking gradient highlights
 
 ### 2. Metal Button
+
 - Multi-layered metallic gradients
 - 3D press effects with smooth transitions
 - Shine animation on click
@@ -39,7 +41,10 @@ frontend/
 
 ```html
 <!-- Add to <head> -->
-<link rel="stylesheet" href="{{ url_for('static', path='/css/glass-buttons.css') }}">
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', path='/css/glass-buttons.css') }}"
+/>
 
 <!-- Add before </body> -->
 <script src="{{ url_for('static', path='/js/glass-buttons.js') }}"></script>
@@ -98,6 +103,7 @@ frontend/
 ## Features
 
 ### Liquid Glass Button
+
 - ✅ Frosted glass backdrop filter
 - ✅ SVG distortion filters (turbulence + displacement)
 - ✅ Multi-layered inset shadows
@@ -108,6 +114,7 @@ frontend/
 - ✅ Responsive sizing
 
 ### Metal Button
+
 - ✅ Triple-layer gradient structure
 - ✅ 3D press animation (translateY + scale)
 - ✅ Shine effect on active state
@@ -119,13 +126,13 @@ frontend/
 
 ## Color Variants
 
-| Variant | Colors | Use Case |
-|---------|--------|----------|
-| `default` | Silver/Gray | Neutral actions |
-| `metal-primary` | Red gradient | Primary CTAs |
-| `metal-success` | Emerald green | Success states |
-| `metal-gold` | Gold/Yellow | Premium features |
-| `metal-bronze` | Bronze/Orange | Secondary premium |
+| Variant         | Colors        | Use Case          |
+| --------------- | ------------- | ----------------- |
+| `default`       | Silver/Gray   | Neutral actions   |
+| `metal-primary` | Red gradient  | Primary CTAs      |
+| `metal-success` | Emerald green | Success states    |
+| `metal-gold`    | Gold/Yellow   | Premium features  |
+| `metal-bronze`  | Bronze/Orange | Secondary premium |
 
 ## JavaScript API
 
@@ -133,12 +140,12 @@ The buttons auto-initialize on page load. For manual control:
 
 ```javascript
 // Initialize liquid glass buttons
-const glassButtons = document.querySelectorAll('.liquid-glass-btn');
-glassButtons.forEach(btn => new GlassButton(btn));
+const glassButtons = document.querySelectorAll(".liquid-glass-btn");
+glassButtons.forEach((btn) => new GlassButton(btn));
 
 // Initialize metal buttons
-const metalButtons = document.querySelectorAll('.metal-btn');
-metalButtons.forEach(btn => new MetalButton(btn));
+const metalButtons = document.querySelectorAll(".metal-btn");
+metalButtons.forEach((btn) => new MetalButton(btn));
 
 // Or reinitialize all
 window.initGlassButtons();
@@ -165,22 +172,24 @@ Visit `/glass-demo` to see all button variants in action with code examples.
 
 ## Differences from React Version
 
-| Feature | React (Original) | Pure CSS/JS (This) |
-|---------|------------------|-------------------|
-| Framework | React + TypeScript | Vanilla JavaScript |
-| Dependencies | Radix UI, CVA | None |
-| Build Step | Required | Not required |
-| Bundle Size | ~50KB | ~15KB |
-| Integration | JSX components | HTML templates |
-| State Management | React hooks | Class-based |
+| Feature          | React (Original)   | Pure CSS/JS (This) |
+| ---------------- | ------------------ | ------------------ |
+| Framework        | React + TypeScript | Vanilla JavaScript |
+| Dependencies     | Radix UI, CVA      | None               |
+| Build Step       | Required           | Not required       |
+| Bundle Size      | ~50KB              | ~15KB              |
+| Integration      | JSX components     | HTML templates     |
+| State Management | React hooks        | Class-based        |
 
 ## Integration Points
 
 ### Landing Page (`/landing`)
+
 - Primary CTA: Metal button (red variant)
 - Secondary CTA: Liquid glass button
 
 ### Future Integration
+
 - Course cards: Metal buttons for enrollment
 - Workflow builder: Liquid glass for steps
 - Settings: Metal buttons for actions
@@ -216,16 +225,19 @@ Visit `/glass-demo` to see all button variants in action with code examples.
 ## Troubleshooting
 
 **Buttons not showing effects:**
+
 - Ensure CSS and JS files are loaded
 - Check browser console for errors
 - Verify `initGlassButtons()` is called
 
 **SVG filter not working:**
+
 - Check if SVG element is in DOM
 - Verify filter ID matches CSS reference
 - Some browsers may not support filter URLs
 
 **Ripple animation not appearing:**
+
 - Ensure button has `position: relative`
 - Check z-index of ripple span
 - Verify animation keyframes are loaded

@@ -1,0 +1,666 @@
+{% extends "base.html" %}
+
+{% block title %}Prompt Evaluator - Upgrad OSP{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/geometric-hero.css">
+<link rel="stylesheet" href="/static/css/glass-buttons.css">
+<style>
+    html, body {
+        background: #030303 !important;
+        overflow-y: auto !important;
+        height: auto !important;
+    }
+    
+    .content-wrapper {
+        overflow-y: visible !important;
+        height: auto !important;
+    }
+
+    /* Hero */
+    .evaluator-hero {
+        position: relative;
+        min-height: 35vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #030303;
+        overflow: hidden;
+        padding: 3rem 2rem 2rem;
+    }
+
+    .evaluator-hero .gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.12), transparent 70%);
+        pointer-events: none;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 2rem;
+        color: #fca5a5;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    .evaluator-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff 0%, #ef4444 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .evaluator-subtitle {
+        font-size: clamp(0.95rem, 2vw, 1.1rem);
+        color: rgba(255, 255, 255, 0.7);
+        max-width: 600px;
+    }
+
+    /* Main Section */
+    .evaluator-main {
+        background: #030303;
+        padding: 3rem 2rem;
+        min-height: 60vh;
+    }
+
+    .evaluator-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Form */
+    .eval-form-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .form-label .required {
+        color: #ef4444;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.75rem;
+        padding: 0.875rem 1rem;
+        color: white;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-textarea {
+        min-height: 120px;
+        resize: vertical;
+        font-family: 'Courier New', monospace;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: rgba(239, 68, 68, 0.5);
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-hint {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 0.25rem;
+    }
+
+    /* File Upload */
+    .file-upload-area {
+        border: 2px dashed rgba(239, 68, 68, 0.3);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .file-upload-area:hover {
+        border-color: rgba(239, 68, 68, 0.5);
+        background: rgba(239, 68, 68, 0.05);
+    }
+
+    .file-upload-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.6;
+    }
+
+    .file-name {
+        color: #fca5a5;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        color: white;
+        border: none;
+        border-radius: 0.75rem;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(239, 68, 68, 0.4);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Results Section */
+    .results-section {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1.5rem;
+        padding: 2.5rem;
+        display: none;
+    }
+
+    .results-section.active {
+        display: block;
+    }
+
+    .score-display {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .score-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 6px solid rgba(239, 68, 68, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        position: relative;
+    }
+
+    .score-value {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ffffff 0%, #ef4444 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .score-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.9rem;
+    }
+
+    .feedback-section {
+        margin-top: 2rem;
+    }
+
+    .feedback-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feedback-card h3 {
+        color: #ffffff;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .feedback-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .feedback-list li {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .feedback-list li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #ef4444;
+    }
+
+    .revised-prompt {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        font-family: 'Courier New', monospace;
+        color: #fca5a5;
+        white-space: pre-wrap;
+    }
+
+    .loading-spinner {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .loading-spinner.active {
+        display: block;
+    }
+
+    .spinner {
+        border: 4px solid rgba(239, 68, 68, 0.1);
+        border-radius: 50%;
+        border-top: 4px solid #ef4444;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.75rem;
+        padding: 1rem;
+    }
+
+    .metric-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ef4444;
+    }
+
+    @media (max-width: 768px) {
+        .eval-form-section,
+        .results-section {
+            padding: 1.5rem;
+        }
+
+        .metrics-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="background: #030303; min-height: 100vh;">
+    <!-- Hero -->
+    <section class="evaluator-hero">
+        <div class="gradient-overlay"></div>
+        <div style="position: relative; z-index: 10; text-align: center; max-width: 800px;">
+            <div class="hero-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+                <span>Prompt Evaluator</span>
+            </div>
+            <h1 class="evaluator-title">Learn from Your Prompts</h1>
+            <p class="evaluator-subtitle">
+                Submit your prompts and AI outputs for expert analysis. Get constructive feedback to improve your prompt engineering skills.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="evaluator-main">
+        <div class="evaluator-container">
+            
+            <!-- Evaluation Form -->
+            <div class="eval-form-section">
+                <h2 style="color: white; margin-bottom: 2rem; font-size: 1.5rem;">Submit for Evaluation</h2>
+                
+                <form id="evaluationForm">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Your Prompt <span class="required">*</span>
+                        </label>
+                        <textarea 
+                            id="userPrompt" 
+                            name="user_prompt" 
+                            class="form-textarea" 
+                            required
+                            placeholder="Paste the prompt you used with the AI...&#10;&#10;Example: Write a blog post about artificial intelligence"
+                        ></textarea>
+                        <div class="form-hint">The exact prompt you provided to the AI</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            AI Output <span class="required">*</span>
+                        </label>
+                        <textarea 
+                            id="aiOutput" 
+                            name="ai_output" 
+                            class="form-textarea" 
+                            required
+                            placeholder="Paste the output you received from the AI...&#10;&#10;Or upload a file below"
+                        ></textarea>
+                        <div class="form-hint">The response you received from the AI</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Upload File (Optional)</label>
+                        <div class="file-upload-area" onclick="document.getElementById('fileUpload').click()">
+                            <div class="file-upload-icon">📄</div>
+                            <div>Click to upload PDF, image, or text file</div>
+                            <div class="file-name" id="fileName"></div>
+                        </div>
+                        <input 
+                            type="file" 
+                            id="fileUpload" 
+                            name="file" 
+                            accept=".pdf,.txt,.png,.jpg,.jpeg"
+                            style="display: none;"
+                            onchange="handleFileSelect(event)"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Output Type</label>
+                        <select id="outputType" name="output_type" class="form-select">
+                            <option value="text">Text</option>
+                            <option value="image_url">Image</option>
+                            <option value="pdf_url">PDF/Document</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">What Did You Expect? (Optional)</label>
+                        <textarea 
+                            id="expectedOutcome" 
+                            name="expected_outcome" 
+                            class="form-textarea"
+                            style="min-height: 80px;"
+                            placeholder="Describe what you were hoping to achieve with this prompt..."
+                        ></textarea>
+                        <div class="form-hint">Helps us understand your intent better</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">AI Model Used (Optional)</label>
+                        <input 
+                            type="text" 
+                            id="aiModel" 
+                            name="ai_model_used" 
+                            class="form-input"
+                            placeholder="e.g., ChatGPT, Claude, Gemini, etc."
+                        >
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"></path>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        <span>Evaluate My Prompt</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Loading -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p style="color: rgba(255, 255, 255, 0.7);">Analyzing your prompt...</p>
+            </div>
+
+            <!-- Results -->
+            <div class="results-section" id="resultsSection">
+                <h2 style="color: white; margin-bottom: 2rem; font-size: 1.5rem;">Evaluation Results</h2>
+                
+                <div class="score-display">
+                    <div class="score-circle" id="scoreCircle">
+                        <span class="score-value" id="scoreValue">--</span>
+                    </div>
+                    <div class="score-label">Overall Quality Score</div>
+                </div>
+
+                <div id="feedbackContent"></div>
+            </div>
+
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentSessionId = null;
+let uploadedFile = null;
+
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        uploadedFile = file;
+        document.getElementById('fileName').textContent = file.name;
+    }
+}
+
+document.getElementById('evaluationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const resultsSection = document.getElementById('resultsSection');
+    
+    // Show loading
+    submitBtn.disabled = true;
+    loadingSpinner.classList.add('active');
+    resultsSection.classList.remove('active');
+    
+    try {
+        let response;
+        
+        if (uploadedFile) {
+            // Submit with file
+            const formData = new FormData();
+            formData.append('file', uploadedFile);
+            formData.append('user_prompt', document.getElementById('userPrompt').value);
+            formData.append('expected_outcome', document.getElementById('expectedOutcome').value);
+            formData.append('ai_model_used', document.getElementById('aiModel').value);
+            if (currentSessionId) {
+                formData.append('session_id', currentSessionId);
+            }
+            
+            response = await fetch('/evaluator/upload-file', {
+                method: 'POST',
+                body: formData
+            });
+        } else {
+            // Submit without file
+            const formData = new FormData(e.target);
+            if (currentSessionId) {
+                formData.append('session_id', currentSessionId);
+            }
+            
+            response = await fetch('/evaluator/evaluate', {
+                method: 'POST',
+                body: formData
+            });
+        }
+        
+        if (!response.ok) {
+            throw new Error('Evaluation failed');
+        }
+        
+        const result = await response.json();
+        currentSessionId = result.session_id;
+        
+        // Display results
+        displayResults(result);
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error evaluating prompt. Please try again.');
+    } finally {
+        submitBtn.disabled = false;
+        loadingSpinner.classList.remove('active');
+    }
+});
+
+function displayResults(result) {
+    const feedback = result.feedback;
+    const resultsSection = document.getElementById('resultsSection');
+    const scoreValue = document.getElementById('scoreValue');
+    const scoreCircle = document.getElementById('scoreCircle');
+    const feedbackContent = document.getElementById('feedbackContent');
+    
+    // Update score
+    scoreValue.textContent = feedback.overall_score;
+    
+    // Color code the score circle
+    const score = feedback.overall_score;
+    let borderColor;
+    if (score >= 80) borderColor = 'rgba(34, 197, 94, 0.5)';
+    else if (score >= 60) borderColor = 'rgba(251, 191, 36, 0.5)';
+    else borderColor = 'rgba(239, 68, 68, 0.5)';
+    scoreCircle.style.borderColor = borderColor;
+    
+    // Build feedback HTML
+    let html = '';
+    
+    // Metrics Grid
+    html += '<div class="metrics-grid">';
+    html += `<div class="metric-card">
+        <div class="metric-label">Clarity</div>
+        <div class="metric-value">${feedback.prompt_quality.clarity_score}</div>
+    </div>`;
+    html += `<div class="metric-card">
+        <div class="metric-label">Specificity</div>
+        <div class="metric-value">${feedback.prompt_quality.specificity_score}</div>
+    </div>`;
+    html += `<div class="metric-card">
+        <div class="metric-label">Structure</div>
+        <div class="metric-value">${feedback.prompt_quality.structure_score}</div>
+    </div>`;
+    html += `<div class="metric-card">
+        <div class="metric-label">Context</div>
+        <div class="metric-value">${feedback.prompt_quality.context_score}</div>
+    </div>`;
+    html += '</div>';
+    
+    // What Went Right
+    if (feedback.what_went_right && feedback.what_went_right.length > 0) {
+        html += '<div class="feedback-card">';
+        html += '<h3>✅ What Went Right</h3>';
+        html += '<ul class="feedback-list">';
+        feedback.what_went_right.forEach(item => {
+            html += `<li>${item}</li>`;
+        });
+        html += '</ul></div>';
+    }
+    
+    // What Went Wrong
+    if (feedback.what_went_wrong && feedback.what_went_wrong.length > 0) {
+        html += '<div class="feedback-card">';
+        html += '<h3>❌ What Needs Improvement</h3>';
+        html += '<ul class="feedback-list">';
+        feedback.what_went_wrong.forEach(item => {
+            html += `<li>${item}</li>`;
+        });
+        html += '</ul></div>';
+    }
+    
+    // Improvement Suggestions
+    if (feedback.improvement_suggestions && feedback.improvement_suggestions.length > 0) {
+        html += '<div class="feedback-card">';
+        html += '<h3>💡 Improvement Suggestions</h3>';
+        html += '<ul class="feedback-list">';
+        feedback.improvement_suggestions.forEach(item => {
+            html += `<li>${item}</li>`;
+        });
+        html += '</ul></div>';
+    }
+    
+    // Revised Prompt
+    if (feedback.revised_prompt) {
+        html += '<div class="feedback-card">';
+        html += '<h3>✨ Suggested Revised Prompt</h3>';
+        html += `<div class="revised-prompt">${feedback.revised_prompt}</div>`;
+        html += '</div>';
+    }
+    
+    feedbackContent.innerHTML = html;
+    resultsSection.classList.add('active');
+    
+    // Scroll to results
+    resultsSection.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+{% endblock %}

@@ -15,6 +15,7 @@ load_dotenv()
 
 from app.prompting import router as prompting_router
 from app.workflow import router as workflow_router
+from app.evaluator import router as evaluator_router
 
 # Configure logging
 logging.basicConfig(
@@ -54,6 +55,7 @@ app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 # Include routers
 app.include_router(prompting_router)
 app.include_router(workflow_router)
+app.include_router(evaluator_router)
 
 
 @app.get("/")

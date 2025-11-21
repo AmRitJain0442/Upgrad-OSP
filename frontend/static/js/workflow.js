@@ -271,6 +271,8 @@ class WorkflowAutomation {
             if (!response.ok) throw new Error('Failed to generate roadmap');
 
             this.roadmap = await response.json();
+            console.log('Full roadmap received:', this.roadmap);
+            console.log('First step full data:', this.roadmap.steps[0]);
             
             this.renderRoadmap();
             this.updateProgress(4);
@@ -304,6 +306,7 @@ class WorkflowAutomation {
             const altText = altCount > 0 ? `+${altCount} alternative${altCount > 1 ? 's' : ''}` : '';
             
             // Course recommendation if available
+            console.log(`Step ${index + 1} course data:`, step.related_course);
             const courseHtml = step.related_course ? `
                 <div class="step-course-card">
                     <div class="course-icon">📚</div>
@@ -411,14 +414,9 @@ class WorkflowAutomation {
                 <h3>💬 Ready-to-Use Prompts</h3>
                 <div class="prompts-container">
                     ${step.prompts.map((prompt, idx) => `
-                        <div class="prompt-card" onclick="navigator.clipboard.writeText('${prompt.replace(/'/g, "\\'")}').then(() => {
-                            const el = event.currentTarget;
-                            const original = el.innerHTML;
-                            el.innerHTML = '<span class=\"copied-badge\">✓ Copied!</span>' + original;
-                            setTimeout(() => el.innerHTML = original, 2000);
-                        })">
+                        <div class="prompt-card" data-prompt-index="${idx}">
                             <div class="prompt-number">${idx + 1}</div>
-                            <div class="prompt-text">${prompt}</div>
+                            <div class="prompt-text">${prompt.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
                             <div class="copy-hint">Click to copy</div>
                         </div>
                     `).join('')}
@@ -476,6 +474,23 @@ class WorkflowAutomation {
             </div>
             ` : ''}
         `;
+
+        // Add copy functionality for prompts
+        setTimeout(() => {
+            const promptCards = detailsContainer.querySelectorAll('.prompt-card');
+            promptCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const promptText = this.querySelector('.prompt-text').textContent;
+                    navigator.clipboard.writeText(promptText).then(() => {
+                        const originalHtml = this.innerHTML;
+                        this.innerHTML = '<span class="copied-badge">✓ Copied!</span>' + originalHtml;
+                        setTimeout(() => {
+                            this.innerHTML = originalHtml;
+                        }, 2000);
+                    });
+                });
+            });
+        }, 100);
 
         // Add quiz functionality
         if (step.quiz) {

@@ -437,6 +437,11 @@ Return ONLY valid JSON with this exact structure:
         elif content.startswith('```'):
             content = content[3:-3].strip()
         
+        # Clean up common JSON issues
+        import re
+        # Remove trailing commas before ] or }
+        content = re.sub(r',(\s*[}\]])', r'\1', content)
+        
         roadmap_data = json.loads(content)
         
         # Add course recommendations and evaluator links to each step

@@ -58,12 +58,100 @@
     line-height: 1.6;
   }
 
+  /* Hero Search Bar */
+  .hero-search-container {
+    margin: 2.5rem auto;
+    max-width: 700px;
+    width: 100%;
+    padding: 0 1rem;
+  }
+  
+  .hero-search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 60px;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hero-search-wrapper:focus-within {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.2),
+      0 0 40px rgba(99, 102, 241, 0.2);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+  }
+  
+  .hero-search-icon {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.6);
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .hero-search-wrapper:focus-within .hero-search-icon {
+    color: #a5b4fc;
+  }
+  
+  .hero-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 0.75rem 0;
+  }
+  
+  .hero-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+  }
+  
+  .hero-search-submit {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  }
+  
+  .hero-search-submit:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  }
+  
+  .hero-search-submit svg {
+    transition: transform 0.3s ease;
+  }
+  
+  .hero-search-submit:hover svg {
+    transform: translateX(4px);
+  }
+
   .cta-buttons {
     display: flex;
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 3rem;
+    margin-top: 1.5rem;
   }
 
   .cta-primary {
@@ -167,6 +255,35 @@
     .landing-subtitle {
       font-size: 1.2rem;
     }
+    
+    .hero-search-container {
+      max-width: 100%;
+      margin: 2rem auto;
+    }
+    
+    .hero-search-wrapper {
+      padding: 0.4rem 0.4rem 0.4rem 1rem;
+    }
+    
+    .hero-search-input {
+      font-size: 0.95rem;
+      padding: 0.6rem 0;
+    }
+    
+    .hero-search-submit {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .hero-search-submit span {
+      display: none;
+    }
+    
+    .hero-search-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.75rem;
+    }
 
     .cta-buttons {
       flex-direction: column;
@@ -251,6 +368,32 @@
         Crafting exceptional AI prompts through innovative learning and cutting-edge technology. Transform from beginner
         to expert with our interactive platform.
       </p>
+
+      <!-- Search Bar -->
+      <div class="hero-search-container">
+        <form action="/prompting/workflow" method="get" class="hero-search-form">
+          <div class="hero-search-wrapper">
+            <svg class="hero-search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input 
+              type="text" 
+              name="task"
+              class="hero-search-input" 
+              placeholder="Tell us what you wanna learn..."
+              autocomplete="off"
+            >
+            <button type="submit" class="hero-search-submit">
+              <span>Explore</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
 
       <!-- Call to Action Buttons with Glass Theme -->
       <div class="cta-buttons">

@@ -26,7 +26,7 @@ html:has(.workflow-container) {
 .workflow-header h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -54,7 +54,7 @@ html:has(.workflow-container) {
 }
 
 .workflow-section:hover {
-    border-color: rgba(239, 68, 68, 0.3);
+    border-color: rgba(99, 102, 241, 0.3);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
@@ -109,9 +109,9 @@ html:has(.workflow-container) {
 
 .task-input-container textarea:focus {
     outline: none;
-    border-color: rgba(239, 68, 68, 0.5);
+    border-color: rgba(99, 102, 241, 0.5);
     background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 /* Buttons */
@@ -129,13 +129,13 @@ html:has(.workflow-container) {
 }
 
 .primary-btn {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     color: white;
 }
 
 .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
 .primary-btn:disabled {
@@ -146,12 +146,12 @@ html:has(.workflow-container) {
 
 .secondary-btn {
     background: white;
-    color: #ef4444;
-    border: 2px solid #ef4444;
+    color: #6366f1;
+    border: 2px solid #6366f1;
 }
 
 .secondary-btn:hover {
-    background: #ef4444;
+    background: #6366f1;
     color: white;
 }
 
@@ -202,10 +202,10 @@ html:has(.workflow-container) {
 }
 
 .example-task:hover {
-    border-color: rgba(239, 68, 68, 0.5);
-    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(99, 102, 241, 0.5);
+    background: rgba(99, 102, 241, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 /* Questions Section - Glass Theme */
@@ -220,9 +220,9 @@ html:has(.workflow-container) {
     background: rgba(255, 255, 255, 0.03);
     padding: 1.5rem;
     border-radius: 0.75rem;
-    border-left: 4px solid #ef4444;
+    border-left: 4px solid #6366f1;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 4px solid #ef4444;
+    border-left: 4px solid #6366f1;
     backdrop-filter: blur(10px);
 }
 
@@ -265,16 +265,16 @@ html:has(.workflow-container) {
 
 .option-btn:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(239, 68, 68, 0.5);
+    border-color: rgba(99, 102, 241, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .option-btn.selected {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%);
-    border-color: #ef4444;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+    border-color: #6366f1;
     color: #ffffff;
-    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
 }
 
 .option-btn:active {
@@ -297,7 +297,7 @@ html:has(.workflow-container) {
 .question-item input:focus,
 .question-item textarea:focus {
     outline: none;
-    border-color: #ef4444;
+    border-color: #6366f1;
 }
 
 /* Tools Grid - Glass Theme */
@@ -319,8 +319,8 @@ html:has(.workflow-container) {
 }
 
 .tool-card:hover {
-    border-color: rgba(239, 68, 68, 0.5);
-    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.2);
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.08);
 }
@@ -340,9 +340,9 @@ html:has(.workflow-container) {
 
 .tool-pricing {
     padding: 0.25rem 0.75rem;
-    background: rgba(239, 68, 68, 0.2);
-    color: #fca5a5;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    border: 1px solid rgba(99, 102, 241, 0.3);
     border-radius: 1rem;
     font-size: 0.85rem;
     font-weight: 600;
@@ -365,7 +365,7 @@ html:has(.workflow-container) {
 }
 
 .tool-url {
-    color: #fca5a5;
+    color: #a5b4fc;
     text-decoration: none;
     font-size: 0.9rem;
     display: inline-flex;
@@ -375,13 +375,13 @@ html:has(.workflow-container) {
 }
 
 .tool-url:hover {
-    color: #ef4444;
+    color: #6366f1;
     text-decoration: underline;
 }
 
 /* Roadmap Tree */
 .roadmap-header {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     color: white;
     padding: 1.5rem;
     border-radius: 12px;
@@ -428,7 +428,7 @@ html:has(.workflow-container) {
     top: -1rem;
     bottom: -1rem;
     width: 2px;
-    background: linear-gradient(to bottom, #ef4444, #dc2626);
+    background: linear-gradient(to bottom, #6366f1, #8b5cf6);
 }
 
 .tree-step:first-child::before {
@@ -442,7 +442,7 @@ html:has(.workflow-container) {
 .step-node {
     position: relative;
     background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(239, 68, 68, 0.5);
+    border: 2px solid rgba(99, 102, 241, 0.5);
     border-radius: 1rem;
     padding: 1.5rem;
     cursor: pointer;
@@ -457,14 +457,14 @@ html:has(.workflow-container) {
     top: 50%;
     width: 2rem;
     height: 2px;
-    background: #ef4444;
+    background: #6366f1;
 }
 
 .step-node:hover {
     transform: translateX(10px);
-    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
     background: rgba(255, 255, 255, 0.08);
-    border-color: #ef4444;
+    border-color: #6366f1;
 }
 
 .step-number {
@@ -474,7 +474,7 @@ html:has(.workflow-container) {
     transform: translateY(-50%);
     width: 32px;
     height: 32px;
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -499,11 +499,11 @@ html:has(.workflow-container) {
 
 .step-time {
     padding: 0.25rem 0.75rem;
-    background: rgba(239, 68, 68, 0.2);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     border-radius: 1rem;
     font-size: 0.85rem;
-    color: #fca5a5;
+    color: #a5b4fc;
     font-weight: 600;
 }
 
@@ -518,12 +518,12 @@ html:has(.workflow-container) {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    background: rgba(239, 68, 68, 0.1);
+    background: rgba(99, 102, 241, 0.1);
     border-radius: 0.75rem;
     font-weight: 600;
-    color: #fca5a5;
+    color: #a5b4fc;
     margin-bottom: 0.75rem;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     backdrop-filter: blur(10px);
 }
 
@@ -533,7 +533,7 @@ html:has(.workflow-container) {
 
 .alt-badge {
     padding: 0.25rem 0.6rem;
-    background: #ef4444;
+    background: #6366f1;
     color: white;
     border-radius: 12px;
     font-size: 0.75rem;
@@ -542,7 +542,7 @@ html:has(.workflow-container) {
 }
 
 .step-expand {
-    color: #ef4444;
+    color: #6366f1;
     font-size: 0.9rem;
     font-weight: 600;
     margin-top: 0.5rem;
@@ -680,7 +680,7 @@ html:has(.workflow-container) {
     padding: 0.75rem;
     margin-bottom: 0.5rem;
     background: #f8fafc;
-    border-left: 3px solid #ef4444;
+    border-left: 3px solid #6366f1;
     border-radius: 4px;
 }
 
@@ -708,7 +708,7 @@ html:has(.workflow-container) {
 
 .alternative-name {
     font-weight: 700;
-    color: #ef4444;
+    color: #6366f1;
     margin-bottom: 0.5rem;
 }
 
@@ -734,7 +734,7 @@ html:has(.workflow-container) {
 
 .tool-link-primary {
     padding: 0.75rem 1.5rem;
-    background: #ef4444;
+    background: #6366f1;
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -746,7 +746,7 @@ html:has(.workflow-container) {
 }
 
 .tool-link-primary:hover {
-    background: #dc2626;
+    background: #4f46e5;
     transform: translateX(5px);
 }
 
@@ -774,8 +774,8 @@ html:has(.workflow-container) {
 }
 
 .alternative-card:hover {
-    border-color: #ef4444;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
     transform: translateY(-2px);
 }
 
@@ -894,22 +894,23 @@ html:has(.workflow-container) {
     gap: 1rem;
     margin-top: 1.5rem;
     padding: 1.25rem;
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.15));
-    border: 2px solid rgba(239, 68, 68, 0.3);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.15));
+    border: 2px solid rgba(99, 102, 241, 0.3);
     border-radius: 12px;
     transition: all 0.3s ease;
 }
 
 .evaluator-cta:hover {
-    border-color: #ef4444;
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.2));
+    border-color: #6366f1;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.2));
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.2);
 }
 
 .evaluator-icon {
     font-size: 2.5rem;
     flex-shrink: 0;
+    color: #6366f1;
 }
 
 .evaluator-text {
@@ -933,7 +934,7 @@ html:has(.workflow-container) {
 
 .evaluator-btn {
     padding: 0.75rem 1.5rem;
-    background: #ef4444;
+    background: #6366f1;
     color: white;
     text-decoration: none;
     border-radius: 8px;
@@ -944,9 +945,9 @@ html:has(.workflow-container) {
 }
 
 .evaluator-btn:hover {
-    background: #dc2626;
+    background: #4f46e5;
     transform: translateX(3px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 /* Course Detail Section in Modal */
@@ -1063,11 +1064,11 @@ html:has(.workflow-container) {
 }
 
 .progress-step.active .step-number {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     color: white;
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-    border-color: #ef4444;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    border-color: #6366f1;
 }
 
 .progress-step.completed .step-number {
@@ -1237,10 +1238,10 @@ html:has(.workflow-container) {
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     border-radius: 0.5rem;
-    color: #ef4444;
+    color: #6366f1;
     font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
@@ -1250,8 +1251,8 @@ html:has(.workflow-container) {
 }
 
 .step-action-btn:hover {
-    background: rgba(239, 68, 68, 0.2);
-    border-color: #ef4444;
+    background: rgba(99, 102, 241, 0.2);
+    border-color: #6366f1;
     transform: translateY(-2px);
 }
 
@@ -1266,14 +1267,14 @@ html:has(.workflow-container) {
     gap: 1rem;
     padding: 1.5rem;
     margin-top: 1.5rem;
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05));
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.05));
+    border: 1px solid rgba(99, 102, 241, 0.2);
     border-radius: 0.75rem;
 }
 
 .evaluator-icon {
     font-size: 2rem;
-    color: #ef4444;
+    color: #6366f1;
 }
 
 .evaluator-text {
@@ -1296,7 +1297,7 @@ html:has(.workflow-container) {
 
 .evaluator-btn {
     padding: 0.75rem 1.5rem;
-    background: #ef4444;
+    background: #6366f1;
     color: white;
     border: none;
     border-radius: 0.5rem;
@@ -1308,9 +1309,9 @@ html:has(.workflow-container) {
 }
 
 .evaluator-btn:hover {
-    background: #dc2626;
+    background: #4f46e5;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 /* Quiz Section */

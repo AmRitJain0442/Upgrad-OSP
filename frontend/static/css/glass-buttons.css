@@ -174,7 +174,7 @@ body.dark-mode .liquid-glass-btn::before,
 
 .metal-btn.metal-primary .metal-btn-content {
   background: linear-gradient(to bottom, #ef4444, rgba(239, 68, 68, 0.4));
-  text-shadow: 0 -1px 0 rgba(30, 58, 138, 1);
+  text-shadow: 0 -1px 0 rgba(127, 29, 29, 1);
 }
 
 .metal-btn.metal-success .metal-btn {

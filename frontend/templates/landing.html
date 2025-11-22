@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="{{ url_for('static', path='/css/geometric-hero.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glowing-effect.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glass-buttons.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', path='/css/testimonials.css') }}">
 <style>
   /* Override to ensure scrolling works */
   body,
@@ -80,11 +79,11 @@
   }
   
   .hero-search-wrapper:focus-within {
-    border-color: rgba(99, 102, 241, 0.5);
+    border-color: rgba(239, 68, 68, 0.5);
     box-shadow: 
       0 8px 32px rgba(0, 0, 0, 0.2),
-      0 0 40px rgba(99, 102, 241, 0.2);
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+      0 0 40px rgba(239, 68, 68, 0.2);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(248, 113, 113, 0.1) 100%);
   }
   
   .hero-search-icon {
@@ -95,7 +94,7 @@
   }
   
   .hero-search-wrapper:focus-within .hero-search-icon {
-    color: #a5b4fc;
+    color: #fca5a5;
   }
   
   .hero-search-input {
@@ -116,7 +115,7 @@
   
   .hero-search-submit {
     flex-shrink: 0;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
     color: white;
     border: none;
     border-radius: 50px;
@@ -128,13 +127,13 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
   }
   
   .hero-search-submit:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 24px rgba(99, 102, 241, 0.5);
-    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    box-shadow: 0 6px 24px rgba(239, 68, 68, 0.5);
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
   }
   
   .hero-search-submit svg {
@@ -567,291 +566,6 @@
 
   </div>
 </div>
-
-<!-- Testimonials Section -->
-<section class="testimonials-section">
-  <div class="testimonials-container">
-
-    <!-- Header -->
-    <div class="testimonials-header">
-      <div class="testimonials-badge">Student Success Stories</div>
-      <h2 class="testimonials-title">What our learners say</h2>
-      <p class="testimonials-description">
-        Discover how our platform has helped prompt engineers master their craft
-      </p>
-    </div>
-
-    <!-- Scrolling Columns -->
-    <div class="testimonials-columns">
-
-      <!-- Column 1 -->
-      <div class="testimonials-column testimonials-column-1">
-        <!-- First set -->
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand
-            complex concepts effortlessly."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Sarah Chen</div>
-              <div class="testimonial-role">AI Engineer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead
-            of repetitive tasks."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=12" alt="Marcus Johnson" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Marcus Johnson</div>
-              <div class="testimonial-role">Content Creator</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt
-            engineering enjoyable and effective."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=5" alt="Priya Sharma" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Priya Sharma</div>
-              <div class="testimonial-role">Marketing Manager</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Duplicate for infinite scroll -->
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "This platform revolutionized how I approach AI prompts. The interactive lessons helped me understand
-            complex concepts effortlessly."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=1" alt="Sarah Chen" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Sarah Chen</div>
-              <div class="testimonial-role">AI Engineer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "The workflow automation tools saved me countless hours. I can now focus on creative prompt design instead
-            of repetitive tasks."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=12" alt="Marcus Johnson" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Marcus Johnson</div>
-              <div class="testimonial-role">Content Creator</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "From beginner to expert in just weeks! The structured curriculum and AI tutor made learning prompt
-            engineering enjoyable and effective."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=5" alt="Priya Sharma" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Priya Sharma</div>
-              <div class="testimonial-role">Marketing Manager</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Column 2 (Hidden on mobile) -->
-      <div class="testimonials-column testimonials-column-2">
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating
-            my learning curve dramatically."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivera" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Alex Rivera</div>
-              <div class="testimonial-role">Product Manager</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress
-            tracking keeps me motivated!"
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=20" alt="Emma Wilson" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Emma Wilson</div>
-              <div class="testimonial-role">Data Scientist</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80%
-            of my routine prompt tasks."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=15" alt="David Kim" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">David Kim</div>
-              <div class="testimonial-role">Software Developer</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Duplicate -->
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "The AI tutor feature is incredible! It provides personalized feedback on every prompt I write, accelerating
-            my learning curve dramatically."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivera" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Alex Rivera</div>
-              <div class="testimonial-role">Product Manager</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "I love how the platform breaks down complex prompting strategies into digestible lessons. The progress
-            tracking keeps me motivated!"
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=20" alt="Emma Wilson" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Emma Wilson</div>
-              <div class="testimonial-role">Data Scientist</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "Best investment in my career! The workflow builder helped me create automated systems that now handle 80%
-            of my routine prompt tasks."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=15" alt="David Kim" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">David Kim</div>
-              <div class="testimonial-role">Software Developer</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Column 3 (Hidden on mobile & tablet) -->
-      <div class="testimonials-column testimonials-column-3">
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI
-            responses consistently."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=27" alt="Lisa Anderson" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Lisa Anderson</div>
-              <div class="testimonial-role">UX Designer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated
-            them into my workflow seamlessly."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=8" alt="James Taylor" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">James Taylor</div>
-              <div class="testimonial-role">Entrepreneur</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive,
-            engaging, and results-driven."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=47" alt="Nina Patel" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Nina Patel</div>
-              <div class="testimonial-role">Researcher</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Duplicate -->
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "Outstanding platform! The real-time feedback system helped me refine my prompts and achieve better AI
-            responses consistently."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=27" alt="Lisa Anderson" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Lisa Anderson</div>
-              <div class="testimonial-role">UX Designer</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "The comprehensive tool database is a goldmine! I discovered AI tools I never knew existed and integrated
-            them into my workflow seamlessly."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=8" alt="James Taylor" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">James Taylor</div>
-              <div class="testimonial-role">Entrepreneur</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="testimonial-card">
-          <div class="testimonial-text">
-            "Practical, hands-on, and incredibly effective. This is how modern education should be - interactive,
-            engaging, and results-driven."
-          </div>
-          <div class="testimonial-author">
-            <img src="https://i.pravatar.cc/150?img=47" alt="Nina Patel" class="testimonial-avatar">
-            <div class="testimonial-info">
-              <div class="testimonial-name">Nina Patel</div>
-              <div class="testimonial-role">Researcher</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 <!-- Footer -->
 <div style="background: #030303; padding: 3rem 2rem; text-align: center;">

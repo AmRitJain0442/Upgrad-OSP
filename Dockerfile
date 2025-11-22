@@ -18,7 +18,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:$PATH"
 
 # Create app user
-RUN groupadd -r appuser && useradd -r -g appuser -s /bin/bash appuser
+RUN groupadd -r appuser && useradd -r -g appuser -s /bin/bash -m appuser
 
 # Set working directory
 WORKDIR /app
@@ -36,15 +36,15 @@ COPY --chown=appuser:appuser . .
 RUN mkdir -p frontend/static frontend/templates uploads && \
     chown -R appuser:appuser /app
 
-# Switch to non-root user
-USER appuser
-
 # Expose port
 EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
+
+# Switch to non-root user
+USER appuser
 
 # Run application with uv
 CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

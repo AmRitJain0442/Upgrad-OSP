@@ -62,12 +62,10 @@ services:
 
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME:-localhost}
-      - CERTBOT_EMAIL=${CERTBOT_EMAIL:-}
 
     volumes:
-      # SSL certificates persistence
-      - ./certbot/letsencrypt:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      # Cloudflare Origin certificates
+      - ./cloudflare-certs:/etc/nginx/cloudflare-certs:ro
       # Nginx logs
       - ./logs/nginx:/var/log/nginx
 
@@ -81,7 +79,3 @@ services:
 networks:
   upgrad-network:
     driver: bridge
-
-volumes:
-  letsencrypt:
-  certbot-www:

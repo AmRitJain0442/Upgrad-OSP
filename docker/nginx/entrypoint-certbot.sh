@@ -2,75 +2,51 @@
 set -e
 
 DOMAIN_NAME="${DOMAIN_NAME:-localhost}"
-CERTBOT_EMAIL="${CERTBOT_EMAIL:-}"
-CERT_DIR="/etc/letsencrypt/live/${DOMAIN_NAME}"
 SSL_DIR="/etc/nginx/ssl"
+CLOUDFLARE_CERT_DIR="/etc/nginx/cloudflare-certs"
 SELF_CERT_KEY="${SSL_DIR}/selfsigned.key"
 SELF_CERT_CRT="${SSL_DIR}/selfsigned.crt"
 
 # Create SSL directory
-mkdir -p "${SSL_DIR}" /var/www/certbot
+mkdir -p "${SSL_DIR}"
 
-echo "[certbot] Initializing SSL certificates for ${DOMAIN_NAME}..."
+echo "[SSL] Initializing SSL certificates for ${DOMAIN_NAME}..."
 
-# Function to issue Let's Encrypt certificate
-issue_certificate() {
-    if [ -z "${CERTBOT_EMAIL}" ]; then
-        echo "[certbot] CERTBOT_EMAIL not set, skipping Let's Encrypt certificate issuance."
-        return 1
-    fi
-
-    if [ "${DOMAIN_NAME}" = "localhost" ] || [ "${DOMAIN_NAME}" = "127.0.0.1" ]; then
-        echo "[certbot] Domain is localhost, skipping Let's Encrypt certificate."
-        return 1
-    fi
-
-    echo "[certbot] Attempting to obtain Let's Encrypt certificate for ${DOMAIN_NAME}..."
-
-    if certbot certonly --standalone --preferred-challenges http \
-        --non-interactive --agree-tos --email "${CERTBOT_EMAIL}" \
-        -d "${DOMAIN_NAME}" --keep-until-expiring; then
-        echo "[certbot] Successfully obtained certificate for ${DOMAIN_NAME}."
+# Function to use Cloudflare Origin certificates
+use_cloudflare_cert() {
+    if [ -f "${CLOUDFLARE_CERT_DIR}/cert.pem" ] && [ -f "${CLOUDFLARE_CERT_DIR}/key.pem" ]; then
+        echo "[SSL] Using Cloudflare Origin certificates..."
+        ln -sf "${CLOUDFLARE_CERT_DIR}/cert.pem" "${SSL_DIR}/domain.crt"
+        ln -sf "${CLOUDFLARE_CERT_DIR}/key.pem" "${SSL_DIR}/domain.key"
+        echo "[SSL] Cloudflare Origin certificates linked successfully."
         return 0
     fi
-
-    echo "[certbot] Failed to obtain Let's Encrypt certificate for ${DOMAIN_NAME}."
     return 1
 }
 
-# Function to link Let's Encrypt certificates
-link_certificate() {
-    echo "[certbot] Linking Let's Encrypt certificates..."
-    ln -sf "${CERT_DIR}/fullchain.pem" "${SSL_DIR}/domain.crt"
-    ln -sf "${CERT_DIR}/privkey.pem" "${SSL_DIR}/domain.key"
-    echo "[certbot] Certificates linked successfully."
-}
-
-# Function to generate self-signed certificate
+# Function to generate self-signed certificate (fallback)
 ensure_self_signed() {
     if [ ! -f "${SELF_CERT_KEY}" ] || [ ! -f "${SELF_CERT_CRT}" ]; then
-        echo "[certbot] Generating self-signed certificate for ${DOMAIN_NAME}..."
+        echo "[SSL] Generating self-signed certificate for ${DOMAIN_NAME}..."
         openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
             -keyout "${SELF_CERT_KEY}" \
             -out "${SELF_CERT_CRT}" \
             -subj "/CN=${DOMAIN_NAME}" 2>/dev/null
-        echo "[certbot] Self-signed certificate generated."
+        echo "[SSL] Self-signed certificate generated."
     else
-        echo "[certbot] Self-signed certificate already exists."
+        echo "[SSL] Self-signed certificate already exists."
     fi
 
     ln -sf "${SELF_CERT_CRT}" "${SSL_DIR}/domain.crt"
     ln -sf "${SELF_CERT_KEY}" "${SSL_DIR}/domain.key"
-    echo "[certbot] Using self-signed certificate."
+    echo "[SSL] Using self-signed certificate."
 }
 
-# Main logic
-if [ -f "${CERT_DIR}/fullchain.pem" ] && [ -f "${CERT_DIR}/privkey.pem" ]; then
-    echo "[certbot] Existing Let's Encrypt certificate detected for ${DOMAIN_NAME}."
-    link_certificate
-elif issue_certificate; then
-    link_certificate
+# Main logic: Try Cloudflare cert first, fallback to self-signed
+if use_cloudflare_cert; then
+    echo "[SSL] Production Cloudflare certificates configured."
 else
+    echo "[SSL] Cloudflare certificates not found, using self-signed certificate for development."
     ensure_self_signed
 fi
 
@@ -78,4 +54,4 @@ fi
 chmod 644 "${SSL_DIR}/domain.crt" 2>/dev/null || true
 chmod 600 "${SSL_DIR}/domain.key" 2>/dev/null || true
 
-echo "[certbot] SSL certificate setup complete."
+echo "[SSL] SSL certificate setup complete."

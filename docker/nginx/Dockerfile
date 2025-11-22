@@ -2,8 +2,6 @@ FROM nginx:1.27-alpine
 
 # Install required packages
 RUN apk add --no-cache \
-    certbot \
-    certbot-nginx \
     openssl \
     apache2-utils \
     curl \
@@ -11,10 +9,9 @@ RUN apk add --no-cache \
 
 # Set environment variables
 ENV DOMAIN_NAME=localhost
-ENV CERTBOT_EMAIL=""
 
 # Create necessary directories
-RUN mkdir -p /etc/nginx/ssl /var/www/certbot
+RUN mkdir -p /etc/nginx/ssl /etc/nginx/cloudflare-certs
 
 # Copy nginx configuration
 COPY docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
@@ -22,9 +19,9 @@ COPY docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 # Copy basic auth password file
 COPY docker/nginx/.htpasswd /etc/nginx/.htpasswd
 
-# Copy certbot entrypoint script
-COPY docker/nginx/entrypoint-certbot.sh /docker-entrypoint.d/10-certbot.sh
-RUN chmod +x /docker-entrypoint.d/10-certbot.sh
+# Copy SSL setup entrypoint script
+COPY docker/nginx/entrypoint-certbot.sh /docker-entrypoint.d/10-ssl-setup.sh
+RUN chmod +x /docker-entrypoint.d/10-ssl-setup.sh
 
 # Expose ports
 EXPOSE 80 443

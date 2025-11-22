@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+docs/
+
+# Tests
+tests/
+test/
+*.test.py
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment files
+.env.example
+.env.local
+.env.development
+
+# Logs
+*.log
+logs/
+
+# Data directories (exclude from image, will be mounted)
+data/
+uploads/
+results/
+
+# Cache
+.cache/
+.ruff_cache/
+.mypy_cache/
+
+# Docker
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.circleci/
+
+# Misc
+old/
+scripts/
+ref.txt
+README.md

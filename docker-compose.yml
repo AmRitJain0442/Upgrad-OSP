@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: upgrad-osp-app
+    restart: unless-stopped
+
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - LOG_LEVEL=INFO
+
+    volumes:
+      # Mount data directories for persistence
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+
+    expose:
+      - "8000"
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+
+    networks:
+      - upgrad-network
+
+    labels:
+      - "com.upgrad.service=app"
+      - "com.upgrad.version=1.0"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    container_name: upgrad-osp-nginx
+    restart: unless-stopped
+
+    depends_on:
+      app:
+        condition: service_healthy
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME:-localhost}
+      - CERTBOT_EMAIL=${CERTBOT_EMAIL:-}
+
+    volumes:
+      # SSL certificates persistence
+      - ./certbot/letsencrypt:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      # Nginx logs
+      - ./logs/nginx:/var/log/nginx
+
+    networks:
+      - upgrad-network
+
+    labels:
+      - "com.upgrad.service=nginx"
+      - "com.upgrad.version=1.0"
+
+networks:
+  upgrad-network:
+    driver: bridge
+
+volumes:
+  letsencrypt:
+  certbot-www:

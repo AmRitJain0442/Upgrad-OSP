@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ url_for('static', path='/css/geometric-hero.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glowing-effect.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', path='/css/glass-buttons.css') }}">
+<link rel="stylesheet" href="/static/css/testimonials.css">
 <style>
   /* Override to ensure scrolling works */
   body,
@@ -64,7 +65,7 @@
     width: 100%;
     padding: 0 1rem;
   }
-  
+
   .hero-search-wrapper {
     position: relative;
     display: flex;
@@ -77,26 +78,26 @@
     transition: all 0.3s ease;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
-  
+
   .hero-search-wrapper:focus-within {
     border-color: rgba(239, 68, 68, 0.5);
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.2),
       0 0 40px rgba(239, 68, 68, 0.2);
     background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(248, 113, 113, 0.1) 100%);
   }
-  
+
   .hero-search-icon {
     flex-shrink: 0;
     color: rgba(255, 255, 255, 0.6);
     margin-right: 1rem;
     transition: color 0.3s ease;
   }
-  
+
   .hero-search-wrapper:focus-within .hero-search-icon {
     color: #fca5a5;
   }
-  
+
   .hero-search-input {
     flex: 1;
     background: transparent;
@@ -107,12 +108,12 @@
     font-weight: 500;
     padding: 0.75rem 0;
   }
-  
+
   .hero-search-input::placeholder {
     color: rgba(255, 255, 255, 0.5);
     font-weight: 400;
   }
-  
+
   .hero-search-submit {
     flex-shrink: 0;
     background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
@@ -129,17 +130,17 @@
     transition: all 0.3s ease;
     box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
   }
-  
+
   .hero-search-submit:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 24px rgba(239, 68, 68, 0.5);
     background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
   }
-  
+
   .hero-search-submit svg {
     transition: transform 0.3s ease;
   }
-  
+
   .hero-search-submit:hover svg {
     transform: translateX(4px);
   }
@@ -254,30 +255,30 @@
     .landing-subtitle {
       font-size: 1.2rem;
     }
-    
+
     .hero-search-container {
       max-width: 100%;
       margin: 2rem auto;
     }
-    
+
     .hero-search-wrapper {
       padding: 0.4rem 0.4rem 0.4rem 1rem;
     }
-    
+
     .hero-search-input {
       font-size: 0.95rem;
       padding: 0.6rem 0;
     }
-    
+
     .hero-search-submit {
       padding: 0.75rem 1.5rem;
       font-size: 0.9rem;
     }
-    
+
     .hero-search-submit span {
       display: none;
     }
-    
+
     .hero-search-icon {
       width: 20px;
       height: 20px;
@@ -370,22 +371,19 @@
 
       <!-- Search Bar -->
       <div class="hero-search-container">
-        <form action="/prompting/workflow" method="get" class="hero-search-form">
+        <form action="/prompting" method="get" class="hero-search-form">
           <div class="hero-search-wrapper">
-            <svg class="hero-search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="hero-search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <path d="m21 21-4.35-4.35"></path>
             </svg>
-            <input 
-              type="text" 
-              name="task"
-              class="hero-search-input" 
-              placeholder="Tell us what you wanna learn..."
-              autocomplete="off"
-            >
+            <input type="text" name="task" class="hero-search-input" placeholder="Tell us what you wanna learn..."
+              autocomplete="off">
             <button type="submit" class="hero-search-submit">
               <span>Explore</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14"></path>
                 <path d="m12 5 7 7-7 7"></path>
               </svg>
@@ -395,16 +393,8 @@
       </div>
 
       <!-- Call to Action Buttons with Glass Theme -->
-      <div class="cta-buttons">
-        <a href="/prompting/" class="metal-btn metal-primary" style="text-decoration: none;">
-          <div class="metal-btn-inner"></div>
-          <div class="metal-btn-content">
-            <span>Start Learning Now</span>
-          </div>
-          <div class="metal-btn-shine"></div>
-          <div class="metal-btn-hover-overlay"></div>
-        </a>
-        <button class="liquid-glass-btn btn-lg" onclick="window.location.href='/prompting/workflow'">
+      <div class="cta-buttons" style="justify-content: center;">
+        <button class="liquid-glass-btn btn-lg" onclick="window.location.href='/prompting/workflow'" style="padding: 1.2rem 3rem; font-size: 1.15rem;">
           <span>Try Workflow Automation</span>
         </button>
       </div>
@@ -567,14 +557,249 @@
   </div>
 </div>
 
+<!-- Testimonials Section -->
+<div class="testimonials-section" style="position: relative; z-index: 20; display: block;">
+  <div class="testimonials-container">
+    <div class="testimonials-header" style="opacity: 1;">
+      <span class="testimonials-badge">Success Stories</span>
+      <h2 class="testimonials-title">Loved by thousands of learners worldwide</h2>
+      <p class="testimonials-description">Join a community of prompt engineers mastering the art of AI communication.
+      </p>
+    </div>
+
+    <div class="testimonials-columns">
+      <!-- Column 1 -->
+      <div class="testimonials-column testimonials-column-1">
+        <!-- Card 1 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The interactive lessons made learning prompt engineering so much easier. I went
+            from zero to hero in weeks!"</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Sarah Jenkins</div>
+              <div class="testimonial-role">Product Manager</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The AI Tutor is a game changer. It's like having a mentor available 24/7 to
+            correct my prompts."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">David Chen</div>
+              <div class="testimonial-role">Software Engineer</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I was skeptical at first, but the workflow automation tools are incredibly
+            powerful. Saved me hours."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Alex Rivera</div>
+              <div class="testimonial-role">Content Strategist</div>
+            </div>
+          </div>
+        </div>
+        <!-- Duplicates for infinite scroll -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The interactive lessons made learning prompt engineering so much easier. I went
+            from zero to hero in weeks!"</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Sarah Jenkins</div>
+              <div class="testimonial-role">Product Manager</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The AI Tutor is a game changer. It's like having a mentor available 24/7 to
+            correct my prompts."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">David Chen</div>
+              <div class="testimonial-role">Software Engineer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I was skeptical at first, but the workflow automation tools are incredibly
+            powerful. Saved me hours."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Alex Rivera</div>
+              <div class="testimonial-role">Content Strategist</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="testimonials-column testimonials-column-2">
+        <!-- Card 4 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Workflow automation tools saved me hours of repetitive work. Highly recommended
+            for any professional."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Michael Ross</div>
+              <div class="testimonial-role">Data Analyst</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 5 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The platform is beautiful and intuitive. Learning complex concepts felt like
+            playing a game."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Emily White</div>
+              <div class="testimonial-role">UX Designer</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 6 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Best investment I've made for my career this year. The prompt engineering skills
+            are applicable everywhere."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Marcus Johnson</div>
+              <div class="testimonial-role">Developer</div>
+            </div>
+          </div>
+        </div>
+        <!-- Duplicates -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Workflow automation tools saved me hours of repetitive work. Highly recommended
+            for any professional."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Michael Ross</div>
+              <div class="testimonial-role">Data Analyst</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The platform is beautiful and intuitive. Learning complex concepts felt like
+            playing a game."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Emily White</div>
+              <div class="testimonial-role">UX Designer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Best investment I've made for my career this year. The prompt engineering skills
+            are applicable everywhere."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Marcus Johnson</div>
+              <div class="testimonial-role">Developer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="testimonials-column testimonials-column-3">
+        <!-- Card 7 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I've tried other courses, but this one is by far the most comprehensive and
+            practical. 10/10!"</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">James Wilson</div>
+              <div class="testimonial-role">Marketing Director</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 8 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The community support is amazing. I learned so much from peer reviews and
+            discussions."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Lisa Patel</div>
+              <div class="testimonial-role">Content Creator</div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 9 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Finally, a course that goes beyond the basics. The advanced modules on
+            chain-of-thought are brilliant."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Robert Chang</div>
+              <div class="testimonial-role">AI Researcher</div>
+            </div>
+          </div>
+        </div>
+        <!-- Duplicates -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I've tried other courses, but this one is by far the most comprehensive and
+            practical. 10/10!"</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">James Wilson</div>
+              <div class="testimonial-role">Marketing Director</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The community support is amazing. I learned so much from peer reviews and
+            discussions."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Lisa Patel</div>
+              <div class="testimonial-role">Content Creator</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Finally, a course that goes beyond the basics. The advanced modules on
+            chain-of-thought are brilliant."</p>
+          <div class="testimonial-author">
+            <img src="/static/images/upgrad-logo.png" alt="User" class="testimonial-avatar">
+            <div class="testimonial-info">
+              <div class="testimonial-name">Robert Chang</div>
+              <div class="testimonial-role">AI Researcher</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Footer -->
 <div style="background: #030303; padding: 3rem 2rem; text-align: center;">
   <div class="landing-footer">
     <p style="color: white;">Made with ❤️ by Learn-Kuch-bhi</p>
     <p style="margin-top: 0.5rem;">
       <a href="/prompting/">Start Learning</a> •
-      <a href="/prompting/workflow">Workflow Automation</a> •
-      <a href="/glass-demo">View Demos</a>
+      <a href="/prompting/workflow">Workflow Automation</a>
     </p>
   </div>
 </div>

@@ -635,7 +635,10 @@ html:has(.workflow-container) {
 }
 
 .modal-content {
-    background: white;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     margin: 5% auto;
     padding: 2rem;
     width: 90%;
@@ -644,6 +647,7 @@ html:has(.workflow-container) {
     overflow-y: auto;
     border-radius: 12px;
     position: relative;
+    font-family: 'Lato', sans-serif;
 }
 
 .close-modal {
@@ -652,13 +656,13 @@ html:has(.workflow-container) {
     top: 1rem;
     font-size: 2rem;
     font-weight: 700;
-    color: #94a3b8;
+    color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
     transition: color 0.3s;
 }
 
 .close-modal:hover {
-    color: #1e293b;
+    color: #ffffff;
 }
 
 .detail-section {
@@ -666,7 +670,7 @@ html:has(.workflow-container) {
 }
 
 .detail-section h3 {
-    color: #1e293b;
+    color: #ffffff;
     margin-bottom: 1rem;
     font-size: 1.3rem;
 }
@@ -679,19 +683,20 @@ html:has(.workflow-container) {
 .detail-list li {
     padding: 0.75rem;
     margin-bottom: 0.5rem;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05);
     border-left: 3px solid #6366f1;
     border-radius: 4px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .pros-list li {
     border-left-color: #10b981;
-    background: #ecfdf5;
+    background: rgba(16, 185, 129, 0.1);
 }
 
 .cons-list li {
     border-left-color: #ef4444;
-    background: #fef2f2;
+    background: rgba(239, 68, 68, 0.1);
 }
 
 .alternatives-grid {
@@ -701,23 +706,25 @@ html:has(.workflow-container) {
 
 .alternative-item {
     padding: 1rem;
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid rgba(99, 102, 241, 0.3);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .alternative-name {
     font-weight: 700;
-    color: #6366f1;
+    color: #a5b4fc;
     margin-bottom: 0.5rem;
 }
 
 /* Enhanced Modal Styles */
 .primary-tool-section {
-    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    background: rgba(99, 102, 241, 0.1);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #fecaca;
+    border: 2px solid rgba(99, 102, 241, 0.3);
 }
 
 .primary-tool-card {
@@ -729,7 +736,7 @@ html:has(.workflow-container) {
 .tool-name-large {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1e293b;
+    color: #ffffff;
 }
 
 .tool-link-primary {
@@ -752,10 +759,11 @@ html:has(.workflow-container) {
 
 /* Enhanced Alternatives Section */
 .alternatives-section {
-    background: #f8fafc;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid rgba(99, 102, 241, 0.2);
 }
 
 .alternatives-grid-enhanced {
@@ -765,18 +773,20 @@ html:has(.workflow-container) {
 }
 
 .alternative-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     padding: 1.25rem;
     border-radius: 10px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid rgba(99, 102, 241, 0.3);
     transition: all 0.3s;
     cursor: pointer;
 }
 
 .alternative-card:hover {
     border-color: #6366f1;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
     transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .alt-header {
@@ -788,21 +798,22 @@ html:has(.workflow-container) {
 
 .alt-tool-name {
     font-weight: 700;
-    color: #1e293b;
+    color: #ffffff;
     font-size: 1.05rem;
 }
 
 .alt-pricing {
     padding: 0.25rem 0.6rem;
-    background: #e0f2fe;
-    color: #0369a1;
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 600;
+    border: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .alt-reason {
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.95rem;
     line-height: 1.6;
     margin: 0;
@@ -810,10 +821,11 @@ html:has(.workflow-container) {
 
 /* Prompts Section */
 .prompts-section {
-    background: #ecfdf5;
+    background: rgba(16, 185, 129, 0.1);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #a7f3d0;
+    border: 2px solid rgba(16, 185, 129, 0.3);
 }
 
 .prompts-container {
@@ -823,10 +835,11 @@ html:has(.workflow-container) {
 }
 
 .prompt-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     padding: 1.25rem;
     border-radius: 10px;
-    border: 2px solid #d1fae5;
+    border: 2px solid rgba(16, 185, 129, 0.3);
     cursor: pointer;
     transition: all 0.3s;
     position: relative;
@@ -837,8 +850,9 @@ html:has(.workflow-container) {
 
 .prompt-card:hover {
     border-color: #10b981;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
     transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .prompt-number {
@@ -857,7 +871,7 @@ html:has(.workflow-container) {
 
 .prompt-text {
     flex: 1;
-    color: #1e293b;
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.6;
     font-size: 0.95rem;
 }
@@ -920,7 +934,7 @@ html:has(.workflow-container) {
 .evaluator-title {
     font-size: 1rem;
     font-weight: 700;
-    color: #1e293b;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.25rem;
@@ -928,7 +942,7 @@ html:has(.workflow-container) {
 
 .evaluator-subtitle {
     font-size: 0.9rem;
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.4;
 }
 
@@ -952,17 +966,19 @@ html:has(.workflow-container) {
 
 /* Course Detail Section in Modal */
 .course-detail-section {
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    background: rgba(59, 130, 246, 0.1);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #bfdbfe;
+    border: 2px solid rgba(59, 130, 246, 0.3);
 }
 
 .course-detail-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
     padding: 1.25rem;
     border-radius: 10px;
-    border: 2px solid #e0e7ff;
+    border: 2px solid rgba(59, 130, 246, 0.3);
 }
 
 .course-detail-header {
@@ -975,7 +991,7 @@ html:has(.workflow-container) {
 .course-detail-title {
     font-size: 1.3rem;
     font-weight: 700;
-    color: #1e293b;
+    color: #ffffff;
 }
 
 .course-detail-btn {
@@ -997,22 +1013,24 @@ html:has(.workflow-container) {
 }
 
 .course-detail-desc {
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     font-size: 0.95rem;
 }
 
 /* Tips Section */
 .tips-section {
-    background: #fffbeb;
+    background: rgba(245, 158, 11, 0.1);
+    backdrop-filter: blur(10px);
     padding: 1.5rem;
     border-radius: 12px;
-    border: 2px solid #fde68a;
+    border: 2px solid rgba(245, 158, 11, 0.3);
 }
 
 .tips-list li {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     border-left-color: #f59e0b;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Pros/Cons Grid */
@@ -1123,7 +1141,7 @@ html:has(.workflow-container) {
 
 /* Modal Content Enhancements */
 .modal-content h2 {
-    color: #1e293b;
+    color: #ffffff;
     font-size: 2rem;
     margin-bottom: 1rem;
 }
@@ -1133,6 +1151,7 @@ html:has(.workflow-container) {
     align-items: center;
     gap: 0.5rem;
     font-size: 1.3rem;
+    color: #ffffff;
 }
 
 .detail-section {
@@ -1286,7 +1305,7 @@ html:has(.workflow-container) {
 .evaluator-title {
     font-size: 1rem;
     font-weight: 700;
-    color: #1e293b;
+    color: #ffffff;
     margin-bottom: 0.25rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1294,7 +1313,7 @@ html:has(.workflow-container) {
 
 .evaluator-subtitle {
     font-size: 0.9rem;
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .evaluator-btn {
@@ -1318,8 +1337,9 @@ html:has(.workflow-container) {
 
 /* Quiz Section */
 .quiz-section {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(37, 99, 235, 0.05));
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: rgba(59, 130, 246, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(59, 130, 246, 0.3);
     border-radius: 0.75rem;
     padding: 1.5rem;
 }
@@ -1327,7 +1347,7 @@ html:has(.workflow-container) {
 .quiz-question {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #1e293b;
+    color: #ffffff;
     margin-bottom: 1.5rem;
     line-height: 1.6;
 }
@@ -1344,8 +1364,9 @@ html:has(.workflow-container) {
     align-items: center;
     gap: 1rem;
     padding: 1rem 1.25rem;
-    background: white;
-    border: 2px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     border-radius: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1355,7 +1376,7 @@ html:has(.workflow-container) {
 
 .quiz-option:hover:not(:disabled) {
     border-color: #3b82f6;
-    background: #f8fafc;
+    background: rgba(59, 130, 246, 0.15);
     transform: translateX(4px);
 }
 
@@ -1365,12 +1386,12 @@ html:has(.workflow-container) {
 
 .quiz-option.correct {
     border-color: #10b981;
-    background: rgba(16, 185, 129, 0.1);
+    background: rgba(16, 185, 129, 0.15);
 }
 
 .quiz-option.incorrect {
     border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
+    background: rgba(239, 68, 68, 0.15);
 }
 
 .option-letter {
@@ -1379,10 +1400,10 @@ html:has(.workflow-container) {
     justify-content: center;
     width: 32px;
     height: 32px;
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     font-weight: 700;
-    color: #475569;
+    color: rgba(255, 255, 255, 0.8);
     flex-shrink: 0;
 }
 
@@ -1398,7 +1419,7 @@ html:has(.workflow-container) {
 
 .option-text {
     flex: 1;
-    color: #1e293b;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
 }
 
@@ -1452,12 +1473,12 @@ html:has(.workflow-container) {
 .feedback-incorrect strong {
     display: block;
     margin-bottom: 0.5rem;
-    color: #1e293b;
+    color: #ffffff;
 }
 
 .feedback-correct p,
 .feedback-incorrect p {
     margin: 0;
-    color: #64748b;
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.6;
 }

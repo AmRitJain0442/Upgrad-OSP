@@ -30,7 +30,8 @@ WORKDIR /app
 COPY --chown=appuser:appuser pyproject.toml uv.lock ./
 
 # Install dependencies
-RUN uv sync --frozen --no-dev
+RUN chown -R appuser:appuser /app && \
+    su appuser -c "uv sync --frozen --no-dev"
 
 # Copy application code
 COPY --chown=appuser:appuser . .
@@ -38,7 +39,7 @@ COPY --chown=appuser:appuser . .
 # Create required directories with explicit permissions
 RUN mkdir -p frontend/static frontend/templates uploads && \
     chmod 755 uploads && \
-    chown -R appuser:appuser /app
+    chown appuser:appuser frontend/static frontend/templates uploads
 
 # Copy and setup entrypoint script
 COPY --chown=root:root docker-entrypoint.sh /usr/local/bin/

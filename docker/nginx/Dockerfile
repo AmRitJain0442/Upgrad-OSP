@@ -11,7 +11,8 @@ RUN apk add --no-cache \
 ENV DOMAIN_NAME=localhost
 
 # Create necessary directories
-RUN mkdir -p /etc/nginx/ssl /etc/nginx/cloudflare-certs
+RUN mkdir -p /etc/nginx/ssl /etc/nginx/cloudflare-certs /var/cache/nginx/static && \
+    chown -R nginx:nginx /var/cache/nginx
 
 # Copy nginx configuration
 COPY docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf

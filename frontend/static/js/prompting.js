@@ -777,15 +777,20 @@ async function handleFileUpload(file) {
         addTutorMessage("You've already uploaded a document. Continue with your prompt!");
         return;
     }
-    
+    const MAX_FILE_SIZE = 25 * 1024 * 1024; 
+    if (file.size > MAX_FILE_SIZE) {
+        addTutorMessage("File size exceeds 25MB limit. Please upload a smaller file.");
+        return;
+    }
+
     // If not in the right step, transition to it
     if (state.currentStep !== LessonStep.AWAITING_UPLOAD) {
         console.log('Not in AWAITING_UPLOAD step, transitioning...');
         transitionToStep(LessonStep.AWAITING_UPLOAD);
     }
-    
+
     unhighlightAll();
-    
+
     // Show uploading state
     elements.uploadDocBtn.disabled = true;
     elements.uploadDocBtn.innerHTML = `

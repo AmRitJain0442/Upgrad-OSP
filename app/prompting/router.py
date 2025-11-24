@@ -5,44 +5,47 @@ FastAPI router for prompting module with streaming support
 import json
 import logging
 from pathlib import Path
+
 from fastapi import (
     APIRouter,
-    UploadFile,
     File,
     HTTPException,
     Request,
+    UploadFile,
+)
+from fastapi import (
     Form as FastAPIForm,
 )
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 
+from app.prompting.agents import (
+    analyze_prompt_realtime,
+    generate_tutor_message,
+    generate_workspace_summary,
+    stream_tutor_response,
+    stream_workspace_response,
+)
+from app.prompting.curriculum import (
+    FULL_CURRICULUM,
+    get_curriculum,
+    get_module,
+    get_submodule,
+)
 from app.prompting.models import (
     ChatMessage,
+    PresentationAnalysis,
+    PresentationAnalysisRequest,
     PromptAnalysisRequest,
-    UploadResponse,
-    SummarizeRequest,
     QuizAnswer,
     QuizResult,
     SessionInfo,
     SubmoduleUnlockRequest,
-    PresentationAnalysisRequest,
-    PresentationAnalysis,
-)
-from app.prompting.curriculum import (
-    get_curriculum,
-    get_module,
-    get_submodule,
-    FULL_CURRICULUM,
+    SummarizeRequest,
+    UploadResponse,
 )
 from app.prompting.session_manager import session_manager
 from app.prompting.utils import allowed_file, extract_text, sanitize_filename
-from app.prompting.agents import (
-    stream_tutor_response,
-    stream_workspace_response,
-    analyze_prompt_realtime,
-    generate_tutor_message,
-    generate_workspace_summary,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -356,31 +359,47 @@ async def upload_file(file: UploadFile = File(...), session_id: str = FastAPIFor
         )
 
     try:
-        # Save file temporarily
         safe_filename = sanitize_filename(file.filename)
         filepath = UPLOAD_DIR / f"{session_id}_{safe_filename}"
 
-        content = await file.read()
+        MAX_FILE_SIZE = 41943040
+        content = bytearray()
+        total_size = 0
+
+        while chunk := await file.read(8192):
+            total_size += len(chunk)
+            if total_size > MAX_FILE_SIZE:
+                return UploadResponse(
+                    success=False,
+                    error="File size exceeds 25MB limit. Please upload a smaller file.",
+                )
+            content.extend(chunk)
+
         with open(filepath, "wb") as f:
             f.write(content)
 
         # Extract text
         text = extract_text(filepath)
 
-        # Store in session
+        # Store in session with file path
         session.set_document(text, safe_filename)
         session.current_step = "prompt"
 
         # Generate preview
         preview = text[:500] + "..." if len(text) > 500 else text
 
-        # Clean up file
-        filepath.unlink()
+        # Generate URL for accessing the uploaded file
+        file_url = f"/uploads/{session_id}_{safe_filename}"
 
-        return UploadResponse(success=True, filename=safe_filename, preview=preview)
+        return UploadResponse(
+            success=True, filename=safe_filename, preview=preview, file_url=file_url
+        )
 
     except Exception as e:
         logger.error(f"Upload error: {e}")
+        # Clean up file if it was created
+        if "filepath" in locals() and filepath.exists():
+            filepath.unlink()
         return UploadResponse(success=False, error=str(e))
 
 

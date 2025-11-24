@@ -485,17 +485,22 @@ async function handleFileUpload(file) {
     if (!file) return;
     
     console.log('handleFileUpload called');
-    
+
     if (state.documentUploaded) {
         addTutorMessage("You've already uploaded a document. Continue with your prompt!");
         return;
     }
-    
+    const MAX_FILE_SIZE = 25 * 1024 * 1024;
+    if (file.size > MAX_FILE_SIZE) {
+        addTutorMessage("File size exceeds 25MB limit. Please upload a smaller file.");
+        return;
+    }
+
     if (state.currentStep !== LessonStep.AWAITING_UPLOAD) {
         console.log('Not in AWAITING_UPLOAD step, transitioning...');
         transitionToStep(LessonStep.AWAITING_UPLOAD);
     }
-    
+
     elements.uploadDocBtn.disabled = true;
     elements.uploadDocBtn.innerHTML = `
         <span class="loading-spinner"></span>

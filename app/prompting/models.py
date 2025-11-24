@@ -48,6 +48,7 @@ class UploadResponse(BaseModel):
     success: bool
     filename: Optional[str] = None
     preview: Optional[str] = None
+    file_url: Optional[str] = None
     error: Optional[str] = None
 
 

@@ -3,19 +3,21 @@ Main FastAPI application
 """
 
 import logging
+import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.templating import Jinja2Templates
+
 from dotenv import load_dotenv
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 # Load environment variables from .env file
 load_dotenv()
 
+from app.evaluator import router as evaluator_router
 from app.prompting import router as prompting_router
 from app.workflow import router as workflow_router
-from app.evaluator import router as evaluator_router
 
 # Configure logging
 logging.basicConfig(
@@ -51,6 +53,12 @@ app.add_middleware(
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+
+# Mount uploads directory for document access
+uploads_dir = "uploads"
+if not os.path.exists(uploads_dir):
+    os.makedirs(uploads_dir, mode=0o755)
+app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
 # Include routers
 app.include_router(prompting_router)

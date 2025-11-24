@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
+    gosu \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv
@@ -32,9 +33,14 @@ RUN uv sync --frozen --no-dev
 # Copy application code
 COPY --chown=appuser:appuser . .
 
-# Create required directories
+# Create required directories with explicit permissions
 RUN mkdir -p frontend/static frontend/templates uploads && \
+    chmod 755 uploads && \
     chown -R appuser:appuser /app
+
+# Copy and setup entrypoint script
+COPY --chown=root:root docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expose port
 EXPOSE 8000
@@ -43,8 +49,8 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
-# Switch to non-root user
-USER appuser
+# Use entrypoint to fix permissions at runtime
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # Run application with uv
 CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

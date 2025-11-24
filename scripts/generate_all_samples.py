@@ -1,4 +1,5 @@
 """Generate sample documents with Gemini"""
+
 import asyncio
 import os
 import json
@@ -18,6 +19,7 @@ agent = Agent(model=model)
 SAMPLES_DIR = Path("frontend/static/samples")
 SAMPLES_DIR.mkdir(parents=True, exist_ok=True)
 
+
 async def gen_doc(name, prompt):
     print(f"Generating {name}...")
     try:
@@ -29,12 +31,15 @@ async def gen_doc(name, prompt):
         print(f"✗ {name}: {e}")
         return name, None
 
+
 async def main():
     print("Generating sample documents...")
-    print(f"Model: gemini-flash-lite-latest\n{'='*60}")
-    
+    print(f"Model: gemini-flash-lite-latest\n{'=' * 60}")
+
     tasks = [
-        gen_doc("general_article.txt", """Write exactly 650 clean, well-formatted words about remote work evolution in tech.
+        gen_doc(
+            "general_article.txt",
+            """Write exactly 650 clean, well-formatted words about remote work evolution in tech.
 
 Title: The Evolution of Remote Work in Tech
 
@@ -61,9 +66,11 @@ Current State (80 words): Statistics like "73 percent prefer hybrid", company po
 
 Future Outlook (70 words): Permanent workplace changes, hybrid model evolution, office redesigns.
 
-Use clear professional journalism style. Vary sentence structure."""),
-
-        gen_doc("technical_api_doc.txt", """Write exactly 750 words of clean technical documentation for UserAuth API v2.1.
+Use clear professional journalism style. Vary sentence structure.""",
+        ),
+        gen_doc(
+            "technical_api_doc.txt",
+            """Write exactly 750 words of clean technical documentation for UserAuth API v2.1.
 
 API Overview (100 words): Purpose, audience, version 2.1, base URL https://api.example.com/v1, JSON responses, HTTPS only, 99.9 percent uptime.
 
@@ -100,9 +107,11 @@ Error Handling (60 words): Standard format, status codes, error codes, message d
 
 Rate Limiting (50 words): 1000/hour limit, response headers, 429 handling, backoff strategy.
 
-Professional technical writing. Complete JSON examples."""),
-
-        gen_doc("business_report.txt", """Write exactly 700 words: Q3 2024 Business Report for TechStart Inc.
+Professional technical writing. Complete JSON examples.""",
+        ),
+        gen_doc(
+            "business_report.txt",
+            """Write exactly 700 words: Q3 2024 Business Report for TechStart Inc.
 
 Header:
 Company: TechStart Inc.
@@ -161,9 +170,11 @@ Provide rationale for each.
 
 Q4 Outlook (40 words): Target 2.8M revenue (17 percent growth), 1,450 customers (16 percent growth), focus areas, expected challenges.
 
-Formal business style. Data-driven. Specific numbers."""),
-
-        gen_doc("creative_brief.txt", """Write exactly 650 words: Social Media Campaign Creative Brief
+Formal business style. Data-driven. Specific numbers.""",
+        ),
+        gen_doc(
+            "creative_brief.txt",
+            """Write exactly 650 words: Social Media Campaign Creative Brief
 
 Header:
 Campaign: EcoTech Future
@@ -233,9 +244,11 @@ Success Metrics (40 words):
 4. Traffic: 10,000 unique visitors
 5. Growth: 25 percent followers, 80 percent retention
 
-Professional creative brief style."""),
-
-        gen_doc("tutorial_content.txt", """Write exactly 700 words: Git Version Control Tutorial for Beginners
+Professional creative brief style.""",
+        ),
+        gen_doc(
+            "tutorial_content.txt",
+            """Write exactly 700 words: Git Version Control Tutorial for Beginners
 
 Title: Getting Started with Git Version Control
 
@@ -303,9 +316,11 @@ Tips for Beginners (60 words):
 Next Steps (30 words):
 Learn: Remote repositories (GitHub, GitLab), pull requests, collaboration workflows, advanced branching strategies, merge conflict resolution, Git hooks, rebasing, cherry-picking.
 
-Clean instructional style. Include command examples."""),
-
-        gen_doc("complex_scenario.txt", """Write exactly 750 words: Complex Business Scenario Requiring Multi-faceted Analysis
+Clean instructional style. Include command examples.""",
+        ),
+        gen_doc(
+            "complex_scenario.txt",
+            """Write exactly 750 words: Complex Business Scenario Requiring Multi-faceted Analysis
 
 Title: Product Launch Decision Dilemma at DataFlow Inc.
 
@@ -363,9 +378,11 @@ Head of Sales: Strongly advocates Mobile App. Reports losing deals due to lack o
 
 This scenario requires analyzing: financial projections, risk assessment, resource allocation, market timing, stakeholder management, and long-term strategy.
 
-Present clear facts. No obvious correct answer. Force critical thinking."""),
-
-        gen_doc("policy_document.txt", """Write exactly 650 words: Formal Company Remote Work Policy
+Present clear facts. No obvious correct answer. Force critical thinking.""",
+        ),
+        gen_doc(
+            "policy_document.txt",
+            """Write exactly 650 words: Formal Company Remote Work Policy
 
 TITLE: Remote Work Policy
 COMPANY: TechCorp Global
@@ -453,25 +470,35 @@ Communication Guidelines (70 words):
 5. Set status appropriately (available, in meeting, away)
 6. Use shared calendars for transparency
 
-Formal professional policy language. Clear rules."""),
+Formal professional policy language. Clear rules.""",
+        ),
     ]
-    
+
     results = await asyncio.gather(*tasks)
-    print(f"\n{'='*60}\nComplete: {sum(1 for _, c in results if c)}/5 generated")
-    
+    print(f"\n{'=' * 60}\nComplete: {sum(1 for _, c in results if c)}/5 generated")
+
     # Create mapping
     mapping = {
-        "foundations-1": "general_article.txt", "foundations-2": "general_article.txt",
-        "foundations-3": "complex_scenario.txt", "foundations-4": "business_report.txt",
-        "advanced-patterns-1": "tutorial_content.txt", "advanced-patterns-2": "data_analysis.txt",
-        "advanced-patterns-3": "business_report.txt", "advanced-patterns-4": "policy_document.txt",
-        "domain-specific-1": "technical_api_doc.txt", "domain-specific-2": "business_report.txt",
-        "domain-specific-3": "creative_brief.txt", "domain-specific-4": "data_analysis.txt",
-        "advanced-techniques-1": "complex_scenario.txt", "advanced-techniques-2": "general_article.txt",
-        "advanced-techniques-3": "business_report.txt", "advanced-techniques-4": "technical_api_doc.txt",
+        "foundations-1": "general_article.txt",
+        "foundations-2": "general_article.txt",
+        "foundations-3": "complex_scenario.txt",
+        "foundations-4": "business_report.txt",
+        "advanced-patterns-1": "tutorial_content.txt",
+        "advanced-patterns-2": "data_analysis.txt",
+        "advanced-patterns-3": "business_report.txt",
+        "advanced-patterns-4": "policy_document.txt",
+        "domain-specific-1": "technical_api_doc.txt",
+        "domain-specific-2": "business_report.txt",
+        "domain-specific-3": "creative_brief.txt",
+        "domain-specific-4": "data_analysis.txt",
+        "advanced-techniques-1": "complex_scenario.txt",
+        "advanced-techniques-2": "general_article.txt",
+        "advanced-techniques-3": "business_report.txt",
+        "advanced-techniques-4": "technical_api_doc.txt",
     }
     (SAMPLES_DIR / "document_mapping.json").write_text(json.dumps(mapping, indent=2))
     print("✓ Mapping created")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

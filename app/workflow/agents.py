@@ -1,6 +1,7 @@
 """
 AI agents for workflow automation using Gemini, Perplexity, and Tavily APIs
 """
+
 import os
 import json
 from typing import List, Dict, Any, Optional
@@ -13,24 +14,24 @@ from app.workflow.models import (
     WorkflowStep,
     WorkflowRoadmap,
     AIToolSearchResult,
-    WorkflowQuestionsResponse
 )
 from app.workflow.ai_tools_database import (
     get_relevant_tools,
-    get_all_tools,
-    format_tools_for_prompt
+    format_tools_for_prompt,
 )
 from app.prompting.curriculum import FULL_CURRICULUM
 
 # Configure Gemini API
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
-PERPLEXITY_API_KEY = os.getenv('PERPLEXITY_API_KEY')
-TAVILY_API_KEY = os.getenv('TAVILY_API_KEY')
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 else:
-    print("WARNING: No Gemini API key found. Set GEMINI_API_KEY or GOOGLE_API_KEY in .env")
+    print(
+        "WARNING: No Gemini API key found. Set GEMINI_API_KEY or GOOGLE_API_KEY in .env"
+    )
 
 
 async def generate_workflow_questions(task_input: str) -> List[WorkflowQuestion]:
@@ -38,11 +39,11 @@ async def generate_workflow_questions(task_input: str) -> List[WorkflowQuestion]
     Use Gemini to generate follow-up questions about the task
     """
     try:
-        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
+        model = genai.GenerativeModel("gemini-2.5-flash")
+
         prompt = f"""You are helping a user automate a mundane task using AI tools.
 They want to: {task_input}
 
@@ -79,19 +80,19 @@ Example: [
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-            }
+            },
         )
-        
+
         # Parse JSON response
         content = response.text.strip()
-        if content.startswith('```json'):
+        if content.startswith("```json"):
             content = content[7:-3].strip()
-        elif content.startswith('```'):
+        elif content.startswith("```"):
             content = content[3:-3].strip()
-        
+
         questions_data = json.loads(content)
         return [WorkflowQuestion(**q) for q in questions_data]
-        
+
     except Exception as e:
         print(f"Error generating questions: {e}")
         # Fallback questions with options
@@ -99,21 +100,38 @@ Example: [
             WorkflowQuestion(
                 question="What is the main input you'll be working with?",
                 context="Understanding your input helps me recommend the right AI tools",
-                options=["Text documents (PDF/DOCX)", "Spreadsheets (Excel/CSV)", "Images/Screenshots", "Audio/Video files", "Web pages/URLs"],
-                allow_custom=True
+                options=[
+                    "Text documents (PDF/DOCX)",
+                    "Spreadsheets (Excel/CSV)",
+                    "Images/Screenshots",
+                    "Audio/Video files",
+                    "Web pages/URLs",
+                ],
+                allow_custom=True,
             ),
             WorkflowQuestion(
                 question="What output format do you need?",
                 context="This determines which tools can deliver your desired results",
-                options=["Summary/Report", "Structured data (JSON/CSV)", "Presentation slides", "Images/Graphics", "Audio/Video content"],
-                allow_custom=True
+                options=[
+                    "Summary/Report",
+                    "Structured data (JSON/CSV)",
+                    "Presentation slides",
+                    "Images/Graphics",
+                    "Audio/Video content",
+                ],
+                allow_custom=True,
             ),
             WorkflowQuestion(
                 question="How much time do you have for this task?",
                 context="Some AI tools are faster but less thorough than others",
-                options=["Under 5 minutes (Quick)", "15-30 minutes (Moderate)", "1+ hours (Detailed)", "Ongoing/Recurring task"],
-                allow_custom=True
-            )
+                options=[
+                    "Under 5 minutes (Quick)",
+                    "15-30 minutes (Moderate)",
+                    "1+ hours (Detailed)",
+                    "Ongoing/Recurring task",
+                ],
+                allow_custom=True,
+            ),
         ]
 
 
@@ -127,40 +145,40 @@ async def search_perplexity(query: str) -> List[AIToolSearchResult]:
                 "https://api.perplexity.ai/chat/completions",
                 headers={
                     "Authorization": f"Bearer {PERPLEXITY_API_KEY}",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 json={
                     "model": "sonar",
                     "messages": [
                         {
                             "role": "system",
-                            "content": "You are an AI tool expert. Return ONLY valid JSON arrays."
+                            "content": "You are an AI tool expert. Return ONLY valid JSON arrays.",
                         },
                         {
                             "role": "user",
                             "content": f"""Find 3-5 AI tools for this task: {query}
 Return ONLY a JSON array with this structure:
-[{{"tool_name": "Tool Name", "description": "Brief description", "url": "https://...", "use_case": "Specific use case", "pricing": "Free/Paid/Freemium"}}]"""
-                        }
+[{{"tool_name": "Tool Name", "description": "Brief description", "url": "https://...", "use_case": "Specific use case", "pricing": "Free/Paid/Freemium"}}]""",
+                        },
                     ],
                     "temperature": 0.2,
-                    "max_tokens": 1000
+                    "max_tokens": 1000,
                 },
-                timeout=30.0
+                timeout=30.0,
             )
-            
+
             data = response.json()
-            content = data['choices'][0]['message']['content']
-            
+            content = data["choices"][0]["message"]["content"]
+
             # Clean up JSON
-            if content.startswith('```json'):
+            if content.startswith("```json"):
                 content = content[7:-3].strip()
-            elif content.startswith('```'):
+            elif content.startswith("```"):
                 content = content[3:-3].strip()
-            
+
             tools_data = json.loads(content)
             return [AIToolSearchResult(**tool) for tool in tools_data]
-            
+
     except Exception as e:
         print(f"Perplexity search error: {e}")
         return []
@@ -174,48 +192,50 @@ async def search_tavily(query: str) -> List[AIToolSearchResult]:
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 "https://api.tavily.com/search",
-                headers={
-                    "Content-Type": "application/json"
-                },
+                headers={"Content-Type": "application/json"},
                 json={
                     "api_key": TAVILY_API_KEY,
                     "query": f"{query} AI tools automation",
                     "search_depth": "basic",
                     "include_answer": True,
-                    "max_results": 5
+                    "max_results": 5,
                 },
-                timeout=30.0
+                timeout=30.0,
             )
-            
+
             data = response.json()
             results = []
-            
-            for item in data.get('results', [])[:5]:
-                results.append(AIToolSearchResult(
-                    tool_name=item.get('title', 'Unknown Tool'),
-                    description=item.get('content', '')[:200],
-                    url=item.get('url', ''),
-                    use_case=query,
-                    pricing="Check website"
-                ))
-            
+
+            for item in data.get("results", [])[:5]:
+                results.append(
+                    AIToolSearchResult(
+                        tool_name=item.get("title", "Unknown Tool"),
+                        description=item.get("content", "")[:200],
+                        url=item.get("url", ""),
+                        use_case=query,
+                        pricing="Check website",
+                    )
+                )
+
             return results
-            
+
     except Exception as e:
         print(f"Tavily search error: {e}")
         return []
 
 
-def generate_step_quiz(step_title: str, step_description: str, ai_tool: str) -> Optional[Dict[str, Any]]:
+def generate_step_quiz(
+    step_title: str, step_description: str, ai_tool: str
+) -> Optional[Dict[str, Any]]:
     """
     Generate an MCQ quiz for a workflow step using Gemini
     """
     try:
-        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
+        model = genai.GenerativeModel("gemini-2.5-flash")
+
         prompt = f"""Create a multiple-choice quiz question to test understanding of this workflow step:
 
 STEP TITLE: {step_title}
@@ -244,124 +264,198 @@ The correct answer should be at a random index (0-3), not always first."""
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-            }
+            },
         )
-        
+
         content = response.text.strip()
-        if content.startswith('```json'):
+        if content.startswith("```json"):
             content = content[7:-3].strip()
-        elif content.startswith('```'):
+        elif content.startswith("```"):
             content = content[3:-3].strip()
-        
+
         quiz_data = json.loads(content)
         return quiz_data
-        
+
     except Exception as e:
         print(f"Error generating quiz: {e}")
         return None
 
 
-def get_relevant_course_for_step(step_category: str, step_description: str, step_title: str = "") -> Optional[Dict[str, str]]:
+def get_relevant_course_for_step(
+    step_category: str, step_description: str, step_title: str = ""
+) -> Optional[Dict[str, str]]:
     """
     Map workflow step to a relevant prompting course from curriculum
     """
     # Keyword mappings for each course module
     course_mappings = {
         "foundations": {
-            "keywords": ["basic", "beginner", "start", "foundation", "fundamental", "summarize", "summary", "extract", "constraint", "research", "gather", "collect", "find"],
-            "module": FULL_CURRICULUM[0]  # Foundations of Prompting
+            "keywords": [
+                "basic",
+                "beginner",
+                "start",
+                "foundation",
+                "fundamental",
+                "summarize",
+                "summary",
+                "extract",
+                "constraint",
+                "research",
+                "gather",
+                "collect",
+                "find",
+            ],
+            "module": FULL_CURRICULUM[0],  # Foundations of Prompting
         },
         "advanced-patterns": {
-            "keywords": ["format", "structure", "template", "json", "output", "pattern", "chain", "sequence", "organize", "arrange"],
-            "module": FULL_CURRICULUM[1]  # Advanced Prompting Patterns
+            "keywords": [
+                "format",
+                "structure",
+                "template",
+                "json",
+                "output",
+                "pattern",
+                "chain",
+                "sequence",
+                "organize",
+                "arrange",
+            ],
+            "module": FULL_CURRICULUM[1],  # Advanced Prompting Patterns
         },
         "domain-specific": {
-            "keywords": ["technical", "business", "creative", "data", "analysis", "report", "documentation", "write", "content", "copy"],
-            "module": FULL_CURRICULUM[2]  # Domain-Specific Prompting
+            "keywords": [
+                "technical",
+                "business",
+                "creative",
+                "data",
+                "analysis",
+                "report",
+                "documentation",
+                "write",
+                "content",
+                "copy",
+            ],
+            "module": FULL_CURRICULUM[2],  # Domain-Specific Prompting
         },
         "advanced-techniques": {
-            "keywords": ["optimize", "improve", "refine", "meta", "context", "error", "robust", "advanced", "polish", "enhance"],
-            "module": FULL_CURRICULUM[3]  # Advanced AI Techniques
+            "keywords": [
+                "optimize",
+                "improve",
+                "refine",
+                "meta",
+                "context",
+                "error",
+                "robust",
+                "advanced",
+                "polish",
+                "enhance",
+            ],
+            "module": FULL_CURRICULUM[3],  # Advanced AI Techniques
         },
         "presentation-builder": {
-            "keywords": ["presentation", "slide", "deck", "powerpoint", "visual", "html", "css", "display", "present", "show"],
-            "module": FULL_CURRICULUM[4]  # AI-Powered Presentation Builder
-        }
+            "keywords": [
+                "presentation",
+                "slide",
+                "deck",
+                "powerpoint",
+                "visual",
+                "html",
+                "css",
+                "display",
+                "present",
+                "show",
+            ],
+            "module": FULL_CURRICULUM[4],  # AI-Powered Presentation Builder
+        },
     }
-    
+
     # Check step category, description, and title for keyword matches
     combined_text = f"{step_category} {step_description} {step_title}".lower()
-    
+
     best_match = None
     best_score = 0
-    
+
     for course_key, course_data in course_mappings.items():
-        score = sum(1 for keyword in course_data["keywords"] if keyword in combined_text)
+        score = sum(
+            1 for keyword in course_data["keywords"] if keyword in combined_text
+        )
         if score > best_score:
             best_score = score
             best_match = course_data["module"]
-    
+
     # If no good match, recommend foundations as default
     if not best_match or best_score == 0:
         best_match = FULL_CURRICULUM[0]
-    
-    print(f"Course mapping: '{combined_text[:50]}...' -> Score: {best_score} -> {best_match['title']}")
-    
+
+    print(
+        f"Course mapping: '{combined_text[:50]}...' -> Score: {best_score} -> {best_match['title']}"
+    )
+
     # Return course info
     # Get first submodule for the URL (modules start at submodule 1)
     first_submodule_id = 1
-    
+
     return {
         "id": best_match["id"],
         "title": best_match["title"],
         "description": best_match["description"],
-        "url": f"/prompting/module/{best_match['id']}/{first_submodule_id}"
+        "url": f"/prompting/module/{best_match['id']}/{first_submodule_id}",
     }
 
 
 async def generate_workflow_roadmap(
-    task_description: str,
-    answers: Dict[str, str],
-    ai_tools: List[AIToolSearchResult]
+    task_description: str, answers: Dict[str, str], ai_tools: List[AIToolSearchResult]
 ) -> WorkflowRoadmap:
     """
     Generate a complete workflow roadmap using Gemini - utilizing ALL found tools
     """
     try:
-        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
+        model = genai.GenerativeModel("gemini-2.5-flash")
+
         # Group tools by category/type for better organization
         tools_by_category = {}
         for tool in ai_tools:
             # Extract category from description or tool name
-            if any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
-                   for keyword in ['research', 'search', 'chatgpt', 'perplexity', 'claude']):
-                category = 'research'
-            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
-                     for keyword in ['present', 'slide', 'gamma', 'pitch']):
-                category = 'presentation'
-            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
-                     for keyword in ['write', 'content', 'copy', 'grammar']):
-                category = 'writing'
-            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
-                     for keyword in ['code', 'programming', 'developer']):
-                category = 'coding'
-            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
-                     for keyword in ['image', 'visual', 'design', 'graphic']):
-                category = 'image'
-            elif any(keyword in tool.description.lower() or keyword in tool.tool_name.lower() 
-                     for keyword in ['video', 'audio', 'voice']):
-                category = 'multimedia'
+            if any(
+                keyword in tool.description.lower() or keyword in tool.tool_name.lower()
+                for keyword in ["research", "search", "chatgpt", "perplexity", "claude"]
+            ):
+                category = "research"
+            elif any(
+                keyword in tool.description.lower() or keyword in tool.tool_name.lower()
+                for keyword in ["present", "slide", "gamma", "pitch"]
+            ):
+                category = "presentation"
+            elif any(
+                keyword in tool.description.lower() or keyword in tool.tool_name.lower()
+                for keyword in ["write", "content", "copy", "grammar"]
+            ):
+                category = "writing"
+            elif any(
+                keyword in tool.description.lower() or keyword in tool.tool_name.lower()
+                for keyword in ["code", "programming", "developer"]
+            ):
+                category = "coding"
+            elif any(
+                keyword in tool.description.lower() or keyword in tool.tool_name.lower()
+                for keyword in ["image", "visual", "design", "graphic"]
+            ):
+                category = "image"
+            elif any(
+                keyword in tool.description.lower() or keyword in tool.tool_name.lower()
+                for keyword in ["video", "audio", "voice"]
+            ):
+                category = "multimedia"
             else:
-                category = 'general'
-            
+                category = "general"
+
             if category not in tools_by_category:
                 tools_by_category[category] = []
             tools_by_category[category].append(tool)
-        
+
         # Create detailed tools summary with ALL tools organized by category
         tools_summary = ""
         for category, tools in tools_by_category.items():
@@ -371,9 +465,9 @@ async def generate_workflow_roadmap(
                 tools_summary += f"  URL: {tool.url}\n"
                 tools_summary += f"  Description: {tool.description}\n"
                 tools_summary += f"  Use Case: {tool.use_case}\n\n"
-        
+
         answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
-        
+
         prompt = f"""You are an expert workflow architect with deep knowledge of AI tools. Create a COMPREHENSIVE, DETAILED, step-by-step workflow roadmap.
 
 TASK: {task_description}
@@ -452,58 +546,68 @@ Return ONLY valid JSON with this exact structure:
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-            }
+            },
         )
-        
+
         content = response.text.strip()
-        if content.startswith('```json'):
+        if content.startswith("```json"):
             content = content[7:-3].strip()
-        elif content.startswith('```'):
+        elif content.startswith("```"):
             content = content[3:-3].strip()
-        
+
         # Clean up common JSON issues
         import re
+
         # Remove trailing commas before ] or }
-        content = re.sub(r',(\s*[}\]])', r'\1', content)
-        
+        content = re.sub(r",(\s*[}\]])", r"\1", content)
+
         roadmap_data = json.loads(content)
-        
+
         # Add course recommendations and evaluator links to each step
-        for step_data in roadmap_data.get('steps', []):
+        for step_data in roadmap_data.get("steps", []):
             # Determine category from step description and title
-            step_text = f"{step_data.get('title', '')} {step_data.get('description', '')}"
-            category = 'general'
-            
+            step_text = (
+                f"{step_data.get('title', '')} {step_data.get('description', '')}"
+            )
+            category = "general"
+
             # Categorize step
-            if any(keyword in step_text.lower() for keyword in ['research', 'search', 'find', 'gather']):
-                category = 'research'
-            elif any(keyword in step_text.lower() for keyword in ['present', 'slide', 'deck']):
-                category = 'presentation'
-            elif any(keyword in step_text.lower() for keyword in ['write', 'content', 'copy']):
-                category = 'writing'
-            
+            if any(
+                keyword in step_text.lower()
+                for keyword in ["research", "search", "find", "gather"]
+            ):
+                category = "research"
+            elif any(
+                keyword in step_text.lower() for keyword in ["present", "slide", "deck"]
+            ):
+                category = "presentation"
+            elif any(
+                keyword in step_text.lower() for keyword in ["write", "content", "copy"]
+            ):
+                category = "writing"
+
             # Get relevant course
             course_info = get_relevant_course_for_step(
-                category, 
-                step_data.get('description', ''),
-                step_data.get('title', '')
+                category, step_data.get("description", ""), step_data.get("title", "")
             )
-            print(f"DEBUG: Step '{step_data.get('title')}' -> Category: {category} -> Course: {course_info['title']}")
-            step_data['related_course'] = course_info
-            step_data['evaluator_link'] = '/evaluator/'
-            
+            print(
+                f"DEBUG: Step '{step_data.get('title')}' -> Category: {category} -> Course: {course_info['title']}"
+            )
+            step_data["related_course"] = course_info
+            step_data["evaluator_link"] = "/evaluator/"
+
             # Generate MCQ quiz for this step
             quiz_data = generate_step_quiz(
-                step_data.get('title', ''),
-                step_data.get('description', ''),
-                step_data.get('ai_tool', '')
+                step_data.get("title", ""),
+                step_data.get("description", ""),
+                step_data.get("ai_tool", ""),
             )
-            step_data['quiz'] = quiz_data
+            step_data["quiz"] = quiz_data
             if quiz_data:
                 print(f"DEBUG: Generated quiz for '{step_data.get('title')}')")
-        
+
         return WorkflowRoadmap(**roadmap_data)
-        
+
     except Exception as e:
         print(f"Error generating roadmap: {e}")
         # Fallback roadmap
@@ -522,51 +626,62 @@ Return ONLY valid JSON with this exact structure:
                     prompts=[
                         "What are the best practices for [your task]?",
                         "Show me examples of [your desired output]",
-                        "What tools are commonly used for [your task]?"
+                        "What tools are commonly used for [your task]?",
                     ],
                     tips=[
                         "Be specific in your questions",
                         "Ask for examples",
-                        "Request step-by-step guidance"
+                        "Request step-by-step guidance",
                     ],
                     pros=[
                         "Fast research",
                         "Comprehensive information",
-                        "Interactive clarification"
+                        "Interactive clarification",
                     ],
                     cons=[
                         "May need fact-checking",
                         "Could be overwhelming",
-                        "Requires good prompting skills"
+                        "Requires good prompting skills",
                     ],
                     estimated_time="30-45 minutes",
                     dependencies=[],
                     alternatives=[
-                        {"tool": "Perplexity", "reason": "Better for research with citations"}
-                    ]
+                        {
+                            "tool": "Perplexity",
+                            "reason": "Better for research with citations",
+                        }
+                    ],
                 )
-            ]
+            ],
         )
 
 
-async def search_with_gemini_web(task_description: str, answers: Dict[str, str]) -> List[AIToolSearchResult]:
+async def search_with_gemini_web(
+    task_description: str, answers: Dict[str, str]
+) -> List[AIToolSearchResult]:
     """
     Use Gemini with web search to find AI tools
     """
     try:
-        api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        
+        model = genai.GenerativeModel("gemini-2.5-flash")
+
         answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
-        
+
         # Extract keywords from task
         keywords = task_description.lower().split()
-        relevant_db_tools = get_relevant_tools(keywords[:5])  # Get relevant tools from database
-        
-        db_tools_context = format_tools_for_prompt(relevant_db_tools[:15]) if relevant_db_tools else "No specific database matches"
-        
+        relevant_db_tools = get_relevant_tools(
+            keywords[:5]
+        )  # Get relevant tools from database
+
+        db_tools_context = (
+            format_tools_for_prompt(relevant_db_tools[:15])
+            if relevant_db_tools
+            else "No specific database matches"
+        )
+
         prompt = f"""You are an expert AI tools researcher. Find the BEST AI tools for this task using web search.
 
 TASK: {task_description}
@@ -606,18 +721,18 @@ Return ONLY valid JSON array:
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-            }
+            },
         )
-        
+
         content = response.text.strip()
-        if content.startswith('```json'):
+        if content.startswith("```json"):
             content = content[7:-3].strip()
-        elif content.startswith('```'):
+        elif content.startswith("```"):
             content = content[3:-3].strip()
-        
+
         tools_data = json.loads(content)
         return [AIToolSearchResult(**tool) for tool in tools_data]
-        
+
     except Exception as e:
         print(f"Gemini web search error: {e}")
         return []
@@ -630,29 +745,33 @@ async def search_with_database(task_description: str) -> List[AIToolSearchResult
     try:
         # Extract keywords from task description
         keywords = [word.lower() for word in task_description.split() if len(word) > 3]
-        
+
         # Get relevant tools from database
         relevant_tools = get_relevant_tools(keywords)
-        
+
         # Convert to AIToolSearchResult format
         results = []
         for tool in relevant_tools[:10]:
-            results.append(AIToolSearchResult(
-                tool_name=tool['tool_name'],
-                description=tool['description'],
-                url=tool['url'],
-                use_case=tool['use_case'],
-                pricing=tool['pricing']
-            ))
-        
+            results.append(
+                AIToolSearchResult(
+                    tool_name=tool["tool_name"],
+                    description=tool["description"],
+                    url=tool["url"],
+                    use_case=tool["use_case"],
+                    pricing=tool["pricing"],
+                )
+            )
+
         return results
-        
+
     except Exception as e:
         print(f"Database search error: {e}")
         return []
 
 
-async def search_ai_tools(task_description: str, answers: Dict[str, str]) -> List[AIToolSearchResult]:
+async def search_ai_tools(
+    task_description: str, answers: Dict[str, str]
+) -> List[AIToolSearchResult]:
     """
     Comprehensive AI tools search using multiple methods:
     1. Curated database search (fast, reliable)
@@ -663,16 +782,18 @@ async def search_ai_tools(task_description: str, answers: Dict[str, str]) -> Lis
     query_parts = [task_description]
     query_parts.extend(answers.values())
     search_query = " ".join(query_parts)
-    
+
     # Try all search methods in parallel
     database_results = await search_with_database(task_description)
     gemini_web_results = await search_with_gemini_web(task_description, answers)
     perplexity_results = await search_perplexity(search_query)
     tavily_results = await search_tavily(search_query)
-    
+
     # Prioritize: Database first (most reliable), then Gemini web, then others
-    all_results = database_results + gemini_web_results + perplexity_results + tavily_results
-    
+    all_results = (
+        database_results + gemini_web_results + perplexity_results + tavily_results
+    )
+
     # If we got no results, return fallback tools
     if not all_results:
         return [
@@ -681,32 +802,32 @@ async def search_ai_tools(task_description: str, answers: Dict[str, str]) -> Lis
                 description="Versatile AI assistant for text generation, analysis, and automation",
                 url="https://chat.openai.com",
                 use_case="General purpose automation and content creation",
-                pricing="Free/Paid"
+                pricing="Free/Paid",
             ),
             AIToolSearchResult(
                 tool_name="Claude",
                 description="Advanced AI assistant with strong reasoning and long context",
                 url="https://claude.ai",
                 use_case="Complex task analysis and detailed workflow planning",
-                pricing="Free/Paid"
+                pricing="Free/Paid",
             ),
             AIToolSearchResult(
                 tool_name="Gemini",
                 description="Google's AI model with web search and multimodal capabilities",
                 url="https://gemini.google.com",
                 use_case="Research and information synthesis",
-                pricing="Free/Paid"
-            )
+                pricing="Free/Paid",
+            ),
         ]
-    
+
     # Deduplicate results
     seen_tools = set()
     unique_results = []
-    
+
     for tool in all_results:
         tool_key = tool.tool_name.lower().replace(" ", "")
         if tool_key not in seen_tools:
             seen_tools.add(tool_key)
             unique_results.append(tool)
-    
+
     return unique_results[:12]  # Return top 12 unique tools

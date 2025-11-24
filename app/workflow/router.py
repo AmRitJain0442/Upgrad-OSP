@@ -1,20 +1,19 @@
 """
 API router for workflow automation endpoints
 """
+
 from typing import Dict, List
 from fastapi import APIRouter, HTTPException
 from app.workflow.models import (
     TaskDiscoveryRequest,
     WorkflowQuestionsResponse,
-    WorkflowGenerationRequest,
-    WorkflowQuestion,
     WorkflowRoadmap,
-    AIToolSearchResult
+    AIToolSearchResult,
 )
 from app.workflow.agents import (
     generate_workflow_questions,
     search_ai_tools,
-    generate_workflow_roadmap
+    generate_workflow_roadmap,
 )
 
 router = APIRouter(prefix="/workflow", tags=["workflow"])
@@ -32,19 +31,18 @@ async def discover_task(request: TaskDiscoveryRequest):
     try:
         # Generate follow-up questions using Gemini
         questions = await generate_workflow_questions(request.user_input)
-        
+
         # Store in session
         workflow_sessions[request.session_id] = {
             "task_input": request.user_input,
             "questions": [q.dict() for q in questions],
-            "answers": {}
+            "answers": {},
         }
-        
+
         return WorkflowQuestionsResponse(
-            questions=questions,
-            session_id=request.session_id
+            questions=questions, session_id=request.session_id
         )
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error discovering task: {str(e)}")
 
@@ -57,13 +55,15 @@ async def submit_answers(session_id: str, answers: Dict[str, str]):
     try:
         if session_id not in workflow_sessions:
             raise HTTPException(status_code=404, detail="Session not found")
-        
+
         workflow_sessions[session_id]["answers"] = answers
-        
+
         return {"status": "success", "message": "Answers recorded"}
-        
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error submitting answers: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error submitting answers: {str(e)}"
+        )
 
 
 @router.post("/search-tools", response_model=List[AIToolSearchResult])
@@ -74,19 +74,19 @@ async def search_tools_endpoint(session_id: str):
     try:
         if session_id not in workflow_sessions:
             raise HTTPException(status_code=404, detail="Session not found")
-        
+
         session_data = workflow_sessions[session_id]
         task_description = session_data.get("task_input", "")
         answers = session_data.get("answers", {})
-        
+
         # Search for AI tools
         tools = await search_ai_tools(task_description, answers)
-        
+
         # Store tools in session
         workflow_sessions[session_id]["tools"] = [tool.dict() for tool in tools]
-        
+
         return tools
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error searching tools: {str(e)}")
 
@@ -99,11 +99,11 @@ async def generate_roadmap_endpoint(session_id: str):
     try:
         if session_id not in workflow_sessions:
             raise HTTPException(status_code=404, detail="Session not found")
-        
+
         session_data = workflow_sessions[session_id]
         task_description = session_data.get("task_input", "")
         answers = session_data.get("answers", {})
-        
+
         # Get tools from session or search if not available
         tools_data = session_data.get("tools", [])
         if not tools_data:
@@ -111,33 +111,35 @@ async def generate_roadmap_endpoint(session_id: str):
             workflow_sessions[session_id]["tools"] = [tool.dict() for tool in tools]
         else:
             tools = [AIToolSearchResult(**tool) for tool in tools_data]
-        
+
         # Generate roadmap
         roadmap = await generate_workflow_roadmap(task_description, answers, tools)
-        
+
         # Debug: Check what's in the roadmap
         roadmap_dict = roadmap.dict()
-        print(f"\n{'='*80}")
-        print(f"ROADMAP DATA BEING SENT TO FRONTEND:")
-        print(f"{'='*80}")
+        print(f"\n{'=' * 80}")
+        print("ROADMAP DATA BEING SENT TO FRONTEND:")
+        print(f"{'=' * 80}")
         print(f"Task: {roadmap_dict['task_title']}")
         print(f"Steps: {len(roadmap_dict['steps'])}")
-        if roadmap_dict['steps']:
-            first_step = roadmap_dict['steps'][0]
-            print(f"\nFirst Step Data:")
+        if roadmap_dict["steps"]:
+            first_step = roadmap_dict["steps"][0]
+            print("\nFirst Step Data:")
             print(f"  - Title: {first_step.get('title')}")
             print(f"  - related_course: {first_step.get('related_course', 'MISSING!')}")
             print(f"  - evaluator_link: {first_step.get('evaluator_link', 'MISSING!')}")
             print(f"  - quiz: {'Present' if first_step.get('quiz') else 'MISSING!'}")
-        print(f"{'='*80}\n")
-        
+        print(f"{'=' * 80}\n")
+
         # Store roadmap in session
         workflow_sessions[session_id]["roadmap"] = roadmap_dict
-        
+
         return roadmap
-        
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error generating roadmap: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error generating roadmap: {str(e)}"
+        )
 
 
 @router.get("/roadmap/{session_id}", response_model=WorkflowRoadmap)
@@ -148,15 +150,17 @@ async def get_roadmap(session_id: str):
     try:
         if session_id not in workflow_sessions:
             raise HTTPException(status_code=404, detail="Session not found")
-        
+
         roadmap_data = workflow_sessions[session_id].get("roadmap")
         if not roadmap_data:
             raise HTTPException(status_code=404, detail="Roadmap not generated yet")
-        
+
         return WorkflowRoadmap(**roadmap_data)
-        
+
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving roadmap: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Error retrieving roadmap: {str(e)}"
+        )
 
 
 @router.delete("/session/{session_id}")
@@ -167,8 +171,8 @@ async def clear_session(session_id: str):
     try:
         if session_id in workflow_sessions:
             del workflow_sessions[session_id]
-        
+
         return {"status": "success", "message": "Session cleared"}
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error clearing session: {str(e)}")

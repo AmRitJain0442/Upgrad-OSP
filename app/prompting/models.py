@@ -125,12 +125,6 @@ class PresentationAnalysisRequest(BaseModel):
 class PresentationAnalysis(BaseModel):
     """Presentation analysis response"""
 
-    strengths: List[str] = Field(
-        ..., description="List of things done well"
-    )
-    improvements: List[str] = Field(
-        ..., description="Areas for improvement"
-    )
-    suggestions: List[str] = Field(
-        ..., description="Constructive suggestions"
-    )
+    strengths: List[str] = Field(..., description="List of things done well")
+    improvements: List[str] = Field(..., description="Areas for improvement")
+    suggestions: List[str] = Field(..., description="Constructive suggestions")

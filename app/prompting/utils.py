@@ -1,6 +1,7 @@
 """
 Utility functions for prompting module
 """
+
 import re
 import logging
 from pathlib import Path
@@ -31,7 +32,7 @@ def extract_text_from_pdf(filepath: Path) -> str:
     """Extract text from .pdf file"""
     try:
         import PyPDF2
-        
+
         with open(filepath, "rb") as f:
             reader = PyPDF2.PdfReader(f)
             text = " ".join([page.extract_text() for page in reader.pages])
@@ -48,7 +49,7 @@ def extract_text_from_docx(filepath: Path) -> str:
     """Extract text from .docx file"""
     try:
         import docx
-        
+
         doc = docx.Document(str(filepath))
         text = " ".join([para.text for para in doc.paragraphs])
         return text
@@ -66,7 +67,7 @@ def extract_text(filepath: Path) -> str:
     Returns cleaned text with normalized whitespace
     """
     ext = filepath.suffix.lower().lstrip(".")
-    
+
     if ext == "txt":
         text = extract_text_from_txt(filepath)
     elif ext == "pdf":
@@ -75,14 +76,14 @@ def extract_text(filepath: Path) -> str:
         text = extract_text_from_docx(filepath)
     else:
         raise ValueError(f"Unsupported file type: {ext}")
-    
+
     # Clean up excessive whitespace - normalize all whitespace to single spaces
     text = re.sub(r"\s+", " ", text)
     text = text.strip()
-    
+
     if not text:
         raise ValueError("No text could be extracted from the file")
-    
+
     logger.info(f"Extracted {len(text)} characters from {filepath.name}")
     return text
 
@@ -93,31 +94,57 @@ def analyze_prompt_quality(prompt: str) -> dict:
     Returns dict with analysis results
     """
     prompt_lower = prompt.lower()
-    
+
     # Check for constraints
-    constraint_keywords = ["based on", "only", "don't", "do not", "avoid", "without", "must", "should not", "exclude"]
+    constraint_keywords = [
+        "based on",
+        "only",
+        "don't",
+        "do not",
+        "avoid",
+        "without",
+        "must",
+        "should not",
+        "exclude",
+    ]
     has_constraints = any(keyword in prompt_lower for keyword in constraint_keywords)
-    
+
     # Check for role assignment
     role_keywords = ["you are", "act as", "as a", "role:", "expert", "professional"]
     has_role = any(keyword in prompt_lower for keyword in role_keywords)
-    
+
     # Check for structure/steps
-    structure_keywords = ["step by step", "first", "then", "finally", "1.", "2.", "bullet points", "list", "format"]
+    structure_keywords = [
+        "step by step",
+        "first",
+        "then",
+        "finally",
+        "1.",
+        "2.",
+        "bullet points",
+        "list",
+        "format",
+    ]
     has_structure = any(keyword in prompt_lower for keyword in structure_keywords)
-    
+
     # Generate suggestions
     suggestions = []
-    
+
     if not has_constraints:
-        suggestions.append("Consider adding constraints to prevent hallucination (e.g., 'Based only on the provided text')")
-    
+        suggestions.append(
+            "Consider adding constraints to prevent hallucination (e.g., 'Based only on the provided text')"
+        )
+
     if not has_role and len(prompt.split()) > 10:
-        suggestions.append("Try assigning a specific role or perspective (e.g., 'You are an expert analyst...')")
-    
+        suggestions.append(
+            "Try assigning a specific role or perspective (e.g., 'You are an expert analyst...')"
+        )
+
     if not has_structure and len(prompt.split()) > 15:
-        suggestions.append("Consider adding structure (e.g., 'First analyze... then conclude...' or 'List the key points')")
-    
+        suggestions.append(
+            "Consider adding structure (e.g., 'First analyze... then conclude...' or 'List the key points')"
+        )
+
     # Calculate quality score (0-100)
     score = 40  # Base score
     if has_constraints:
@@ -126,13 +153,13 @@ def analyze_prompt_quality(prompt: str) -> dict:
         score += 20
     if has_structure:
         score += 10
-    
+
     return {
         "has_constraints": has_constraints,
         "has_role": has_role,
         "has_structure": has_structure,
         "suggestions": suggestions,
-        "score": min(score, 100)
+        "score": min(score, 100),
     }
 
 
@@ -141,7 +168,7 @@ def sanitize_filename(filename: str) -> str:
     # Remove path components
     filename = Path(filename).name
     # Remove unsafe characters
-    filename = re.sub(r'[^\w\s.-]', '', filename)
+    filename = re.sub(r"[^\w\s.-]", "", filename)
     # Limit length
     if len(filename) > 255:
         name, ext = filename.rsplit(".", 1) if "." in filename else (filename, "")

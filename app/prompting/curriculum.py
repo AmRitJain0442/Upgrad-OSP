@@ -1,6 +1,7 @@
 """
 Comprehensive Prompt Engineering Curriculum
 """
+
 from typing import List, Dict, Any
 
 
@@ -26,11 +27,11 @@ FULL_CURRICULUM = [
                         "To make the AI work faster",
                         "To prevent 'hallucination' (making up facts)",
                         "To make the summary longer",
-                        "To make the AI sound smarter"
+                        "To make the AI sound smarter",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 2,
@@ -48,11 +49,11 @@ FULL_CURRICULUM = [
                         "It makes the AI respond faster",
                         "It provides context and expertise perspective",
                         "It reduces token usage",
-                        "It makes responses shorter"
+                        "It makes responses shorter",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 3,
@@ -70,11 +71,11 @@ FULL_CURRICULUM = [
                         "It forces the AI to use more tokens",
                         "It breaks complex reasoning into manageable steps",
                         "It makes the AI work slower",
-                        "It requires less computation"
+                        "It requires less computation",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 4,
@@ -92,13 +93,13 @@ FULL_CURRICULUM = [
                         "Using as few words as possible",
                         "Combining role, constraints, and structure",
                         "Making it as long as possible",
-                        "Using technical jargon"
+                        "Using technical jargon",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
-            }
-        ]
+                "completed": False,
+            },
+        ],
     },
     {
         "id": "advanced-patterns",
@@ -121,11 +122,11 @@ FULL_CURRICULUM = [
                         "When you want the AI to work faster",
                         "When you need consistent formatting or specific patterns",
                         "When you have very little data",
-                        "When you want shorter responses"
+                        "When you want shorter responses",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 2,
@@ -143,11 +144,11 @@ FULL_CURRICULUM = [
                         "It makes responses prettier",
                         "It ensures outputs are structured and immediately usable",
                         "It reduces processing time",
-                        "It makes prompts shorter"
+                        "It makes prompts shorter",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 3,
@@ -165,11 +166,11 @@ FULL_CURRICULUM = [
                         "It's faster than single prompts",
                         "It breaks complexity into manageable, focused steps",
                         "It uses fewer tokens",
-                        "It requires less planning"
+                        "It requires less planning",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 4,
@@ -187,13 +188,13 @@ FULL_CURRICULUM = [
                         "Using longer constraints",
                         "Combining multiple constraint types for precise control",
                         "Making constraints as restrictive as possible",
-                        "Avoiding constraints altogether"
+                        "Avoiding constraints altogether",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
-            }
-        ]
+                "completed": False,
+            },
+        ],
     },
     {
         "id": "domain-specific",
@@ -216,11 +217,11 @@ FULL_CURRICULUM = [
                         "Using complex technical jargon",
                         "Specifying audience and technical depth",
                         "Making prompts as short as possible",
-                        "Avoiding code examples"
+                        "Avoiding code examples",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 2,
@@ -238,11 +239,11 @@ FULL_CURRICULUM = [
                         "Using business buzzwords",
                         "Including context, stakeholders, and decision focus",
                         "Keeping analysis purely objective",
-                        "Avoiding specific recommendations"
+                        "Avoiding specific recommendations",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 3,
@@ -260,11 +261,11 @@ FULL_CURRICULUM = [
                         "They limit AI creativity",
                         "They channel creativity toward specific goals and brand consistency",
                         "They make responses shorter",
-                        "They're not important for creative work"
+                        "They're not important for creative work",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 4,
@@ -282,13 +283,13 @@ FULL_CURRICULUM = [
                         "Using complex statistical terminology",
                         "Specifying analysis type, metrics, and desired insights",
                         "Keeping prompts very short",
-                        "Avoiding interpretation"
+                        "Avoiding interpretation",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
-            }
-        ]
+                "completed": False,
+            },
+        ],
     },
     {
         "id": "advanced-techniques",
@@ -311,11 +312,11 @@ FULL_CURRICULUM = [
                         "It's faster than regular prompting",
                         "AI optimizes its own instructions based on task understanding",
                         "It uses fewer tokens",
-                        "It avoids needing examples"
+                        "It avoids needing examples",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 2,
@@ -333,11 +334,11 @@ FULL_CURRICULUM = [
                         "Making prompts as long as possible",
                         "Systematic testing and comparison of variations",
                         "Using the same prompt for everything",
-                        "Avoiding iteration"
+                        "Avoiding iteration",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 3,
@@ -355,11 +356,11 @@ FULL_CURRICULUM = [
                         "It makes individual prompts shorter",
                         "It maintains coherence and consistency across interactions",
                         "It reduces the need for examples",
-                        "It makes AI work faster"
+                        "It makes AI work faster",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 4,
@@ -377,13 +378,13 @@ FULL_CURRICULUM = [
                         "To make prompts longer",
                         "To ensure reliable, production-ready behavior with imperfect inputs",
                         "To make AI work slower",
-                        "To avoid using AI altogether"
+                        "To avoid using AI altogether",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
-            }
-        ]
+                "completed": False,
+            },
+        ],
     },
     {
         "id": "presentation-builder",
@@ -406,11 +407,11 @@ FULL_CURRICULUM = [
                         "It makes the AI work faster",
                         "It organizes content into slide-ready sections and points",
                         "It reduces the document size",
-                        "It removes unnecessary information"
+                        "It removes unnecessary information",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 2,
@@ -428,11 +429,11 @@ FULL_CURRICULUM = [
                         "Using complex technical language",
                         "Asking for as much text as possible",
                         "Specifying clear structure, format, and length constraints",
-                        "Letting AI decide everything for maximum creativity"
+                        "Letting AI decide everything for maximum creativity",
                     ],
-                    "correct_index": 2
+                    "correct_index": 2,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 3,
@@ -450,11 +451,11 @@ FULL_CURRICULUM = [
                         "Asking AI to 'make it better' without specifics",
                         "Targeting specific slides/elements with clear, actionable changes",
                         "Completely regenerating all content from scratch",
-                        "Accepting the first output without iteration"
+                        "Accepting the first output without iteration",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
+                "completed": False,
             },
             {
                 "id": 4,
@@ -472,14 +473,14 @@ FULL_CURRICULUM = [
                         "Asking for the longest code possible",
                         "Specifying structure, styling, interactivity, and output format clearly",
                         "Using technical jargon to sound professional",
-                        "Requesting separate HTML, CSS, and JS files"
+                        "Requesting separate HTML, CSS, and JS files",
                     ],
-                    "correct_index": 1
+                    "correct_index": 1,
                 },
-                "completed": False
-            }
-        ]
-    }
+                "completed": False,
+            },
+        ],
+    },
 ]
 
 
@@ -501,7 +502,7 @@ def get_submodule(module_id: str, submodule_id: int) -> Dict[str, Any] | None:
     module = get_module(module_id)
     if not module:
         return None
-    
+
     for submodule in module["submodules"]:
         if submodule["id"] == submodule_id:
             return submodule

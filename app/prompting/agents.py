@@ -224,8 +224,7 @@ analysis_agent = Agent(
 
 
 async def stream_tutor_response(
-    message: str,
-    lesson_context: dict | None = None
+    message: str, lesson_context: dict | None = None
 ) -> AsyncIterator[str]:
     """
     Stream AI tutor response in real-time with lesson context
@@ -247,24 +246,28 @@ async def stream_tutor_response(
         # Build contextual prompt
         if lesson_context:
             context_parts = []
-            
+
             if lesson_context.get("module"):
                 context_parts.append(f"Module: {lesson_context['module']}")
-            
+
             if lesson_context.get("lesson"):
                 context_parts.append(f"Current Lesson: {lesson_context['lesson']}")
-            
+
             if lesson_context.get("step"):
                 context_parts.append(f"Lesson Step: {lesson_context['step']}")
-            
+
             if lesson_context.get("attempts") and lesson_context["attempts"] > 0:
                 context_parts.append(f"Attempt Number: {lesson_context['attempts']}")
-            
+
             if lesson_context.get("last_prompt"):
-                context_parts.append(f"User's Last Prompt: {lesson_context['last_prompt']}")
-            
+                context_parts.append(
+                    f"User's Last Prompt: {lesson_context['last_prompt']}"
+                )
+
             context_str = "\n".join(context_parts)
-            full_prompt = f"[LESSON CONTEXT]\n{context_str}\n\n[USER MESSAGE]\n{message}"
+            full_prompt = (
+                f"[LESSON CONTEXT]\n{context_str}\n\n[USER MESSAGE]\n{message}"
+            )
         else:
             full_prompt = message
 
@@ -278,8 +281,7 @@ async def stream_tutor_response(
 
 
 async def analyze_prompt_realtime(
-    prompt: str,
-    lesson_info: dict | None = None
+    prompt: str, lesson_info: dict | None = None
 ) -> PromptAnalysisResult:
     """
     Analyze prompt in real-time and provide structured feedback
@@ -300,22 +302,22 @@ async def analyze_prompt_realtime(
 
         # Build context with lesson awareness
         context_parts = [f'Prompt to analyze: "{prompt}"']
-        
+
         if lesson_info:
             if lesson_info.get("lesson_name"):
                 context_parts.append(f"\nLesson Context: {lesson_info['lesson_name']}")
-            
+
             if lesson_info.get("submodule_id"):
                 lesson_focus = {
                     1: "Focus on CONSTRAINTS to prevent hallucination",
                     2: "Focus on ROLE ASSIGNMENT for perspective",
                     3: "Focus on STRUCTURE for step-by-step reasoning",
-                    4: "Focus on COMBINING all techniques"
+                    4: "Focus on COMBINING all techniques",
                 }
                 focus = lesson_focus.get(lesson_info["submodule_id"], "")
                 if focus:
                     context_parts.append(f"Lesson Focus: {focus}")
-        
+
         context_parts.append(f"""
 Basic detection results:
 - Has constraints: {basic_analysis["has_constraints"]}
@@ -381,8 +383,7 @@ async def stream_workspace_response(
 
 
 async def generate_tutor_message(
-    message: str,
-    lesson_context: dict | None = None
+    message: str, lesson_context: dict | None = None
 ) -> str:
     """
     Generate a complete tutor message (non-streaming)
@@ -398,27 +399,31 @@ async def generate_tutor_message(
         # Build contextual prompt
         if lesson_context:
             context_parts = []
-            
+
             if lesson_context.get("module"):
                 context_parts.append(f"Module: {lesson_context['module']}")
-            
+
             if lesson_context.get("lesson"):
                 context_parts.append(f"Current Lesson: {lesson_context['lesson']}")
-            
+
             if lesson_context.get("step"):
                 context_parts.append(f"Lesson Step: {lesson_context['step']}")
-            
+
             if lesson_context.get("attempts") and lesson_context["attempts"] > 0:
                 context_parts.append(f"Attempt Number: {lesson_context['attempts']}")
-            
+
             if lesson_context.get("last_prompt"):
-                context_parts.append(f"User's Last Prompt: {lesson_context['last_prompt']}")
-            
+                context_parts.append(
+                    f"User's Last Prompt: {lesson_context['last_prompt']}"
+                )
+
             context_str = "\n".join(context_parts)
-            full_prompt = f"[LESSON CONTEXT]\n{context_str}\n\n[USER MESSAGE]\n{message}"
+            full_prompt = (
+                f"[LESSON CONTEXT]\n{context_str}\n\n[USER MESSAGE]\n{message}"
+            )
         else:
             full_prompt = message
-        
+
         result = await tutor_agent.run(full_prompt)
         return result.output
     except Exception as e:
@@ -455,16 +460,16 @@ async def generate_workspace_summary(
 async def generate_presentation_analysis(presentation_text: str, topic: str):
     """
     Analyze a presentation using Gemini API with structured feedback
-    
+
     Args:
         presentation_text: The full presentation content
         topic: The presentation topic
-    
+
     Returns:
         PresentationAnalysis with strengths, improvements, and suggestions
     """
     from app.prompting.models import PresentationAnalysis
-    
+
     try:
         analysis_prompt = f"""You are an expert presentation designer and trainer. Analyze this presentation and provide constructive feedback.
 
@@ -505,31 +510,34 @@ Focus on:
 
         # Create a specialized analysis agent
         from pydantic import BaseModel
-        
+
         class AnalysisOutput(BaseModel):
             strengths: list[str]
             improvements: list[str]
             suggestions: list[str]
-        
+
         analysis_agent = Agent(
             model=get_google_model("gemini-flash-latest", thinking_enabled=False),
             result_type=AnalysisOutput,
-            system_prompt="You are an expert presentation analyst. Provide constructive, specific feedback."
+            system_prompt="You are an expert presentation analyst. Provide constructive, specific feedback.",
         )
-        
+
         result = await analysis_agent.run(analysis_prompt)
-        
+
         return PresentationAnalysis(
             strengths=result.data.strengths,
             improvements=result.data.improvements,
-            suggestions=result.data.suggestions
+            suggestions=result.data.suggestions,
         )
-    
+
     except Exception as e:
         logger.error(f"Error generating presentation analysis: {e}")
         # Return default analysis if API fails
         return PresentationAnalysis(
             strengths=["Well-structured content", "Clear topic focus"],
-            improvements=["Consider adding more visual elements", "Expand on key points"],
-            suggestions=["Add more examples", "Include interactive elements"]
+            improvements=[
+                "Consider adding more visual elements",
+                "Expand on key points",
+            ],
+            suggestions=["Add more examples", "Include interactive elements"],
         )

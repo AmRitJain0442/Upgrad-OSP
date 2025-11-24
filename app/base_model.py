@@ -1,4 +1,3 @@
-from pydantic_ai.settings import ModelSettings
 import logging
 
 from pydantic_ai.models.google import GoogleModel, GoogleModelSettings

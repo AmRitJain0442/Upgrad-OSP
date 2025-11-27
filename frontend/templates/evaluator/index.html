@@ -6,12 +6,17 @@
 <link rel="stylesheet" href="/static/css/geometric-hero.css">
 <link rel="stylesheet" href="/static/css/glass-buttons.css">
 <style>
+    /* Global Font */
+    * {
+        font-family: 'Lato', sans-serif;
+    }
+
     html, body {
         background: #030303 !important;
         overflow-y: auto !important;
         height: auto !important;
     }
-    
+
     .content-wrapper {
         overflow-y: visible !important;
         height: auto !important;
@@ -40,30 +45,45 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.5rem 1rem;
+        padding: 0.6rem 1.2rem;
         background: rgba(239, 68, 68, 0.1);
         border: 1px solid rgba(239, 68, 68, 0.3);
         border-radius: 2rem;
-        color: #fca5a5;
-        font-size: 0.875rem;
-        font-weight: 600;
+        color: #ef4444;
+        font-size: 0.75rem;
+        font-weight: 700;
         margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+    }
+
+    .hero-badge:hover {
+        background: rgba(239, 68, 68, 0.15);
+        border-color: rgba(239, 68, 68, 0.5);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
     }
 
     .evaluator-title {
-        font-size: clamp(2rem, 5vw, 3rem);
-        font-weight: 800;
-        background: linear-gradient(135deg, #ffffff 0%, #ef4444 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 900;
+        line-height: 1.1;
         margin-bottom: 1rem;
+        color: #ffffff;
+        font-family: 'Lato', sans-serif;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-shadow: 0 0 40px rgba(239, 68, 68, 0.3);
     }
 
     .evaluator-subtitle {
         font-size: clamp(0.95rem, 2vw, 1.1rem);
-        color: rgba(255, 255, 255, 0.7);
-        max-width: 600px;
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+        font-weight: 400;
     }
 
     /* Main Section */
@@ -80,12 +100,37 @@
 
     /* Form */
     .eval-form-section {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 10, 10, 0.9) 100%);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1.5rem;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 1rem;
         padding: 2.5rem;
         margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .eval-form-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba(239, 68, 68, 0.1), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+    }
+
+    .eval-form-section:hover {
+        border-color: rgba(239, 68, 68, 0.3);
+        box-shadow: 0 0 40px rgba(239, 68, 68, 0.15);
+    }
+
+    .eval-form-section:hover::before {
+        opacity: 1;
     }
 
     .form-group {
@@ -95,41 +140,50 @@
     .form-label {
         display: block;
         color: rgba(255, 255, 255, 0.9);
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-family: 'Lato', sans-serif;
     }
 
     .form-label .required {
         color: #ef4444;
+        font-weight: 900;
     }
 
     .form-input,
     .form-textarea,
     .form-select {
         width: 100%;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 0.75rem;
+        background: rgba(10, 10, 10, 0.6);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 0.5rem;
         padding: 0.875rem 1rem;
         color: white;
         font-size: 0.95rem;
         transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
     }
 
     .form-textarea {
         min-height: 120px;
         resize: vertical;
-        font-family: 'Courier New', monospace;
+        font-family: 'Lato', sans-serif;
+        line-height: 1.6;
     }
 
     .form-input:focus,
     .form-textarea:focus,
     .form-select:focus {
         outline: none;
-        border-color: rgba(239, 68, 68, 0.5);
-        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(239, 68, 68, 0.6);
+        box-shadow:
+            0 0 0 3px rgba(239, 68, 68, 0.15),
+            0 0 30px rgba(239, 68, 68, 0.2);
+        background: rgba(10, 10, 10, 0.8);
     }
 
     .form-input::placeholder,
@@ -147,16 +201,37 @@
     .file-upload-area {
         border: 2px dashed rgba(239, 68, 68, 0.3);
         border-radius: 0.75rem;
-        padding: 2rem;
+        padding: 2.5rem;
         text-align: center;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        background: rgba(255, 255, 255, 0.02);
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.5), rgba(20, 10, 10, 0.4));
+        position: relative;
+        overflow: hidden;
+    }
+
+    .file-upload-area::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(239, 68, 68, 0.08), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
     }
 
     .file-upload-area:hover {
-        border-color: rgba(239, 68, 68, 0.5);
-        background: rgba(239, 68, 68, 0.05);
+        border-color: rgba(239, 68, 68, 0.6);
+        background: linear-gradient(135deg, rgba(20, 10, 10, 0.6), rgba(30, 10, 10, 0.5));
+        box-shadow:
+            0 0 30px rgba(239, 68, 68, 0.2),
+            inset 0 0 20px rgba(239, 68, 68, 0.1);
+    }
+
+    .file-upload-area:hover::before {
+        opacity: 1;
     }
 
     .file-upload-icon {
@@ -176,21 +251,45 @@
         background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
         color: white;
         border: none;
-        border-radius: 0.75rem;
-        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        padding: 1.1rem 2.5rem;
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+        gap: 0.75rem;
+        box-shadow:
+            0 4px 16px rgba(239, 68, 68, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
     }
 
     .submit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 24px rgba(239, 68, 68, 0.4);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow:
+            0 8px 30px rgba(239, 68, 68, 0.5),
+            0 0 40px rgba(239, 68, 68, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .submit-btn:hover::before {
+        left: 100%;
     }
 
     .submit-btn:disabled {
@@ -199,18 +298,48 @@
         transform: none;
     }
 
+    .submit-btn:disabled:hover {
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+    }
+
     /* Results Section */
     .results-section {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 10, 10, 0.9) 100%);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1.5rem;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 1rem;
         padding: 2.5rem;
         display: none;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 40px rgba(239, 68, 68, 0.15);
+    }
+
+    .results-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at bottom left, rgba(239, 68, 68, 0.1), transparent 60%);
+        pointer-events: none;
     }
 
     .results-section.active {
         display: block;
+        animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .score-display {
@@ -249,39 +378,74 @@
     }
 
     .feedback-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        padding: 1.5rem;
+        background: linear-gradient(135deg, rgba(15, 10, 10, 0.8), rgba(10, 10, 10, 0.7));
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 0.75rem;
+        padding: 1.75rem;
         margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .feedback-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba(239, 68, 68, 0.08), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .feedback-card:hover {
+        border-color: rgba(239, 68, 68, 0.3);
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.15);
+    }
+
+    .feedback-card:hover::before {
+        opacity: 1;
     }
 
     .feedback-card h3 {
         color: #ffffff;
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin-bottom: 1.2rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        position: relative;
+        z-index: 1;
     }
 
     .feedback-list {
         list-style: none;
         padding: 0;
+        position: relative;
+        z-index: 1;
     }
 
     .feedback-list li {
-        color: rgba(255, 255, 255, 0.8);
-        padding: 0.5rem 0;
-        padding-left: 1.5rem;
+        color: rgba(255, 255, 255, 0.85);
+        padding: 0.75rem 0;
+        padding-left: 2rem;
         position: relative;
+        line-height: 1.6;
+        font-size: 0.95rem;
     }
 
     .feedback-list li::before {
-        content: "→";
+        content: "▸";
         position: absolute;
-        left: 0;
+        left: 0.5rem;
         color: #ef4444;
+        font-size: 1.2rem;
+        font-weight: 700;
     }
 
     .revised-prompt {
@@ -289,9 +453,10 @@
         border: 1px solid rgba(239, 68, 68, 0.2);
         border-radius: 0.75rem;
         padding: 1.5rem;
-        font-family: 'Courier New', monospace;
+        font-family: 'Lato', sans-serif;
         color: #fca5a5;
         white-space: pre-wrap;
+        line-height: 1.7;
     }
 
     .loading-container {
@@ -362,7 +527,32 @@
         font-size: 0.9rem;
         font-weight: 700;
         letter-spacing: 0.3em;
-        font-family: 'Courier New', monospace;
+        font-family: 'Lato', sans-serif;
+        text-transform: uppercase;
+    }
+
+    /* Section Headings */
+    .eval-form-section h2,
+    .results-section h2 {
+        font-family: 'Lato', sans-serif;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        position: relative;
+        display: inline-block;
+        z-index: 1;
+    }
+
+    .eval-form-section h2::after,
+    .results-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #ef4444, transparent);
+        border-radius: 2px;
     }
 
     .metrics-grid {
@@ -370,25 +560,60 @@
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
         margin-bottom: 1.5rem;
+        position: relative;
+        z-index: 1;
     }
 
     .metric-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(135deg, rgba(15, 10, 10, 0.7), rgba(10, 10, 10, 0.6));
+        border: 1px solid rgba(239, 68, 68, 0.25);
         border-radius: 0.75rem;
-        padding: 1rem;
+        padding: 1.25rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .metric-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(239, 68, 68, 0.1), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .metric-card:hover {
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .metric-card:hover::before {
+        opacity: 1;
     }
 
     .metric-label {
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 0.85rem;
-        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+        margin-bottom: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 600;
+        position: relative;
+        z-index: 1;
     }
 
     .metric-value {
-        font-size: 1.5rem;
-        font-weight: 700;
+        font-size: 1.75rem;
+        font-weight: 900;
         color: #ef4444;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
     }
 
     @media (max-width: 768px) {
@@ -545,6 +770,21 @@
                 <div id="feedbackContent"></div>
             </div>
 
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <section style="background: #030303; padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(239, 68, 68, 0.1);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="opacity: 0.7;">
+                <p style="color: white; margin-bottom: 0.5rem; font-family: 'Lato', sans-serif;">Made with ❤️ by Learn-Kuch-bhi</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; font-family: 'Lato', sans-serif;">
+                    <a href="/prompting/" style="color: #ef4444; text-decoration: none; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Start Learning</a> •
+                    <a href="/prompting/workflow" style="color: #ef4444; text-decoration: none; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Workflow Automation</a> •
+                    <a href="/dashboard" style="color: #ef4444; text-decoration: none; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Dashboard</a> •
+                    <a href="/evaluator" style="color: #ef4444; text-decoration: none; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Evaluator</a>
+                </p>
+            </div>
         </div>
     </section>
 </div>

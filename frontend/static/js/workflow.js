@@ -11,7 +11,14 @@ class WorkflowAutomation {
         this.answers = {};
         this.tools = [];
         this.roadmap = null;
-        
+
+        // Split screen state
+        this.splitScreenActive = false;
+        this.currentActiveStepIndex = null;
+        this.dividerDragging = false;
+        this.dividerStartX = 0;
+        this.leftPanelStartWidth = 0;
+
         console.log('Initializing event listeners...');
         this.initializeEventListeners();
         console.log('Event listeners initialized');
@@ -59,6 +66,32 @@ class WorkflowAutomation {
                 modal.style.display = 'none';
             }
         });
+
+        // Initialize split screen listeners
+        this.initializeSplitScreenListeners();
+    }
+
+    initializeSplitScreenListeners() {
+        // Close button
+        document.getElementById('closeSplitBtn')?.addEventListener('click', () => {
+            this.closeSplitView();
+        });
+
+        // ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.splitScreenActive) {
+                this.closeSplitView();
+            }
+        });
+
+        // Divider drag
+        const divider = document.getElementById('splitDivider');
+        if (divider) {
+            divider.addEventListener('mousedown', (e) => this.startDividerDrag(e));
+        }
+
+        document.addEventListener('mousemove', (e) => this.onDividerDrag(e));
+        document.addEventListener('mouseup', () => this.stopDividerDrag());
     }
 
     showLoader(buttonId) {
@@ -348,7 +381,7 @@ class WorkflowAutomation {
             console.log(`Step ${index + 1} course data:`, step.related_course);
             const courseHtml = step.related_course ? `
                 <div class="step-course-card">
-                    <div class="course-icon">📚</div>
+                    <div class="course-icon">→</div>
                     <div class="course-info">
                         <div class="course-label">RECOMMENDED COURSE</div>
                         <div class="course-title">${step.related_course.title}</div>
@@ -367,14 +400,12 @@ class WorkflowAutomation {
                     </div>
                     <p class="step-description">${step.description}</p>
                     <div class="step-tool">
-                        <span class="tool-icon">🎯</span>
                         <strong>${step.ai_tool}</strong>
                         ${altCount > 0 ? `<span class="alt-badge">${altText}</span>` : ''}
                     </div>
                     ${courseHtml}
                     <div class="step-actions">
                         <a href="${step.evaluator_link || '/evaluator/'}" class="step-action-btn evaluator-btn" target="_blank">
-                            <span class="btn-icon">✓</span>
                             TEST YOUR PROMPT
                         </a>
                     </div>
@@ -401,18 +432,33 @@ class WorkflowAutomation {
     }
 
     showStepDetails(step) {
-        const modal = document.getElementById('stepModal');
+        const container = document.getElementById('splitScreenContainer');
         const detailsContainer = document.getElementById('stepDetails');
+        const rightPanel = document.getElementById('rightPanel');
 
-        // Save current scroll position
-        const scrollY = window.scrollY;
+        // Activate split screen
+        container.classList.add('split-active');
+        this.splitScreenActive = true;
 
+        // Restore saved split ratio
+        const savedRatio = localStorage.getItem('workflowSplitRatio');
+        if (savedRatio) {
+            const leftPanel = document.getElementById('leftPanel');
+            const leftPercentage = parseFloat(savedRatio);
+            leftPanel.style.width = `${leftPercentage}%`;
+            rightPanel.style.width = `${100 - leftPercentage}%`;
+        }
+
+        // Mark active node
+        this.updateActiveNode(step);
+
+        // Render content
         detailsContainer.innerHTML = `
             <h2>${step.title}</h2>
             <p style="color: #64748b; margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.7;">${step.description}</p>
 
             <div class="detail-section primary-tool-section">
-                <h3>🎯 Primary Tool</h3>
+                <h3>Primary Tool</h3>
                 <div class="primary-tool-card">
                     <div class="tool-name-large">${step.ai_tool}</div>
                     ${step.tool_url ? `<a href="${step.tool_url}" target="_blank" class="tool-link-primary">Visit tool →</a>` : ''}
@@ -421,7 +467,7 @@ class WorkflowAutomation {
 
             ${step.related_course ? `
             <div class="detail-section course-detail-section">
-                <h3>📚 Recommended Course</h3>
+                <h3>Recommended Course</h3>
                 <div class="course-detail-card">
                     <div class="course-detail-header">
                         <div class="course-detail-title">${step.related_course.title}</div>
@@ -433,24 +479,25 @@ class WorkflowAutomation {
             ` : ''}
 
             ${step.alternatives && step.alternatives.length > 0 ? `
-                <div class="detail-section alternatives-section">
-                    <h3>🔄 Alternative Tools (${step.alternatives.length})</h3>
-                    <div class="alternatives-grid-enhanced">
-                        ${step.alternatives.map(alt => `
-                            <div class="alternative-card">
-                                <div class="alt-header">
-                                    <span class="alt-tool-name">${alt.tool}</span>
-                                    ${alt.pricing ? `<span class="alt-pricing">${alt.pricing}</span>` : ''}
-                                </div>
-                                <p class="alt-reason">${alt.reason}</p>
+            <div class="detail-section alternatives-section">
+                <h3>Alternative Tools (${step.alternatives.length})</h3>
+                <div class="alternatives-grid-enhanced">
+                    ${step.alternatives.map(alt => `
+                        <div class="alternative-card">
+                            <div class="alt-header">
+                                <span class="alt-tool-name">${alt.tool}</span>
+                                ${alt.pricing ? `<span class="alt-pricing">${alt.pricing}</span>` : ''}
                             </div>
-                        `).join('')}
-                    </div>
+                            <p class="alt-reason">${alt.reason}</p>
+                        </div>
+                    `).join('')}
                 </div>
+            </div>
             ` : ''}
 
+            ${step.prompts && step.prompts.length > 0 ? `
             <div class="detail-section prompts-section">
-                <h3>💬 Ready-to-Use Prompts</h3>
+                <h3>Ready-to-Use Prompts</h3>
                 <div class="prompts-container">
                     ${step.prompts.map((prompt, idx) => `
                         <div class="prompt-card" data-prompt-index="${idx}">
@@ -462,7 +509,7 @@ class WorkflowAutomation {
                 </div>
                 ${step.evaluator_link ? `
                 <div class="evaluator-cta">
-                    <div class="evaluator-icon">⚡</div>
+                    <div class="evaluator-icon">→</div>
                     <div class="evaluator-text">
                         <div class="evaluator-title">TEST YOUR PROMPT</div>
                         <div class="evaluator-subtitle">Use our AI Evaluator to analyze and improve your prompts</div>
@@ -471,34 +518,41 @@ class WorkflowAutomation {
                 </div>
                 ` : ''}
             </div>
+            ` : ''}
 
+            ${step.tips && step.tips.length > 0 ? `
             <div class="detail-section tips-section">
-                <h3>💡 Pro Tips</h3>
+                <h3>Pro Tips</h3>
                 <ul class="detail-list tips-list">
                     ${step.tips.map(tip => `<li>${tip}</li>`).join('')}
                 </ul>
             </div>
+            ` : ''}
 
             <div class="pros-cons-grid">
+                ${step.pros && step.pros.length > 0 ? `
                 <div class="detail-section">
-                    <h3>✅ Pros</h3>
+                    <h3>Pros</h3>
                     <ul class="detail-list pros-list">
                         ${step.pros.map(pro => `<li>${pro}</li>`).join('')}
                     </ul>
                 </div>
+                ` : ''}
 
+                ${step.cons && step.cons.length > 0 ? `
                 <div class="detail-section">
-                    <h3>⚠️ Cons</h3>
+                    <h3>Cons</h3>
                     <ul class="detail-list cons-list">
                         ${step.cons.map(con => `<li>${con}</li>`).join('')}
                     </ul>
                 </div>
+                ` : ''}
             </div>
 
             ${step.quiz ? `
             <div class="detail-section quiz-section">
-                <h3>📝 Knowledge Check</h3>
-                <div class="quiz-container" data-step-quiz="${step.id}">
+                <h3>Knowledge Check</h3>
+                <div class="quiz-container">
                     <div class="quiz-question">${step.quiz.question}</div>
                     <div class="quiz-options">
                         ${step.quiz.options.map((option, idx) => `
@@ -514,73 +568,152 @@ class WorkflowAutomation {
             ` : ''}
         `;
 
-        // Add copy functionality for prompts
-        setTimeout(() => {
-            const promptCards = detailsContainer.querySelectorAll('.prompt-card');
-            promptCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const promptText = this.querySelector('.prompt-text').textContent;
-                    navigator.clipboard.writeText(promptText).then(() => {
-                        const originalHtml = this.innerHTML;
-                        this.innerHTML = '<span class="copied-badge">✓ Copied!</span>' + originalHtml;
-                        setTimeout(() => {
-                            this.innerHTML = originalHtml;
-                        }, 2000);
-                    });
+        // Scroll to top
+        rightPanel.scrollTop = 0;
+
+        // Initialize interactive features
+        this.initializePromptCopy(detailsContainer);
+        if (step.quiz) {
+            this.initializeQuiz(detailsContainer, step);
+        }
+    }
+
+    closeSplitView() {
+        const container = document.getElementById('splitScreenContainer');
+        container.classList.remove('split-active');
+        this.splitScreenActive = false;
+        this.currentActiveStepIndex = null;
+
+        // Remove active highlight
+        document.querySelectorAll('.step-node').forEach(node => {
+            node.classList.remove('active');
+        });
+    }
+
+    updateActiveNode(step) {
+        // Remove all active classes
+        document.querySelectorAll('.step-node').forEach(node => {
+            node.classList.remove('active');
+        });
+
+        // Add active to clicked node
+        const stepIndex = this.roadmap.steps.indexOf(step);
+        const stepNode = document.querySelector(`.step-node[data-step-index="${stepIndex}"]`);
+        if (stepNode) {
+            stepNode.classList.add('active');
+            this.currentActiveStepIndex = stepIndex;
+            stepNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+
+    startDividerDrag(e) {
+        e.preventDefault();
+        this.dividerDragging = true;
+        this.dividerStartX = e.clientX;
+
+        const leftPanel = document.getElementById('leftPanel');
+        this.leftPanelStartWidth = leftPanel.offsetWidth;
+
+        document.getElementById('splitDivider').classList.add('dragging');
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'col-resize';
+    }
+
+    onDividerDrag(e) {
+        if (!this.dividerDragging) return;
+
+        e.preventDefault();
+
+        const container = document.getElementById('splitScreenContainer');
+        const leftPanel = document.getElementById('leftPanel');
+        const rightPanel = document.getElementById('rightPanel');
+
+        const deltaX = e.clientX - this.dividerStartX;
+        const containerWidth = container.offsetWidth;
+
+        let newLeftWidth = this.leftPanelStartWidth + deltaX;
+
+        // Enforce 30%-70% limits
+        const minWidth = containerWidth * 0.3;
+        const maxWidth = containerWidth * 0.7;
+        newLeftWidth = Math.max(minWidth, Math.min(maxWidth, newLeftWidth));
+
+        const leftPercentage = (newLeftWidth / containerWidth) * 100;
+        const rightPercentage = 100 - leftPercentage;
+
+        leftPanel.style.width = `${leftPercentage}%`;
+        rightPanel.style.width = `${rightPercentage}%`;
+    }
+
+    stopDividerDrag() {
+        if (!this.dividerDragging) return;
+
+        this.dividerDragging = false;
+
+        document.getElementById('splitDivider').classList.remove('dragging');
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+
+        // Save ratio to localStorage
+        const leftPanel = document.getElementById('leftPanel');
+        const container = document.getElementById('splitScreenContainer');
+        const ratio = (leftPanel.offsetWidth / container.offsetWidth) * 100;
+        localStorage.setItem('workflowSplitRatio', ratio);
+    }
+
+    initializePromptCopy(container) {
+        const promptCards = container.querySelectorAll('.prompt-card');
+        promptCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const promptText = this.querySelector('.prompt-text').textContent;
+                navigator.clipboard.writeText(promptText).then(() => {
+                    const copyHint = this.querySelector('.copy-hint');
+                    copyHint.textContent = 'Copied!';
+                    copyHint.style.color = '#10b981';
+                    setTimeout(() => {
+                        copyHint.textContent = 'Click to copy';
+                        copyHint.style.color = '';
+                    }, 2000);
                 });
             });
-        }, 100);
+        });
+    }
 
-        // Add quiz functionality
-        if (step.quiz) {
-            setTimeout(() => {
-                const quizOptions = detailsContainer.querySelectorAll('.quiz-option');
-                const feedbackDiv = detailsContainer.querySelector('.quiz-feedback');
-                
-                quizOptions.forEach((btn, idx) => {
-                    btn.addEventListener('click', () => {
-                        // Disable all options
-                        quizOptions.forEach(opt => opt.disabled = true);
-                        
-                        // Check if correct
-                        const isCorrect = idx === step.quiz.correct_index;
-                        
-                        if (isCorrect) {
-                            btn.classList.add('correct');
-                            feedbackDiv.innerHTML = `
-                                <div class="feedback-correct">
-                                    <span class="feedback-icon">✓</span>
-                                    <div>
-                                        <strong>Correct!</strong>
-                                        <p>${step.quiz.explanation}</p>
-                                    </div>
-                                </div>
-                            `;
-                        } else {
-                            btn.classList.add('incorrect');
-                            quizOptions[step.quiz.correct_index].classList.add('correct');
-                            feedbackDiv.innerHTML = `
-                                <div class="feedback-incorrect">
-                                    <span class="feedback-icon">✗</span>
-                                    <div>
-                                        <strong>Not quite right.</strong>
-                                        <p>${step.quiz.explanation}</p>
-                                    </div>
-                                </div>
-                            `;
-                        }
-                        
-                        feedbackDiv.style.display = 'block';
-                    });
-                });
-            }, 100);
-        }
+    initializeQuiz(container, step) {
+        const quizOptions = container.querySelectorAll('.quiz-option');
+        const feedbackDiv = container.querySelector('.quiz-feedback');
 
-        modal.style.display = 'block';
-        
-        // Restore scroll position
-        requestAnimationFrame(() => {
-            window.scrollTo(0, scrollY);
+        quizOptions.forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+                quizOptions.forEach(opt => opt.disabled = true);
+
+                const isCorrect = idx === step.quiz.correct_index;
+
+                if (isCorrect) {
+                    btn.classList.add('correct');
+                    feedbackDiv.innerHTML = `
+                        <div class="feedback-correct">
+                            <div>
+                                <strong>Correct!</strong>
+                                <p>${step.quiz.explanation}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    btn.classList.add('incorrect');
+                    quizOptions[step.quiz.correct_index].classList.add('correct');
+                    feedbackDiv.innerHTML = `
+                        <div class="feedback-incorrect">
+                            <div>
+                                <strong>Not quite right.</strong>
+                                <p>${step.quiz.explanation}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                feedbackDiv.style.display = 'block';
+            });
         });
     }
 

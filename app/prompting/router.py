@@ -32,6 +32,7 @@ from app.prompting.curriculum import (
     get_module,
     get_submodule,
 )
+from app.prompting.submodule_descriptions import get_submodule_description
 from app.prompting.models import (
     ChatMessage,
     PresentationAnalysis,
@@ -103,6 +104,9 @@ async def module_page(request: Request, module_id: str, submodule_id: int):
         session.current_module = module_id
         session.current_submodule = submodule_id
 
+    # Get submodule description for info modal
+    submodule_info = get_submodule_description(module_id, submodule_id)
+
     # Use different template for different modules
     if module_id == "presentation-builder":
         template_name = "prompting/presentation_module.html"
@@ -116,6 +120,7 @@ async def module_page(request: Request, module_id: str, submodule_id: int):
             "module": module,
             "submodule": submodule,
             "session_id": session_id,
+            "submodule_info": submodule_info,
         },
     )
     response.set_cookie(

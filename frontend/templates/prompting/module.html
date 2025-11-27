@@ -3,6 +3,85 @@
 {% block title %}{{ submodule.title }} - {{ module.title }}{% endblock %}
 
 {% block content %}
+<!-- Module Info Modal (Outside module-page for proper overlay) -->
+<div id="moduleInfoOverlay" class="module-info-overlay">
+    <div class="module-info-modal">
+        <div class="module-info-header">
+            <button class="module-info-close" onclick="closeModuleInfo()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="module-info-breadcrumb">
+                Module {{ submodule_info.module_number if submodule_info else '' }}.{{ submodule_info.submodule_number if submodule_info else '' }}
+            </div>
+            <h2 class="module-info-title">{{ submodule_info.submodule_title if submodule_info else submodule.title }}</h2>
+            <div class="module-info-subtitle">{{ submodule_info.module_title if submodule_info else module.title }}</div>
+        </div>
+        <div class="module-info-body">
+            <div class="video-placeholder">
+                <div class="video-placeholder-content">
+                    <div class="video-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </div>
+                    <div class="video-placeholder-text">Video Coming Soon</div>
+                </div>
+            </div>
+
+            {% if submodule_info %}
+            <div class="info-section">
+                <p class="info-description">{{ submodule_info.description }}</p>
+            </div>
+
+            <div class="info-section">
+                <div class="info-section-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    <h3>Key Learning</h3>
+                </div>
+                <p class="info-content">{{ submodule_info.key_learning }}</p>
+            </div>
+
+            <div class="info-section">
+                <div class="info-section-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    <h3>Why Important</h3>
+                </div>
+                <p class="info-content">{{ submodule_info.why_important }}</p>
+            </div>
+
+            <div class="info-section">
+                <div class="info-section-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg>
+                    <h3>Real-World Use</h3>
+                </div>
+                <p class="info-content">{{ submodule_info.real_world_use }}</p>
+            </div>
+            {% else %}
+            <div class="info-section">
+                <p class="info-description">Welcome to this lesson!</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="module-info-footer">
+            <button class="close-modal-btn" onclick="closeModuleInfo()">Start Lesson</button>
+        </div>
+    </div>
+</div>
+
 <div class="module-page">
     <div class="cyber-bg"></div>
 
@@ -147,6 +226,45 @@
         sessionId: '{{ session_id }}',
         submodule: {{ submodule | tojson }}
     };
+
+    // Module Info Modal Functions
+    function closeModuleInfo() {
+        const overlay = document.getElementById('moduleInfoOverlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+        }
+    }
+
+    function openModuleInfo() {
+        const overlay = document.getElementById('moduleInfoOverlay');
+        if (overlay) {
+            overlay.classList.add('active');
+        }
+    }
+
+    // Show modal on page load every time
+    window.addEventListener('DOMContentLoaded', function() {
+        openModuleInfo();
+    });
+
+    // Close modal on overlay click (not on modal content click)
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('moduleInfoOverlay');
+        if (overlay) {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeModuleInfo();
+                }
+            });
+        }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeModuleInfo();
+        }
+    });
 </script>
 {% endblock %}
 

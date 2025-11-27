@@ -268,15 +268,50 @@
             </div>
         </div>
 
-        <div id="roadmapTree" class="roadmap-tree">
-            <!-- Tree will be dynamically generated here -->
+        <!-- NEW: Split Screen Container -->
+        <div id="splitScreenContainer" class="split-screen-container">
+            <!-- Left Panel: Workflow Tree -->
+            <div id="leftPanel" class="split-panel split-panel-left">
+                <div id="roadmapTree" class="roadmap-tree">
+                    <!-- Tree will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Resizable Divider -->
+            <div id="splitDivider" class="split-divider">
+                <div class="split-divider-handle"></div>
+            </div>
+
+            <!-- Right Panel: Step Details -->
+            <div id="rightPanel" class="split-panel split-panel-right">
+                <div class="split-panel-header">
+                    <h3 class="split-panel-title">Step Details</h3>
+                    <button id="closeSplitBtn" class="close-split-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div id="stepDetails" class="split-panel-content">
+                    <!-- Placeholder when no step selected -->
+                    <div class="placeholder-content">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"></path>
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                        </svg>
+                        <h3>Select a Step</h3>
+                        <p>Click on any step in the workflow tree to view details.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Step Details Modal -->
-        <div id="stepModal" class="modal">
+        <!-- Keep modal for backwards compatibility -->
+        <div id="stepModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
-                <div id="stepDetails"></div>
+                <div id="modalStepDetails"></div>
             </div>
         </div>
 

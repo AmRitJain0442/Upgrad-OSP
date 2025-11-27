@@ -18,6 +18,25 @@ html:has(.workflow-container) {
     min-height: 100vh;
 }
 
+/* Responsive width for larger screens */
+@media (min-width: 1920px) {
+    .workflow-container {
+        max-width: 1700px;
+    }
+}
+
+@media (min-width: 1600px) and (max-width: 1919px) {
+    .workflow-container {
+        max-width: 1500px;
+    }
+}
+
+@media (min-width: 1440px) and (max-width: 1599px) {
+    .workflow-container {
+        max-width: 1350px;
+    }
+}
+
 .workflow-header {
     text-align: center;
     margin-bottom: 3rem;
@@ -413,6 +432,378 @@ html:has(.workflow-container) {
 .roadmap-tree {
     position: relative;
     padding: 2rem 0;
+}
+
+/* ============================================
+   SPLIT SCREEN LAYOUT
+   ============================================ */
+
+/* Split Screen Container */
+.split-screen-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    max-height: calc(100vh - 200px);
+    height: auto;
+    background: transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Default: Full width left panel */
+.split-screen-container:not(.split-active) .split-panel-left {
+    width: 100%;
+}
+
+.split-screen-container:not(.split-active) .split-divider,
+.split-screen-container:not(.split-active) .split-panel-right {
+    display: none;
+}
+
+/* Active split state */
+.split-screen-container.split-active .split-panel-left {
+    width: 45%;
+    min-width: 300px;
+}
+
+.split-screen-container.split-active .split-panel-right {
+    width: 55%;
+    min-width: 400px;
+}
+
+/* Split Panels */
+.split-panel {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: width 0.3s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+.split-panel-left {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px 0 0 12px;
+    padding: 1rem;
+}
+
+.split-panel-right {
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.split-screen-container.split-active .split-panel-right {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Resizable Divider */
+.split-divider {
+    position: relative;
+    width: 8px;
+    cursor: col-resize;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    flex-shrink: 0;
+    transition: background 0.2s ease;
+}
+
+.split-divider:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.split-divider-handle {
+    width: 4px;
+    height: 60px;
+    background: rgba(99, 102, 241, 0.4);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.split-divider:hover .split-divider-handle {
+    background: #6366f1;
+    height: 80px;
+    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
+}
+
+.split-divider.dragging {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.split-divider.dragging .split-divider-handle {
+    background: #6366f1;
+    height: 100%;
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.6);
+}
+
+/* Right Panel Header */
+.split-panel-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+}
+
+.split-panel-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Close Button */
+.close-split-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.close-split-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #ffffff;
+    transform: rotate(90deg);
+}
+
+/* Right Panel Content */
+.split-panel-content {
+    padding: 2rem;
+    animation: fadeInUp 0.5s ease;
+}
+
+/* Placeholder Content */
+.placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.placeholder-content h3 {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 1rem 0 0.5rem;
+}
+
+.placeholder-content p {
+    max-width: 400px;
+}
+
+/* Adjust tree in split view */
+.split-screen-container.split-active .roadmap-tree {
+    padding: 1rem 0;
+}
+
+.split-screen-container.split-active .tree-step {
+    margin: 1.5rem 0;
+}
+
+.split-screen-container.split-active .step-node {
+    font-size: 0.95rem;
+    padding: 1.2rem;
+}
+
+.split-screen-container.split-active .step-title {
+    font-size: 1.1rem;
+}
+
+/* Active node highlight */
+.split-screen-container.split-active .step-node.active {
+    border-color: #6366f1;
+    background: rgba(99, 102, 241, 0.15);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    transform: translateX(10px);
+}
+
+/* Scrollbar Styling */
+.split-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.split-panel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.split-panel::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 4px;
+}
+
+.split-panel::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
+}
+
+/* Large Screen Optimization */
+@media (min-width: 1920px) {
+    .split-screen-container.split-active .split-panel-left {
+        width: 40%;
+        min-width: 350px;
+    }
+
+    .split-screen-container.split-active .split-panel-right {
+        width: 60%;
+        min-width: 500px;
+    }
+
+    .split-panel-content {
+        padding: 2.5rem;
+    }
+}
+
+@media (min-width: 1600px) and (max-width: 1919px) {
+    .split-screen-container.split-active .split-panel-left {
+        width: 42%;
+        min-width: 350px;
+    }
+
+    .split-screen-container.split-active .split-panel-right {
+        width: 58%;
+        min-width: 450px;
+    }
+
+    .split-panel-content {
+        padding: 2.25rem;
+    }
+}
+
+@media (min-width: 1440px) and (max-width: 1599px) {
+    .split-screen-container.split-active .split-panel-left {
+        width: 43%;
+        min-width: 320px;
+    }
+
+    .split-screen-container.split-active .split-panel-right {
+        width: 57%;
+        min-width: 420px;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .split-screen-container.split-active .split-panel-left {
+        width: 40%;
+        min-width: 250px;
+    }
+
+    .split-screen-container.split-active .split-panel-right {
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Stack vertically on mobile */
+    .split-screen-container.split-active {
+        flex-direction: column;
+    }
+
+    .split-screen-container.split-active .split-panel-left,
+    .split-screen-container.split-active .split-panel-right {
+        width: 100% !important;
+        min-width: unset;
+    }
+
+    .split-panel-left {
+        border-radius: 12px 12px 0 0;
+        max-height: 40vh;
+    }
+
+    .split-panel-right {
+        border-radius: 0 0 12px 12px;
+        border-left: 1px solid rgba(99, 102, 241, 0.3);
+        border-top: none;
+    }
+
+    .split-divider {
+        display: none;
+    }
+
+    .close-split-btn {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Height-constrained screens (720p, laptops with limited vertical space) */
+@media (max-height: 800px) {
+    .split-screen-container {
+        min-height: 400px;
+        max-height: calc(100vh - 150px);
+    }
+
+    .split-panel-content {
+        padding: 1.5rem;
+    }
+
+    .placeholder-content {
+        min-height: 300px;
+    }
+}
+
+@media (max-height: 720px) {
+    .split-screen-container {
+        min-height: 350px;
+        max-height: calc(100vh - 120px);
+    }
+
+    .split-panel-header {
+        padding: 1rem 1.5rem;
+    }
+
+    .split-panel-title {
+        font-size: 1.25rem;
+    }
+
+    .split-panel-content {
+        padding: 1rem;
+    }
+
+    .placeholder-content {
+        min-height: 250px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .tree-step {

@@ -1,5 +1,5 @@
 Two-Panel Interface:
-• Left Panel: AI Tutor chat (guidance, tips, quiz) -- (use a faster model like gemini-2.5-flash to give them real time guidance on the prompts that they are writing and while that one generates, show the breakdown of the prompt and also make that left one also resizable.)
+• Left Panel: AI Tutor chat (guidance, tips, quiz) -- (use a faster model like gemini-flash-latest to give them real time guidance on the prompts that they are writing and while that one generates, show the breakdown of the prompt and also make that left one also resizable.)
 • Right Panel: Workspace (document upload, prompt testing, results)
 Add markdown parsing/rendering in both of them. and instruct the ai properly.
 

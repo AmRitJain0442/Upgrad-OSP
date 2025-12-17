@@ -3,18 +3,18 @@ API Testing Script - Tests all configured APIs
 Run this to verify all API keys are working correctly
 """
 
+import asyncio
 import os
 import sys
-import asyncio
 from pathlib import Path
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from dotenv import load_dotenv
-import httpx
 import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold
+import httpx
+from dotenv import load_dotenv
+from google.generativeai.types import HarmBlockThreshold, HarmCategory
 
 # Load environment variables
 load_dotenv()
@@ -60,7 +60,7 @@ async def test_gemini_api():
             return False
 
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel("gemini-flash-latest")
 
         response = model.generate_content(
             "Count from 1 to 3",

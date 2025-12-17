@@ -2,24 +2,25 @@
 AI agents for workflow automation using Gemini, Perplexity, and Tavily APIs
 """
 
-import os
 import json
-from typing import List, Dict, Any, Optional
-import httpx
-import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold
+import os
+from typing import Any, Dict, List, Optional
 
-from app.workflow.models import (
-    WorkflowQuestion,
-    WorkflowStep,
-    WorkflowRoadmap,
-    AIToolSearchResult,
-)
-from app.workflow.ai_tools_database import (
-    get_relevant_tools,
-    format_tools_for_prompt,
-)
+import google.generativeai as genai
+import httpx
+from google.generativeai.types import HarmBlockThreshold, HarmCategory
+
 from app.prompting.curriculum import FULL_CURRICULUM
+from app.workflow.ai_tools_database import (
+    format_tools_for_prompt,
+    get_relevant_tools,
+)
+from app.workflow.models import (
+    AIToolSearchResult,
+    WorkflowQuestion,
+    WorkflowRoadmap,
+    WorkflowStep,
+)
 
 # Configure Gemini API
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
@@ -42,7 +43,7 @@ async def generate_workflow_questions(task_input: str) -> List[WorkflowQuestion]
         api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel("gemini-flash-latest")
 
         prompt = f"""You are helping a user automate a mundane task using AI tools.
 They want to: {task_input}
@@ -234,7 +235,7 @@ def generate_step_quiz(
         api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel("gemini-flash-latest")
 
         prompt = f"""Create a multiple-choice quiz question to test understanding of this workflow step:
 
@@ -413,7 +414,7 @@ async def generate_workflow_roadmap(
         api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel("gemini-flash-latest")
 
         # Group tools by category/type for better organization
         tools_by_category = {}
@@ -666,7 +667,7 @@ async def search_with_gemini_web(
         api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if api_key:
             genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.5-flash")
+        model = genai.GenerativeModel("gemini-flash-latest")
 
         answers_summary = "\n".join([f"- {q}: {a}" for q, a in answers.items()])
 

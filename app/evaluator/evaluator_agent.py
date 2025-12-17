@@ -3,14 +3,15 @@ Evaluator Agent
 Uses Gemini to analyze prompts and AI outputs, providing constructive feedback
 """
 
-import os
 import json
+import os
 import re
 from typing import Optional
-import google.generativeai as genai
-from google.generativeai.types import HarmCategory, HarmBlockThreshold
-from .models import EvaluationFeedback
 
+import google.generativeai as genai
+from google.generativeai.types import HarmBlockThreshold, HarmCategory
+
+from .models import EvaluationFeedback
 
 # Configure Gemini
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -194,7 +195,7 @@ async def evaluate_prompt_output(
 
         # Use Gemini to evaluate
         model = genai.GenerativeModel(
-            model_name="gemini-2.5-flash",
+            model_name="gemini-flash-latest",
             generation_config={
                 "temperature": 0.7,
                 "top_p": 0.95,

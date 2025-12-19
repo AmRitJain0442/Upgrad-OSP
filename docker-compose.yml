@@ -66,6 +66,8 @@ services:
     volumes:
       # Cloudflare Origin certificates
       - ./cloudflare-certs:/etc/nginx/cloudflare-certs:ro
+      # Static assets
+      - ./frontend/static:/app/frontend/static:ro
       # Nginx logs
       - ./logs/nginx:/var/log/nginx
 
